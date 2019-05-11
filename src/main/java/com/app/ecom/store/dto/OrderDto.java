@@ -12,7 +12,7 @@ public class OrderDto {
 
 	private String orderDate;
 
-	private CustomerDto customerDto;
+	private UserDto userDto;
 
 	private Set<ProductDto> productDtos = new HashSet<>();
 
@@ -48,12 +48,12 @@ public class OrderDto {
 		this.orderDate = orderDate;
 	}
 
-	public CustomerDto getCustomerDto() {
-		return customerDto;
+	public UserDto getUserDto() {
+		return userDto;
 	}
 
-	public void setCustomerDto(CustomerDto customerDto) {
-		this.customerDto = customerDto;
+	public void setUserDto(UserDto userDto) {
+		this.userDto = userDto;
 	}
 
 	public Set<ProductDto> getProductDtos() {

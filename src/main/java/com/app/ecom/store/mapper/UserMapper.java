@@ -1,14 +1,18 @@
 package com.app.ecom.store.mapper;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+import java.util.List;
+import java.util.Objects;
 
 import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 @Component
 public class UserMapper {
@@ -18,8 +22,15 @@ public class UserMapper {
     
     public User userDtoToUser(UserDto userDto) {
         User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        user.setId(userDto.getId());
+        if(!StringUtils.isEmpty(userDto.getUsername())) {
+        	user.setUsername(userDto.getUsername());
+        }
+        if(!StringUtils.isEmpty(userDto.getPassword())) {
+        	user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+            user.setIsEnabled(false);
+            user.setRoles(new HashSet<>());
+        }
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
@@ -31,8 +42,33 @@ public class UserMapper {
         user.setState(userDto.getState());
         user.setPincode(userDto.getPincode());
         user.setCountry(userDto.getCountry());
-        user.setIsEnabled(false);
-        user.setRoles(new HashSet<>());
         return user;
+    }
+    
+    public List<UserDto> usersToUserDtos(List<User> users) {
+    	if(CollectionUtils.isEmpty(users)) {
+    		return Collections.emptyList();
+    	}
+    	
+    	List<UserDto> userDtos = new ArrayList<>();
+    	users.stream().filter(Objects::nonNull).forEach(user -> userDtos.add(userToUserDto(user)));
+    	return userDtos;
+    }
+    
+    public UserDto userToUserDto(User user) {
+    	UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setEmail(user.getEmail());
+        userDto.setLanguage(user.getLanguage());
+        userDto.setMobile(user.getMobile());
+        userDto.setAddressLine1(user.getAddressLine1());
+        userDto.setAddressLine2(user.getAddressLine2());
+        userDto.setCity(user.getCity());
+        userDto.setState(user.getState());
+        userDto.setPincode(user.getPincode());
+        userDto.setCountry(user.getCountry());
+        return userDto;
     }
 }

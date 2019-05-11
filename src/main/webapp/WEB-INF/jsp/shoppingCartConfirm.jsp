@@ -84,7 +84,7 @@
 	</div>
 </div>
 <div class="row" style="height:10px;"></div>
-<form:form method="POST" modelAttribute="customerDto" id="customerForm" class="form-horizontal" enctype="multipart/form-data" action="<%=action %>">
+<form:form method="POST" modelAttribute="userDto" id="customerForm" class="form-horizontal" enctype="multipart/form-data" action="<%=action %>">
 <div class="row">
 	<div class="col-sm-6">
 		<div class="card">
@@ -110,7 +110,7 @@
             		</div>
 					<div class="col-sm-6">
 						<label for="name"><spring:message code="Name" text="Name" /></label>
-            			<form:input type="text" path="name" class="form-control input-sm"/>
+            			<form:input type="text" path="firstName" class="form-control input-sm"/>
             		</div>
 				</div>
 				<div class="row autofill">
@@ -146,7 +146,7 @@
 				<div class="row d-none searchByMobileOrName">
 					<div class="col-sm-8">
 						<label for="mobileOrName"><spring:message code="Search by Name or Mobile" text="Search by Name or Mobile" /></label>
-						<input type="text" id="mobileOrName" onkeyup="getCustomers(this, '${contextPath}/customers/search')" class="form-control input-sm"/>
+						<input type="text" id="mobileOrName" onkeyup="getCustomers(this, '${contextPath}/users/search')" class="form-control input-sm"/>
 					</div>
 					<div class="col-sm-4"></div>
 				</div>

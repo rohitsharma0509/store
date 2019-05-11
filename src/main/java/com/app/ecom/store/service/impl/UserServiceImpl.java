@@ -1,13 +1,19 @@
 package com.app.ecom.store.service.impl;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.app.ecom.store.dto.UserDto;
+import com.app.ecom.store.events.RegistrationCompleteEvent;
+import com.app.ecom.store.mapper.UserMapper;
+import com.app.ecom.store.model.User;
+import com.app.ecom.store.repository.UserRepository;
+import com.app.ecom.store.service.UserService;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,22 +24,19 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.LocaleResolver;
 
-import com.app.ecom.store.dto.UserDto;
-import com.app.ecom.store.events.RegistrationCompleteEvent;
-import com.app.ecom.store.model.User;
-import com.app.ecom.store.repository.UserRepository;
-import com.app.ecom.store.service.UserService;
-
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
+    @Inject
     private UserRepository userRepository;
     
-    @Autowired
+    @Inject
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     
-    @Autowired
+    @Inject
     private LocaleResolver localeResolver;
+    
+    @Inject
+    private UserMapper userMapper;
     
     @Inject
     private ApplicationEventPublisher applicationEventPublisher;
@@ -68,6 +71,11 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+    
+	@Override
+	public List<UserDto> getUserByMobileOrName(String mobileOrName) {
+		return userMapper.usersToUserDtos(userRepository.findByMobileContaining(mobileOrName));
+	}
     
     @Override
     public Page<User> getUsers(Pageable pageable) {

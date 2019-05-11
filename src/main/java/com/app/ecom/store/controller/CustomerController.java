@@ -4,13 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomerDto;
 import com.app.ecom.store.model.Customer;
 import com.app.ecom.store.service.CustomerService;
 import com.app.ecom.store.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -22,10 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class CustomerController {
-	@Inject
+	@Autowired
 	private CustomerService customerService;
 
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 
 	@GetMapping(value = RequestUrls.CUSTOMERS)

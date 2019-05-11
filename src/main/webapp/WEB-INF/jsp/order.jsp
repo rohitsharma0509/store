@@ -25,13 +25,13 @@
 		<div class="col-sm-6">
 			<spring:message code="Order Number" text="Order Number" />: <strong>${orderDto.orderNumber}</strong>
 			<div>
-				<strong>${orderDto.customerDto.name}</strong>
+				<strong>${orderDto.userDto.firstName} ${orderDto.userDto.lastName}</strong>
 			</div>
-			<div>${orderDto.customerDto.addressLine1},</div>
-			<div>${orderDto.customerDto.addressLine2}</div>
-			<div>${orderDto.customerDto.city}, ${orderDto.customerDto.state}, ${orderDto.customerDto.pincode}</div>
-			<div><strong><spring:message code="Email" text="Email" />:</strong> ${orderDto.customerDto.email}</div>
-			<div><strong><spring:message code="Mobile" text="Mobile" />:</strong> ${orderDto.customerDto.mobile}</div>
+			<div>${orderDto.userDto.addressLine1},</div>
+			<div>${orderDto.userDto.addressLine2}</div>
+			<div>${orderDto.userDto.city}, ${orderDto.userDto.state}, ${orderDto.userDto.pincode}</div>
+			<div><strong><spring:message code="Email" text="Email" />:</strong> ${orderDto.userDto.email}</div>
+			<div><strong><spring:message code="Mobile" text="Mobile" />:</strong> ${orderDto.userDto.mobile}</div>
 		</div>
 		<div class="col-sm-6">
 			<div style="float:right"><strong><spring:message code="Order Date" text="Order Date" />:</strong> ${orderDto.orderDate}</div>

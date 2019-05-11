@@ -35,8 +35,8 @@ public class Order {
 	private ZonedDateTime orderDate;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "customer_id", updatable = false)
-	private Customer customer;
+	@JoinColumn(name = "user_id", updatable = false)
+	private User user;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -74,12 +74,12 @@ public class Order {
 		this.orderDate = orderDate;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public User getUser() {
+		return user;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Set<OrderDetails> getOrderDetails() {

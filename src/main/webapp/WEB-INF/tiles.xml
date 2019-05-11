@@ -133,27 +133,27 @@
     
     <definition name="profitLoss" extends="base.definition">  
         <put-attribute name="title" value="Profit and Loss" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/profitLoss.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/profitLoss.jsp" />  
     </definition>
     
     <definition name="dailyProfitLoss" extends="plain.definition">  
         <put-attribute name="title" value="Profit and Loss" />
-        <put-attribute name="body" value="/WEB-INF/jsp/dailyProfitLoss.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/dailyProfitLoss.jsp" />  
     </definition>
     
     <definition name="monthlyProfitLoss" extends="plain.definition">  
         <put-attribute name="title" value="Profit and Loss" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/monthlyProfitLoss.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/monthlyProfitLoss.jsp" />  
     </definition>
     
     <definition name="quarterlyProfitLoss" extends="plain.definition">  
         <put-attribute name="title" value="Profit and Loss" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/quarterlyProfitLoss.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/quarterlyProfitLoss.jsp" />  
     </definition>
     
     <definition name="yearlyProfitLoss" extends="plain.definition">  
         <put-attribute name="title" value="Profit and Loss" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/yearlyProfitLoss.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/yearlyProfitLoss.jsp" />  
     </definition>
     
     <definition name="order" extends="base.definition">  

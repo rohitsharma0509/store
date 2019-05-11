@@ -41,7 +41,7 @@ public class SignupController {
     public String registration(@ModelAttribute("userForm") UserDto userDto, BindingResult bindingResult, Model model, WebRequest request) {
         userValidator.validate(userDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return RequestUrls.REGISTRATION;
+            return "registration";
         }
         User user = userService.createUser(userDto);
         userService.sendVerificationLink(user, request);

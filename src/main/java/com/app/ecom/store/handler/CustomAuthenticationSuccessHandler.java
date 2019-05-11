@@ -2,14 +2,15 @@ package com.app.ecom.store.handler;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.model.User;
 import com.app.ecom.store.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,11 @@ import org.springframework.util.StringUtils;
 
 @Component
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
-    @Inject
+    @Autowired
     private UserService userService;
+    
+    @Autowired
+    private HttpSession httpSession;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -28,9 +32,10 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     }
 
     protected void setLocale(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
-        if (authentication != null &&authentication.getPrincipal() != null) {
+        if (null != authentication && null != authentication.getPrincipal()) {
         	String username = authentication.getName();
             User user = userService.findByUsername(username);
+            httpSession.setAttribute("user", user);
             String locale = null == user || StringUtils.isEmpty(user.getLanguage()) ? "en" : user.getLanguage();
             userService.updateLocale(request, response, locale);
         }

@@ -2,25 +2,23 @@ package com.app.ecom.store.service.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import javax.inject.Inject;
+import javax.persistence.Tuple;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
+import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.CustomPage;
-import com.app.ecom.store.dto.CustomerDto;
 import com.app.ecom.store.dto.OrderDto;
 import com.app.ecom.store.dto.ProductDto;
+import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.mapper.OrderMapper;
 import com.app.ecom.store.model.Order;
+import com.app.ecom.store.querybuilder.QueryBuilder;
 import com.app.ecom.store.repository.OrderRepository;
 import com.app.ecom.store.service.OrderService;
+import com.app.ecom.store.util.CommonUtil;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -31,18 +29,30 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
-	@Inject
+	@Autowired
 	private OrderMapper orderMapper;
 
-	@Inject
+	@Autowired
 	private OrderRepository orderRepository;
 	
-	public OrderDto addOrder(java.util.List<ProductDto> productDtos, CustomerDto customerDto, Double totalPrice) {
-		Order order = orderRepository.save(orderMapper.convertToOrder(productDtos, customerDto, totalPrice));
+	@Autowired
+	private QueryBuilder queryBuilder;
+	
+	@Autowired
+	private CommonUtil commonUtil;
+	
+	public OrderDto addOrder(java.util.List<ProductDto> productDtos, UserDto userDto, Double totalPrice) {
+		Order order = orderRepository.save(orderMapper.convertToOrder(productDtos, userDto, totalPrice));
 		return orderMapper.orderToOrderDto(order);
 	}
 
@@ -87,17 +97,17 @@ public class OrderServiceImpl implements OrderService {
 			Phrase customerPhrase = new Phrase("", normalFont);
 			customerPhrase.add("Order Number: "+ orderDto.getOrderNumber());
 			customerPhrase.add("\n");
-			customerPhrase.add(orderDto.getCustomerDto().getName());
+			customerPhrase.add(orderDto.getUserDto().getFirstName()+" "+orderDto.getUserDto().getLastName());
 			customerPhrase.add("\n");
-			customerPhrase.add(orderDto.getCustomerDto().getAddressLine1());
+			customerPhrase.add(orderDto.getUserDto().getAddressLine1());
 			customerPhrase.add("\n");
-			customerPhrase.add(orderDto.getCustomerDto().getAddressLine2());
+			customerPhrase.add(orderDto.getUserDto().getAddressLine2());
 			customerPhrase.add("\n");
-			customerPhrase.add(orderDto.getCustomerDto().getCity()+", "+orderDto.getCustomerDto().getState()+", "+orderDto.getCustomerDto().getPincode());
+			customerPhrase.add(orderDto.getUserDto().getCity()+", "+orderDto.getUserDto().getState()+", "+orderDto.getUserDto().getPincode());
 			customerPhrase.add("\n");
-			customerPhrase.add("Email: "+orderDto.getCustomerDto().getEmail());
+			customerPhrase.add("Email: "+orderDto.getUserDto().getEmail());
 			customerPhrase.add("\n");
-			customerPhrase.add("Mobile: "+orderDto.getCustomerDto().getMobile());
+			customerPhrase.add("Mobile: "+orderDto.getUserDto().getMobile());
 
 			PdfPTable table = new PdfPTable(2);
 			table.setWidthPercentage(100);
@@ -256,17 +266,47 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public CustomPage<OrderDto> searchOrders(Order order, Pageable pageable) {
-		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues().withIgnoreCase()
-				.withMatcher("orderNumber", ExampleMatcher.GenericPropertyMatchers.contains());
-		Example<Order> example = Example.of(order, matcher);
-		PageRequest request = PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), pageable.getSort());
-		Page<Order> page = orderRepository.findAll(example, request);
-		CustomPage<OrderDto> customPage = new CustomPage<>();
-		customPage.setContent(orderMapper.ordersToOrderDtos(page.getContent()));
-		customPage.setPageNumber(page.getNumber());
-		customPage.setSize(page.getSize());
-		customPage.setTotalPages(page.getTotalPages());
-		return customPage;
+	public CustomPage<OrderDto> searchOrders(String orderNumber, String fromDate, String toDate, Long userId, Pageable pageable) {
+		int offset = (pageable.getPageNumber() - 1)*pageable.getPageSize();
+		int limit = offset + pageable.getPageSize();
+		StringBuilder query = new StringBuilder("select * from orders where 1=1");
+		StringBuilder countQuery = new StringBuilder("select count(order_id) from orders where 1=1");
+		if(!StringUtils.isEmpty(orderNumber)) {
+			query.append(" and order_number like '%"+orderNumber+"%'");
+			countQuery.append(" and order_number like '%"+orderNumber+"%'");
+		}
+		if(!StringUtils.isEmpty(fromDate)) {
+			query.append(" and date(order_date)<='"+commonUtil.formatDate(fromDate, Constants.DD_MM_YYYY, Constants.YYYY_MM_DD)+"'");
+			countQuery.append(" and date(order_date)<='"+commonUtil.formatDate(fromDate, Constants.DD_MM_YYYY, Constants.YYYY_MM_DD)+"'");
+		}
+		if(!StringUtils.isEmpty(toDate)) {
+			query.append(" and date(order_date)>='"+commonUtil.formatDate(fromDate, Constants.DD_MM_YYYY, Constants.YYYY_MM_DD)+"'");
+			countQuery.append(" and date(order_date)>='"+commonUtil.formatDate(fromDate, Constants.DD_MM_YYYY, Constants.YYYY_MM_DD)+"'");
+		}
+		if(!StringUtils.isEmpty(userId)) {
+			query.append(" and user_id="+userId);
+			countQuery.append(" and user_id="+userId);
+		}
+		query.append(" limit "+offset+", "+limit);
+		List<Tuple> tuples = queryBuilder.getTupleByQuery(query.toString(), null);
+		
+		List<OrderDto> orderDtos = new ArrayList<>();
+		for(Tuple tuple : tuples){
+			OrderDto orderDto = new OrderDto();
+			orderDto.setId(Long.parseLong(String.valueOf(tuple.get("order_id"))));
+			orderDto.setOrderDate(commonUtil.formatDate(String.valueOf(tuple.get("order_date")), Constants.YYYY_MM_DD, Constants.DD_MM_YYYY));
+			orderDto.setOrderNumber(String.valueOf(tuple.get("order_number")));
+			orderDto.setTotalAmount(Double.parseDouble(String.valueOf(tuple.get("total_amount"))));
+			orderDtos.add(orderDto);
+		}
+		
+		Integer totalRecords = queryBuilder.countByQuery(countQuery.toString(), null);
+		
+		CustomPage<OrderDto> page = new CustomPage<>();
+		page.setContent(orderDtos);
+		page.setPageNumber(pageable.getPageNumber() - 1);
+		page.setSize(pageable.getPageSize());
+		page.setTotalPages((int)Math.ceil((double)totalRecords/pageable.getPageSize()));
+		return page;
 	}
 }

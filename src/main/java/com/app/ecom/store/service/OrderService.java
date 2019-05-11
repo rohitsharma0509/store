@@ -3,17 +3,16 @@ package com.app.ecom.store.service;
 import java.io.ByteArrayOutputStream;
 import java.time.ZonedDateTime;
 
+import com.app.ecom.store.dto.CustomPage;
+import com.app.ecom.store.dto.OrderDto;
+import com.app.ecom.store.dto.ProductDto;
+import com.app.ecom.store.dto.UserDto;
+import com.app.ecom.store.model.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.app.ecom.store.dto.CustomPage;
-import com.app.ecom.store.dto.CustomerDto;
-import com.app.ecom.store.dto.OrderDto;
-import com.app.ecom.store.dto.ProductDto;
-import com.app.ecom.store.model.Order;
-
 public interface OrderService {
-	OrderDto addOrder(java.util.List<ProductDto> productDtos, CustomerDto customerDto, Double totalPrice);
+	OrderDto addOrder(java.util.List<ProductDto> productDtos, UserDto userDto, Double totalPrice);
 
 	OrderDto getOrder(Long id);
 
@@ -25,5 +24,5 @@ public interface OrderService {
 	
 	Long countByOrderDateGreaterThanEqual(ZonedDateTime orderDate);
 
-	CustomPage<OrderDto> searchOrders(Order order, Pageable pageable);
+	CustomPage<OrderDto> searchOrders(String orderNumber, String fromDate, String toDate, Long userId, Pageable pageable);
 }

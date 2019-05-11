@@ -3,24 +3,27 @@ package com.app.ecom.store.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
-import com.app.ecom.store.dto.CustomerDto;
 import com.app.ecom.store.dto.OrderDto;
 import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.ShoppingCart;
-import com.app.ecom.store.model.Order;
+import com.app.ecom.store.dto.UserDto;
+import com.app.ecom.store.model.User;
 import com.app.ecom.store.service.OrderService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.service.ShoppingCartService;
 import com.app.ecom.store.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -34,32 +37,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class OrderController {
 
-	@Inject
+	@Autowired
 	private OrderService orderService;
 	
-	@Inject
+	@Autowired
 	private ProductService productService;
 
-	@Inject
+	@Autowired
 	private ShoppingCartService shoppingCartService;
 	
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 	
+	@Autowired
+	private HttpSession httpSession;
+	
 	@PostMapping(value = RequestUrls.BUY)
-	public String buyNow(@ModelAttribute("customer") @Valid CustomerDto customerDto,
+	public String buyNow(@ModelAttribute @Valid UserDto userDto,
 			HttpServletRequest request, @RequestParam(value = "productId", required=false) Long id) {
 		OrderDto orderDto;
 		if(null == id){
 			ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(request);
-			shoppingCart.setCustomerDto(customerDto);
-			orderDto = orderService.addOrder(shoppingCart.getProductDtos(), customerDto, shoppingCart.getTotalPrice());
+			shoppingCart.setUserDto(userDto);
+			orderDto = orderService.addOrder(shoppingCart.getProductDtos(), userDto, shoppingCart.getTotalPrice());
 			shoppingCartService.removeShoppingCart(request);
 		} else {
 			List<ProductDto> productDtos = new ArrayList<>();
 			ProductDto productDto = productService.getProductByIdForCart(id);
 			productDtos.add(productDto);
-			orderDto = orderService.addOrder(productDtos, customerDto, productDto.getPerProductPrice());
+			orderDto = orderService.addOrder(productDtos, userDto, productDto.getPerProductPrice());
 		}
 		return "redirect:orders/" + orderDto.getId();
 	}
@@ -72,9 +78,15 @@ public class OrderController {
 	}
 	
 	@GetMapping(value =RequestUrls.ORDERS)
-	public String searchOrders(Model model, @ModelAttribute("order") Order order, @PageableDefault(page = 1, size = 10) Pageable pageable) {
-		CustomPage<OrderDto> page = orderService.searchOrders(order, pageable);
-		model.addAttribute("order", order);
+	public String searchOrders(Model model, @RequestParam(required=false) String orderNumber, @RequestParam(required=false) String fromDate, @RequestParam(required=false) String toDate, @PageableDefault(page = 1, size = 10) Pageable pageable) {
+		User user = (User) httpSession.getAttribute("user");
+		CustomPage<OrderDto> page = orderService.searchOrders(orderNumber, fromDate, toDate, user.getId(), pageable);
+		
+		Map<String, String> params = new HashMap<>();
+		params.put("orderNumber", orderNumber);
+		params.put("fromDate", fromDate);
+		params.put("toDate", toDate);
+		
 		model.addAttribute("pagging", commonUtil.getPagging("orders", page.getPageNumber()+1, page.getTotalPages(), null));
 		model.addAttribute("page", page);
 		return "orders";	

@@ -8,25 +8,25 @@
 <div class="row" style="height: 10px;"></div>
 <div class="row main-row">
 	<div class="col-sm-3">
-		<form:form method="GET" modelAttribute="order" class="form-horizontal" action="orders">
+		<form method="GET" class="form-horizontal" action="orders">
 			<div class="card">
 				<div class="card-body main-center">
 					<div class="row">
 						<div class="col-sm-12">
 							<label for="orderNumber" class="control-label text-right"><spring:message code="Order Number" text="Order Number" /></label>
-							<form:input type="text" path="orderNumber" id="orderNumber" class="form-control input-sm" />
+							<input type="text" name="orderNumber" id="orderNumber" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
 							<label for="from"><spring:message code="From" text="From" /></label>
-							<input type="date" id="from" class="form-control input-sm" />
+							<input type="date" name="fromDate" id="fromDate" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
 							<label for="to"><spring:message code="To" text="To" /></label>
-							<input type="date" id="to" class="form-control input-sm" />
+							<input type="date" name="toDate" id="toDate" class="form-control input-sm" />
 						</div>
 					</div>
 					<div class="row">
@@ -36,7 +36,7 @@
 					</div>
 				</div>
 			</div>
-		</form:form>
+		</form>
 	</div>
 	<div class="col-sm-9">
 		<c:choose>

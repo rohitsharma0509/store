@@ -1,5 +1,7 @@
 package com.app.ecom.store.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,6 +9,7 @@ import javax.transaction.Transactional;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.model.User;
 import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.util.CommonUtil;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserController {
@@ -75,5 +80,11 @@ public class UserController {
 		model.addAttribute(FieldNames.CODE, code);
 		model.addAttribute(FieldNames.MESSAGE, environment.getProperty(String.valueOf(code)));
 		return "failure";
+	}
+	
+	@GetMapping(value = "/users/search")
+	@ResponseBody
+	public List<UserDto> searchCustomer(@RequestParam(required = true) String mobileOrName) {
+		return userService.getUserByMobileOrName(mobileOrName);
 	}
 }

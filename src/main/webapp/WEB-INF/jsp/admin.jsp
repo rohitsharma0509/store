@@ -35,4 +35,14 @@
 		</table>
 	</div>
 </div>
+<div class="row">
+  <div class="col-sm-6">
+    <table class="table">
+      <tr class="info"><th><span class="glyphicon glyphicon-users"><b><spring:message code="Profit & Loss" text="Profit & Loss" /></b></span></th></tr>
+      <tr><td><a href="${contextPath}<%=RequestUrls.PROFIT_LOSS %>"><spring:message code="Profit & Loss" text="Profit & Loss" /></a></td></tr>
+    </table>
+  </div>
+  <div class="col-sm-6">
+  </div>
+</div>
 <div class="row" style="height: 100px;"></div>

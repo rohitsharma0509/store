@@ -10,20 +10,20 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.CustomerDto;
 import com.app.ecom.store.dto.OrderDto;
 import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.ShoppingCart;
+import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.model.Customer;
 import com.app.ecom.store.model.Order;
 import com.app.ecom.store.model.OrderDetails;
 import com.app.ecom.store.model.Product;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.CommonUtil;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 @Component
 public class OrderMapper {
@@ -33,16 +33,19 @@ public class OrderMapper {
 
 	@Inject
 	private ProductMapper productMapper;
+	
+	@Inject
+	private UserMapper userMapper;
 
 	@Inject
 	private CommonUtil commonUtil;
 	
-	public Order convertToOrder(java.util.List<ProductDto> productDtos, CustomerDto customerDto, Double totalAmount) {
+	public Order convertToOrder(java.util.List<ProductDto> productDtos, UserDto userDto, Double totalAmount) {
 		Order order = new Order();
 		order.setOrderDate(ZonedDateTime.now());
 		order.setOrderNumber(commonUtil.generateRandomDigits("ORD", 10, ""));
 		order.setTotalAmount(totalAmount);
-		order.setCustomer(customerDtoToCustomer(customerDto));
+		order.setUser(userMapper.userDtoToUser(userDto));
 		order.setOrderDetails(productDtosToOrderDetails(productDtos, order));
 		return order;
 	}
@@ -53,7 +56,7 @@ public class OrderMapper {
 		order.setOrderDate(ZonedDateTime.now());
 		order.setOrderNumber(commonUtil.generateRandomDigits("ORD", 10, ""));
 		order.setTotalAmount(shoppingCart.getTotalPrice());
-		order.setCustomer(customerDtoToCustomer(shoppingCart.getCustomerDto()));
+		order.setUser(userMapper.userDtoToUser(shoppingCart.getUserDto()));
 		order.setOrderDetails(productDtosToOrderDetails(
 				shoppingCart.getProductDtos(), order));
 		return order;
@@ -76,7 +79,7 @@ public class OrderMapper {
 		orderDto.setOrderDate(commonUtil.convertZonedDateTimeToString(order.getOrderDate(), Constants.DATETIME_FORMAT_YYYYMMDDHHMMSS));
 		orderDto.setOrderNumber(order.getOrderNumber());
 		orderDto.setTotalAmount(order.getTotalAmount());
-		orderDto.setCustomerDto(customerToCustomerDto(order.getCustomer()));
+		orderDto.setUserDto(userMapper.userToUserDto(order.getUser()));
 		orderDto.setProductDtos(orderDetailsToProductDtos(order.getOrderDetails()));
 		return orderDto;
 	}

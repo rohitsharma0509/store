@@ -27,7 +27,7 @@
 			for (i = 0; i < arr.length; i++) {
 				var customer = arr[i];
 				var mobile = customer.mobile;
-				var name = customer.name;
+				var name = customer.firstName;
 				/*check if the item starts with the same letters as the text field value:*/
 			    if (mobile.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
 			    	/*create a DIV element for each matching element:*/
@@ -127,7 +127,7 @@
 	function setCustomer(customer) {
 		var f = document.getElementById("customerForm");
 		f.id.value = customer.id;
-		f.name.value = customer.name;
+		f.firstName.value = customer.firstName;
 		f.mobile.value = customer.mobile;
 		f.addressLine1.value = customer.addressLine1;
 		f.addressLine2.value = customer.addressLine2;
@@ -135,6 +135,6 @@
 		f.state.value = customer.state;
 		f.pincode.value = customer.pincode;
 		f.pincode.email = customer.email;
-		var address = customer.name +", "+ customer.addressLine1 +", "+customer.addressLine2 +", "+ customer.city +", "+ customer.state+" - "+customer.pincode; 
+		var address = customer.firstName +", "+ customer.addressLine1 +", "+customer.addressLine2 +", "+ customer.city +", "+ customer.state+" - "+customer.pincode; 
 		$('.address > div').text(address);
 	}

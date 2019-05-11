@@ -5,10 +5,11 @@
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="${contextPath}/home"><spring:message code="Dashboard" text="Dashboard" /></a></li>
         <li class="nav-item"><a class="nav-link" href="${contextPath}/allProducts"><spring:message code="Products" text="Products" /></a></li>
-        <li class="nav-item"><a class="nav-link" href="${contextPath}/stock"><spring:message code="Stock" text="Stock" /></a></li>
+        <security:authorize access="hasAuthority('ADMIN')">
+          <li class="nav-item"><a class="nav-link" href="${contextPath}/stock"><spring:message code="Stock" text="Stock" /></a></li>
+        </security:authorize>
         <li class="nav-item"><a class="nav-link" href="${contextPath}/orders"><spring:message code="Orders" text="Orders" /></a></li>
-        <li class="nav-item"><a class="nav-link" href="${contextPath}/customers"><spring:message code="Customers" text="Customers" /></a></li>
-        <li class="nav-item"><a class="nav-link" href="${contextPath}/profitLoss"><spring:message code="Profit & Loss" text="Profit & Loss" /></a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="${contextPath}/customers"><spring:message code="Customers" text="Customers" /></a></li> -->
       </ul>
     </nav>
   </div>

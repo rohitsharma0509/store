@@ -1,5 +1,6 @@
 package com.app.ecom.store.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -66,8 +70,12 @@ public class User {
 	@ManyToMany(cascade={CascadeType.ALL})
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Order> orders = new HashSet<>();
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
@@ -194,4 +202,12 @@ public class User {
     public void setIsEnabled(Boolean isEnabled) {
         this.isEnabled = isEnabled;
     }
+    
+    public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
 }

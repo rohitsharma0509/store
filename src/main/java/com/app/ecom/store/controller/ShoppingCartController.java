@@ -8,9 +8,9 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import com.app.ecom.store.constants.RequestUrls;
-import com.app.ecom.store.dto.CustomerDto;
 import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.ShoppingCart;
+import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.service.ShoppingCartService;
 import org.springframework.stereotype.Controller;
@@ -99,7 +99,7 @@ public class ShoppingCartController {
 			model.addAttribute("productDtos", productDtos);
 			model.addAttribute("totalPrice", productDto.getPerProductPrice());
 		}
-		model.addAttribute("customerDto", new CustomerDto());
+		model.addAttribute("userDto", new UserDto());
 		return "shoppingCartConfirm";
 	}
 	

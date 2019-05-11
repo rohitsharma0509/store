@@ -1,18 +1,11 @@
 package com.app.ecom.store.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "customers")
@@ -49,10 +42,10 @@ public class Customer {
 	@Column(name = "email")
 	private String email;
 	
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	/*@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	@JsonIgnore
 	//@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	private Set<Order> orders = new HashSet<>();
+	private Set<Order> orders = new HashSet<>();*/
 	
 	public Long getId() {
 		return id;
@@ -134,11 +127,11 @@ public class Customer {
 		this.email = email;
 	}
 
-	public Set<Order> getOrders() {
+	/*public Set<Order> getOrders() {
 		return orders;
 	}
 
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
-	}
+	}*/
 }
