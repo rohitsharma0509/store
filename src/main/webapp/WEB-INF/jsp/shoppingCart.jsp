@@ -150,11 +150,10 @@ $(document).ready(function() {
     bottom: 0
 }
 </style>
-<div class="row">
-	<div class="col-sm-12" style="height:40px;"><b><a href="${contextPath}/allProducts"><spring:message code="Products" text="Products" /></a></b> >
-		<spring:message code="Shopping Cart" text="Shopping Cart" />
-	</div>
-</div>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="${contextPath}/allProducts"><spring:message code="Products" text="Products" /></a></li>
+  <li class="breadcrumb-item active"><spring:message code="Shopping Cart" text="Shopping Cart" /></li>
+</ol>
 <div class="row" style="height:10px;"></div>
 <div class="row">
 	<div class="col-sm-12">

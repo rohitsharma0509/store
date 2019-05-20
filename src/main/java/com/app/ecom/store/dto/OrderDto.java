@@ -11,10 +11,14 @@ public class OrderDto {
 	private Double totalAmount;
 
 	private String orderDate;
+	
+	private String status;
 
 	private UserDto userDto;
 
 	private Set<ProductDto> productDtos = new HashSet<>();
+	
+	private AddressDto addressDto;
 
 	public Long getId() {
 		return id;
@@ -48,6 +52,14 @@ public class OrderDto {
 		this.orderDate = orderDate;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public UserDto getUserDto() {
 		return userDto;
 	}
@@ -62,6 +74,14 @@ public class OrderDto {
 
 	public void setProductDtos(Set<ProductDto> productDtos) {
 		this.productDtos = productDtos;
+	}
+
+	public AddressDto getAddressDto() {
+		return addressDto;
+	}
+
+	public void setAddressDto(AddressDto addressDto) {
+		this.addressDto = addressDto;
 	}
 
 }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <div class="row">
   <div class="col-sm-12" style="padding: 0px;">
@@ -5,6 +6,7 @@
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="${contextPath}/home"><spring:message code="Dashboard" text="Dashboard" /></a></li>
         <li class="nav-item"><a class="nav-link" href="${contextPath}/allProducts"><spring:message code="Products" text="Products" /></a></li>
+        <li class="nav-item"><a class="nav-link" href="${contextPath}/shoppingCart"><spring:message code="Shopping cart" text="Shopping cart" /></a>
         <security:authorize access="hasAuthority('ADMIN')">
           <li class="nav-item"><a class="nav-link" href="${contextPath}/stock"><spring:message code="Stock" text="Stock" /></a></li>
         </security:authorize>

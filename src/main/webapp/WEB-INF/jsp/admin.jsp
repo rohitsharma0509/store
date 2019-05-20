@@ -1,8 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
-<div class="row panel">
-	<div class="col-sm-12" style="height:40px;"><spring:message code="Admin" text="Admin" /></div>
-</div>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item active"><spring:message code="Admin" text="Admin" /></li>
+</ol>
 <div class="row">
 	<div class="col-sm-6">
 		<table class="table">
@@ -21,28 +21,32 @@
 <div class="row">
 	<div class="col-sm-6">
 		<table class="table">
-			<tr class="info"><th><span class="glyphicon glyphicon-users"><b><spring:message code="Manage Categories & Products" text="Manage Categories & Products" /></b></span></th></tr>
-			<tr><td><a href="${contextPath}<%=RequestUrls.CATEGORIES %>"><spring:message code="Category" text="Category" /></a></td></tr>
-			<tr><td><a href="${contextPath}<%=RequestUrls.PRODUCTS %>"><spring:message code="Products" text="Products" /></a></td></tr>
-		</table>
+      <tr class="info"><th><span class="glyphicon glyphicon-users"><b><spring:message code="Configuration" text="Configuration" /></b></span></th></tr>
+      <tr><td><a href="#"><spring:message code="Settings" text="Settings" /></a></td></tr>
+    </table>
 	</div>
 	<div class="col-sm-6">
 		<table class="table">
-			<tr class="info"><th><span class="glyphicon glyphicon-users"><b><spring:message code="Email" text="Email" /></b></span></th></tr>
-			<tr><td><a href="${contextPath}/getEmailAccount"><spring:message code="Add Email Account" text="Add Email Account" /></a></td></tr>
-			<tr><td><a href="${contextPath}<%=RequestUrls.EMAIL_TEMPLATES %>"><spring:message code="Manage Email Template" text="Manage Email Template" /></a></td></tr>
-			<tr><td><a href="${contextPath}/composeEmail"><spring:message code="Send Email" text="Send Email" /></a></td></tr>
-		</table>
+      <tr class="info"><th><span class="glyphicon glyphicon-users"><b><spring:message code="Manage Categories & Products" text="Manage Categories & Products" /></b></span></th></tr>
+      <tr><td><a href="${contextPath}<%=RequestUrls.CATEGORIES %>"><spring:message code="Category" text="Category" /></a></td></tr>
+      <tr><td><a href="${contextPath}<%=RequestUrls.PRODUCTS %>"><spring:message code="Products" text="Products" /></a></td></tr>
+    </table>
 	</div>
 </div>
 <div class="row">
   <div class="col-sm-6">
     <table class="table">
-      <tr class="info"><th><span class="glyphicon glyphicon-users"><b><spring:message code="Profit & Loss" text="Profit & Loss" /></b></span></th></tr>
-      <tr><td><a href="${contextPath}<%=RequestUrls.PROFIT_LOSS %>"><spring:message code="Profit & Loss" text="Profit & Loss" /></a></td></tr>
+      <tr class="info"><th><span class="glyphicon glyphicon-users"><b><spring:message code="Email" text="Email" /></b></span></th></tr>
+      <tr><td><a href="${contextPath}/getEmailAccount"><spring:message code="Add Email Account" text="Add Email Account" /></a></td></tr>
+      <tr><td><a href="${contextPath}<%=RequestUrls.EMAIL_TEMPLATES %>"><spring:message code="Manage Email Template" text="Manage Email Template" /></a></td></tr>
+      <tr><td><a href="${contextPath}/composeEmail"><spring:message code="Send Email" text="Send Email" /></a></td></tr>
     </table>
   </div>
   <div class="col-sm-6">
+    <table class="table">
+      <tr class="info"><th><span class="glyphicon glyphicon-users"><b><spring:message code="Profit & Loss" text="Profit & Loss" /></b></span></th></tr>
+      <tr><td><a href="${contextPath}<%=RequestUrls.PROFIT_LOSS %>"><spring:message code="Profit & Loss" text="Profit & Loss" /></a></td></tr>
+    </table>
   </div>
 </div>
 <div class="row" style="height: 100px;"></div>

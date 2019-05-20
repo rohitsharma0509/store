@@ -15,9 +15,9 @@
     border-bottom: 2px solid #1b1e21;
 }
 </style>
-<div class="row">
-	<div class="col-sm-12" style="height: 40px;"><spring:message code="Order Detail" text="Order Detail" /></div>
-</div>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item active"><spring:message code="Order Detail" text="Order Detail" /></li>
+</ol>
 <hr>
 <div class="row" style="height: 10px;"></div>
 <div class="container invoice">
@@ -27,9 +27,9 @@
 			<div>
 				<strong>${orderDto.userDto.firstName} ${orderDto.userDto.lastName}</strong>
 			</div>
-			<div>${orderDto.userDto.addressLine1},</div>
-			<div>${orderDto.userDto.addressLine2}</div>
-			<div>${orderDto.userDto.city}, ${orderDto.userDto.state}, ${orderDto.userDto.pincode}</div>
+			<div>${orderDto.addressDto.addressLine1},</div>
+			<div>${orderDto.addressDto.addressLine2}</div>
+			<div>${orderDto.addressDto.city}, ${orderDto.addressDto.state}, ${orderDto.addressDto.pincode}</div>
 			<div><strong><spring:message code="Email" text="Email" />:</strong> ${orderDto.userDto.email}</div>
 			<div><strong><spring:message code="Mobile" text="Mobile" />:</strong> ${orderDto.userDto.mobile}</div>
 		</div>

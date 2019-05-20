@@ -8,57 +8,48 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import com.app.ecom.store.constants.Constants;
-import com.app.ecom.store.dto.CustomerDto;
 import com.app.ecom.store.dto.OrderDto;
 import com.app.ecom.store.dto.ProductDto;
-import com.app.ecom.store.dto.ShoppingCart;
-import com.app.ecom.store.dto.UserDto;
-import com.app.ecom.store.model.Customer;
+import com.app.ecom.store.enums.OrderStatusEnum;
+import com.app.ecom.store.model.Address;
 import com.app.ecom.store.model.Order;
 import com.app.ecom.store.model.OrderDetails;
 import com.app.ecom.store.model.Product;
+import com.app.ecom.store.model.User;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 @Component
 public class OrderMapper {
 
-	@Inject
+	@Autowired
 	private ProductService productService;
 
-	@Inject
+	@Autowired
 	private ProductMapper productMapper;
 	
-	@Inject
+	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired 
+	private AddressMapper addressMapper;
 
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 	
-	public Order convertToOrder(java.util.List<ProductDto> productDtos, UserDto userDto, Double totalAmount) {
+	public Order convertToOrder(java.util.List<ProductDto> productDtos, User user, Double totalAmount, Address address) {
 		Order order = new Order();
 		order.setOrderDate(ZonedDateTime.now());
 		order.setOrderNumber(commonUtil.generateRandomDigits("ORD", 10, ""));
 		order.setTotalAmount(totalAmount);
-		order.setUser(userMapper.userDtoToUser(userDto));
+		order.setStatus(OrderStatusEnum.ORDERED.getStatus());
+		order.setUser(user);
 		order.setOrderDetails(productDtosToOrderDetails(productDtos, order));
-		return order;
-	}
-	
-
-	public Order shoppingCartToOrder(ShoppingCart shoppingCart) {
-		Order order = new Order();
-		order.setOrderDate(ZonedDateTime.now());
-		order.setOrderNumber(commonUtil.generateRandomDigits("ORD", 10, ""));
-		order.setTotalAmount(shoppingCart.getTotalPrice());
-		order.setUser(userMapper.userDtoToUser(shoppingCart.getUserDto()));
-		order.setOrderDetails(productDtosToOrderDetails(
-				shoppingCart.getProductDtos(), order));
+		order.setAddress(address);
 		return order;
 	}
 	
@@ -77,10 +68,12 @@ public class OrderMapper {
 		OrderDto orderDto = new OrderDto();
 		orderDto.setId(order.getId());
 		orderDto.setOrderDate(commonUtil.convertZonedDateTimeToString(order.getOrderDate(), Constants.DATETIME_FORMAT_YYYYMMDDHHMMSS));
+		orderDto.setStatus(order.getStatus());
 		orderDto.setOrderNumber(order.getOrderNumber());
 		orderDto.setTotalAmount(order.getTotalAmount());
-		orderDto.setUserDto(userMapper.userToUserDto(order.getUser()));
+		orderDto.setUserDto(userMapper.userToUserDto(order.getUser(), false));
 		orderDto.setProductDtos(orderDetailsToProductDtos(order.getOrderDetails()));
+		orderDto.setAddressDto(addressMapper.addressToAddressDto(order.getAddress()));
 		return orderDto;
 	}
 
@@ -113,42 +106,5 @@ public class OrderMapper {
 		});
 
 		return orderDetails;
-	}
-
-	public Customer customerDtoToCustomer(CustomerDto customerDto) {
-		Customer customer = new Customer();
-		customer.setId(customerDto.getId());
-		customer.setName(customerDto.getName());
-		customer.setMobile(customerDto.getMobile());
-		customer.setEmail(customerDto.getEmail());
-		customer.setAddressLine1(customerDto.getAddressLine1());
-		customer.setAddressLine2(customerDto.getAddressLine2());
-		customer.setCity(customerDto.getCity());
-		customer.setState(customerDto.getState());
-		customer.setPincode(customerDto.getPincode());
-		customer.setCountry(customerDto.getCountry());
-		return customer;
-	}
-
-	public List<CustomerDto> customersToCustomerDtos(List<Customer> customers) {
-		List<CustomerDto> customerDtos = new ArrayList<>();
-		customers.stream().filter(Objects::nonNull).forEach(customer -> customerDtos.add(customerToCustomerDto(customer)));
-		return customerDtos;
-	}
-	
-	
-	public CustomerDto customerToCustomerDto(Customer customer) {
-		CustomerDto customerDto = new CustomerDto();
-		customerDto.setId(customer.getId());
-		customerDto.setName(customer.getName());
-		customerDto.setMobile(customer.getMobile());
-		customerDto.setAddressLine1(customer.getAddressLine1());
-		customerDto.setAddressLine2(customer.getAddressLine2());
-		customerDto.setCity(customer.getCity());
-		customerDto.setState(customer.getState());
-		customerDto.setCountry(customer.getCountry());
-		customerDto.setPincode(customer.getPincode());
-		customerDto.setEmail(customer.getEmail());
-		return customerDto;
 	}
 }

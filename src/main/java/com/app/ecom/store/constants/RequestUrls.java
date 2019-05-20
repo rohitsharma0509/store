@@ -62,7 +62,7 @@ public class RequestUrls {
 	public static final String ADD_ROLE = "/admin/addRole";
 	public static final String CHANGE_LANGUAGE = "/changeLanguage";
 	public static final String CHANGE_LOCALE = "/changeLocale";
-	public static final String PERSONAL_INFO = "/personalInfo";
+	public static final String EDIT_PROFILE = "/editProfile";
 	public static final String MY_ACCOUNT = "/myAccount";
 	
 	public static final String PROFIT_LOSS = "/admin/profitLoss";

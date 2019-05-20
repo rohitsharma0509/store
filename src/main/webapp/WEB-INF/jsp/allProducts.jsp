@@ -43,14 +43,9 @@ function getProductList(){
 	}
 }
 </script>
-
-<div class="row">
-	<div class="col-sm-12" style="height: 40px;"><spring:message code="All Products" text="All Products" />
-		<div class="pull-right">
-			<a href="${contextPath}/shoppingCart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;<spring:message code="Shopping cart" text="Shopping cart" /></a>
-		</div>
-	</div>
-</div>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item active"><spring:message code="All Products" text="All Products" /></li>
+</ol>
 <div class="row" style="height: 10px;"></div>
 <div class="row">
 	<div class="col-sm-12">

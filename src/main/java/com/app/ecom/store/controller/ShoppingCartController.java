@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.ShoppingCart;
-import com.app.ecom.store.dto.UserDto;
+import com.app.ecom.store.model.User;
+import com.app.ecom.store.service.AddressService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.service.ShoppingCartService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
@@ -25,15 +27,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ShoppingCartController {
-	@Inject
+	@Autowired
 	private ShoppingCartService shoppingCartService;
 	
-	@Inject
+	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private AddressService addressService;
+	
 	@GetMapping(value = RequestUrls.ADD_TO_CART)
-	public String addToCart(Model model, HttpServletRequest request, @RequestParam(value = "id", required=true) Long id) {
-		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(request);
+	public String addToCart(Model model, @RequestParam(value = "id", required=true) Long id) {
+		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
 		Optional<ProductDto> optionalProductDto = shoppingCart.getProductDtos().stream().filter(productDto -> productDto.getId()==id).findFirst();
 		Integer availableQuantity = productService.getAvailableQuantity(id);
 		if(optionalProductDto.isPresent()){
@@ -59,8 +64,8 @@ public class ShoppingCartController {
 	}
 	
 	@DeleteMapping(value = RequestUrls.DELETE_FROM_CART)
-	public String removeFromCart(Model model, HttpServletRequest request, @PathVariable(value = "id") Long id) {
-		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(request);
+	public String removeFromCart(Model model, @PathVariable(value = "id") Long id) {
+		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
 		
 		ProductDto productDtoToDelete = null;
 		if(shoppingCart != null && !CollectionUtils.isEmpty(shoppingCart.getProductDtos())){
@@ -80,16 +85,18 @@ public class ShoppingCartController {
 	}
 	
 	@GetMapping(value = RequestUrls.SHOPPING_CART)
-	public String getShoppingCart(Model model, HttpServletRequest request) {
-		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(request);
+	public String getShoppingCart(Model model) {
+		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
 		model.addAttribute("shoppingCart", shoppingCart);
 		return "shoppingCart";
 	}
 	
 	@GetMapping(value = RequestUrls.CHECKOUT)
 	public String checkout(Model model, HttpServletRequest request, @RequestParam(value = "id", required=false) Long id) {
+		HttpSession httpSession = request.getSession();
+		User user = (User) httpSession.getAttribute("user");
 		if(null == id){
-			ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(request);
+			ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
 			model.addAttribute("productDtos", shoppingCart.getProductDtos());
 			model.addAttribute("totalPrice", shoppingCart.getTotalPrice());
 		}else {
@@ -99,13 +106,14 @@ public class ShoppingCartController {
 			model.addAttribute("productDtos", productDtos);
 			model.addAttribute("totalPrice", productDto.getPerProductPrice());
 		}
-		model.addAttribute("userDto", new UserDto());
+		//model.addAttribute("userDto", new UserDto());
+		model.addAttribute("addresses", addressService.getAddressByUser(user));
 		return "shoppingCartConfirm";
 	}
 	
 	@PostMapping(value = RequestUrls.SHOPPING_CART)
-	public String updateShoppingCart(Model model, @ModelAttribute ShoppingCart shoppingCart, HttpServletRequest request) {
-		model.addAttribute("shoppingCart", shoppingCartService.updateShoppingCart(request, shoppingCart));
+	public String updateShoppingCart(Model model, @ModelAttribute ShoppingCart shoppingCart) {
+		model.addAttribute("shoppingCart", shoppingCartService.updateShoppingCart(shoppingCart));
 		return "redirect:checkout";
 	}
 }

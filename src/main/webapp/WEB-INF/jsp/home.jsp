@@ -1,3 +1,4 @@
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <script src="js/sockjs.min.js"></script>
 <script src="js/stomp.min.js"></script>
@@ -16,6 +17,7 @@
     color: #fff;
     height: 40px;
     padding: 10px;
+    margin-top: 5px;
 }
 .chat-wrapper > a {
   color: white;
@@ -289,11 +291,12 @@ function disconnect() {
   <div class="col-sm-11" style="height: 40px;"><spring:message code="Dashboard" text="Dashboard" /></div>
   <div class="col-sm-1">
     <div class="chat-wrapper">
-      <a href="#" onclick="openChatWindow()"><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;Chat Now</a>
+      <a href="#" onclick="openChatWindow()"><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;<spring:message code="Chat Now" text="Chat Now" /></a>
     </div>
   </div>
 </div>
 <div class="row" style="height: 10px;"></div>
+<security:authorize access="hasAuthority('ADMIN')">
 <div class="row">
   <div class="col-sm-2">
     <div class="card indicator">
@@ -387,6 +390,7 @@ function disconnect() {
     </div>
   </div>
 </div>
+</security:authorize>
 <div class="row">
   <div id="chatWindow" class="modal fade" role="dialog">
     <div class="modal-dialog">

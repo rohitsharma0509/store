@@ -2,9 +2,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<div class="row panel">
-	<div class="col-sm-12" style="height:40px;"><b><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></b> > <spring:message code="Users" text="Users" /></div>
-</div>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item active"><spring:message code="Users" text="Users" /></li>
+</ol>
 <div class="row" style="height: 10px;"></div>
 <div class="row">
 	<div class="col-sm-12">

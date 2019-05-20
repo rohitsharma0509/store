@@ -1,22 +1,23 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <%
 String action = "Save";
 %>
-<div class="row panel">
-	<c:choose>
-	    <c:when test="${empty productCategory.id}">
-	        <div class="col-sm-12" style="height:40px;"><b><a href="${contextPath}/admin">Admin</a></b> > <b><a href="${contextPath}<%=RequestUrls.CATEGORIES %>">Categories</a></b> > Add Category</div>
-	    </c:when>
-	    <c:otherwise>
-	        <div class="col-sm-12" style="height:40px;"><b><a href="${contextPath}/admin">Admin</a></b> > <b><a href="${contextPath}<%=RequestUrls.CATEGORIES %>">Categories</a></b> > Edit Category</div>
-	        <% 
-	        action = "Edit";
-	        %>
-	    </c:otherwise>
-	</c:choose>
-</div>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.CATEGORIES %>"><spring:message code="Categories" text="Categories" /></a></li>
+  <c:choose>
+    <c:when test="${empty productCategory.id}">
+      <li class="breadcrumb-item active"><spring:message code="Add Product" text="Add Category" /></li>
+    </c:when>
+    <c:otherwise>
+      <li class="breadcrumb-item active"><spring:message code="Edit Product" text="Edit Category" /></li>
+      <% action = "Edit"; %>
+    </c:otherwise>
+  </c:choose>
+</ol>
 <div class="row" style="height:10px;">
 </div>
 <form:form method="POST" modelAttribute="productCategory" class="form-horizontal" action="<%=RequestUrls.CATEGORIES %>">

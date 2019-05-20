@@ -132,7 +132,7 @@ public class ProductDto {
 				+ ", alertQuantity=" + alertQuantity + ", purchasePrice="
 				+ purchasePrice + ", perProductPrice=" + perProductPrice
 				+ ", image=" + image + ", base64Image=" + base64Image
-				+ ", categoryId=" + categoryId + "]";
+				+ ", categoryId=" + categoryId + ", availableQuantity="+availableQuantity+"]";
 	}
 	
 	/*public Set<Purchase> getPurchases() {

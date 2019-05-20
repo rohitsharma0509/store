@@ -12,11 +12,12 @@ import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.OrderDto;
 import com.app.ecom.store.dto.ProductDto;
-import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.mapper.OrderMapper;
 import com.app.ecom.store.model.Order;
+import com.app.ecom.store.model.User;
 import com.app.ecom.store.querybuilder.QueryBuilder;
 import com.app.ecom.store.repository.OrderRepository;
+import com.app.ecom.store.service.AddressService;
 import com.app.ecom.store.service.OrderService;
 import com.app.ecom.store.util.CommonUtil;
 import com.itextpdf.text.BaseColor;
@@ -51,8 +52,11 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private CommonUtil commonUtil;
 	
-	public OrderDto addOrder(java.util.List<ProductDto> productDtos, UserDto userDto, Double totalPrice) {
-		Order order = orderRepository.save(orderMapper.convertToOrder(productDtos, userDto, totalPrice));
+	@Autowired
+	private AddressService addressService;
+	
+	public OrderDto addOrder(java.util.List<ProductDto> productDtos, User user, Double totalPrice, Long addressId) {
+		Order order = orderRepository.save(orderMapper.convertToOrder(productDtos, user, totalPrice, addressService.getAddressById(addressId)));
 		return orderMapper.orderToOrderDto(order);
 	}
 
@@ -99,11 +103,11 @@ public class OrderServiceImpl implements OrderService {
 			customerPhrase.add("\n");
 			customerPhrase.add(orderDto.getUserDto().getFirstName()+" "+orderDto.getUserDto().getLastName());
 			customerPhrase.add("\n");
-			customerPhrase.add(orderDto.getUserDto().getAddressLine1());
+			customerPhrase.add(orderDto.getAddressDto().getAddressLine1());
 			customerPhrase.add("\n");
-			customerPhrase.add(orderDto.getUserDto().getAddressLine2());
+			customerPhrase.add(orderDto.getAddressDto().getAddressLine2());
 			customerPhrase.add("\n");
-			customerPhrase.add(orderDto.getUserDto().getCity()+", "+orderDto.getUserDto().getState()+", "+orderDto.getUserDto().getPincode());
+			customerPhrase.add(orderDto.getAddressDto().getCity()+", "+orderDto.getAddressDto().getState()+", "+orderDto.getAddressDto().getPincode());
 			customerPhrase.add("\n");
 			customerPhrase.add("Email: "+orderDto.getUserDto().getEmail());
 			customerPhrase.add("\n");

@@ -10,14 +10,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.OrderDto;
 import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.ShoppingCart;
-import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.model.User;
 import com.app.ecom.store.service.OrderService;
 import com.app.ecom.store.service.ProductService;
@@ -28,10 +26,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -52,20 +49,19 @@ public class OrderController {
 	@Autowired
 	private HttpSession httpSession;
 	
-	@PostMapping(value = RequestUrls.BUY)
-	public String buyNow(@ModelAttribute @Valid UserDto userDto,
-			HttpServletRequest request, @RequestParam(value = "productId", required=false) Long id) {
+	@GetMapping(value = RequestUrls.BUY)
+	public String buyNow(HttpServletRequest request, @RequestParam(value = "addressId", required=true) Long addressId, @RequestParam(value = "productId", required=false) String id) {
 		OrderDto orderDto;
-		if(null == id){
-			ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(request);
-			shoppingCart.setUserDto(userDto);
-			orderDto = orderService.addOrder(shoppingCart.getProductDtos(), userDto, shoppingCart.getTotalPrice());
-			shoppingCartService.removeShoppingCart(request);
+		User user = (User) httpSession.getAttribute("user");
+		if(StringUtils.isEmpty(id)) {
+			ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
+			orderDto = orderService.addOrder(shoppingCart.getProductDtos(), user, shoppingCart.getTotalPrice(), addressId);
+			shoppingCartService.removeShoppingCart();
 		} else {
 			List<ProductDto> productDtos = new ArrayList<>();
-			ProductDto productDto = productService.getProductByIdForCart(id);
+			ProductDto productDto = productService.getProductByIdForCart(Long.parseLong(id));
 			productDtos.add(productDto);
-			orderDto = orderService.addOrder(productDtos, userDto, productDto.getPerProductPrice());
+			orderDto = orderService.addOrder(productDtos, user, productDto.getPerProductPrice(), addressId);
 		}
 		return "redirect:orders/" + orderDto.getId();
 	}

@@ -20,6 +20,9 @@ public class UserMapper {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     
+    @Autowired
+    private AddressMapper addressMapper;
+    
     public User userDtoToUser(UserDto userDto) {
         User user = new User();
         user.setId(userDto.getId());
@@ -35,13 +38,7 @@ public class UserMapper {
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setLanguage(StringUtils.isEmpty(userDto.getLanguage()) ? "en" : userDto.getLanguage());
-        user.setMobile(userDto.getMobile());
-        user.setAddressLine1(userDto.getAddressLine1());
-        user.setAddressLine2(userDto.getAddressLine2());
-        user.setCity(userDto.getCity());
-        user.setState(userDto.getState());
-        user.setPincode(userDto.getPincode());
-        user.setCountry(userDto.getCountry());
+        user.setAddresses(addressMapper.addressDtosToAddress(userDto.getAddresses()));
         return user;
     }
     
@@ -56,6 +53,9 @@ public class UserMapper {
     }
     
     public UserDto userToUserDto(User user) {
+    	return userToUserDto(user, true);
+    }
+    public UserDto userToUserDto(User user, Boolean isAddressRequired) {
     	UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName());
@@ -63,12 +63,9 @@ public class UserMapper {
         userDto.setEmail(user.getEmail());
         userDto.setLanguage(user.getLanguage());
         userDto.setMobile(user.getMobile());
-        userDto.setAddressLine1(user.getAddressLine1());
-        userDto.setAddressLine2(user.getAddressLine2());
-        userDto.setCity(user.getCity());
-        userDto.setState(user.getState());
-        userDto.setPincode(user.getPincode());
-        userDto.setCountry(user.getCountry());
+        if(isAddressRequired) {
+        	userDto.setAddresses(addressMapper.addressesToAddressDtos(user.getAddresses()));
+        }
         return userDto;
     }
 }

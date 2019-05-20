@@ -54,7 +54,7 @@ public class UserController {
 		return "myAccount";
 	}
 	
-	@GetMapping(value = RequestUrls.PERSONAL_INFO)
+	@GetMapping(value = RequestUrls.EDIT_PROFILE)
 	public String getUser(Model model) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		User user = userService.findByUsername(username);
@@ -64,7 +64,7 @@ public class UserController {
 		languages.put("fr", "French");
 		model.addAttribute("languages", languages);
 		model.addAttribute("user", user);
-		return "personalInfo";
+		return "editProfile";
 	}
 	
 	@GetMapping(value = RequestUrls.MY_ACCOUNT)

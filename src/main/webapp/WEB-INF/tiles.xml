@@ -5,6 +5,10 @@
         
 <tiles-definitions>  
     <!-- Base Define -->
+    <definition name="empty.definition" template="/WEB-INF/jsp/emptyLayout.jsp">  
+        <put-attribute name="body" value="" />
+    </definition>
+    
     <definition name="plain.definition" template="/WEB-INF/jsp/plainLayout.jsp">  
         <put-attribute name="title" value="" />  
         <put-attribute name="body" value="" />
@@ -46,12 +50,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/myAccount.jsp" />  
     </definition>
     
-    <definition name="personalInfo" extends="base.definition">  
+    <definition name="editProfile" extends="base.definition">  
         <put-attribute name="title" value="Edit Profile" />  
-        <put-attribute name="body" value="/WEB-INF/jsp/personalInfo.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/editProfile.jsp" />  
     </definition>
 
-    <definition name="failure" extends="plain.definition">  
+    <definition name="failure" extends="empty.definition">  
         <put-attribute name="title" value="Admin" />  
         <put-attribute name="body" value="/WEB-INF/jsp/failure.jsp" />  
     </definition>
@@ -126,7 +130,7 @@
         <put-attribute name="body" value="/WEB-INF/jsp/allProducts.jsp" />  
     </definition>
     
-    <definition name="productListing" extends="plain.definition">  
+    <definition name="productListing" extends="empty.definition">  
         <put-attribute name="title" value="Product Listing" />  
         <put-attribute name="body" value="/WEB-INF/jsp/productListing.jsp" />  
     </definition>
@@ -136,22 +140,22 @@
         <put-attribute name="body" value="/WEB-INF/jsp/admin/profitLoss.jsp" />  
     </definition>
     
-    <definition name="dailyProfitLoss" extends="plain.definition">  
+    <definition name="dailyProfitLoss" extends="empty.definition">  
         <put-attribute name="title" value="Profit and Loss" />
         <put-attribute name="body" value="/WEB-INF/jsp/admin/dailyProfitLoss.jsp" />  
     </definition>
     
-    <definition name="monthlyProfitLoss" extends="plain.definition">  
+    <definition name="monthlyProfitLoss" extends="empty.definition">  
         <put-attribute name="title" value="Profit and Loss" />  
         <put-attribute name="body" value="/WEB-INF/jsp/admin/monthlyProfitLoss.jsp" />  
     </definition>
     
-    <definition name="quarterlyProfitLoss" extends="plain.definition">  
+    <definition name="quarterlyProfitLoss" extends="empty.definition">  
         <put-attribute name="title" value="Profit and Loss" />  
         <put-attribute name="body" value="/WEB-INF/jsp/admin/quarterlyProfitLoss.jsp" />  
     </definition>
     
-    <definition name="yearlyProfitLoss" extends="plain.definition">  
+    <definition name="yearlyProfitLoss" extends="empty.definition">  
         <put-attribute name="title" value="Profit and Loss" />  
         <put-attribute name="body" value="/WEB-INF/jsp/admin/yearlyProfitLoss.jsp" />  
     </definition>
@@ -190,4 +194,9 @@
         <put-attribute name="title" value="Supplier" />  
         <put-attribute name="body" value="/WEB-INF/jsp/suppliers.jsp" />  
     </definition>
+    
+    <definition name="addAddress" extends="empty.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/addAddress.jsp" />  
+    </definition>
+    
  </tiles-definitions>

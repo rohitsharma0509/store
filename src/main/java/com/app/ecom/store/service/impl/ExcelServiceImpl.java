@@ -7,21 +7,18 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.stereotype.Service;
-
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.ExcelData;
 import com.app.ecom.store.dto.StockDto;
-import com.app.ecom.store.model.Customer;
 import com.app.ecom.store.model.Order;
-import com.app.ecom.store.repository.CustomerRepository;
 import com.app.ecom.store.repository.OrderRepository;
 import com.app.ecom.store.service.ExcelService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.CommonUtil;
 import com.app.ecom.store.util.ExcelUtil;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ExcelServiceImpl implements ExcelService {
@@ -34,9 +31,6 @@ public class ExcelServiceImpl implements ExcelService {
 	
 	@Inject
 	private ProductService productService;
-	
-	@Inject
-	private CustomerRepository customerRepository;
 	
 	@Inject
 	private OrderRepository orderRepository;
@@ -68,30 +62,6 @@ public class ExcelServiceImpl implements ExcelService {
 			headers.add("Available Qty");
 			
 			excelData.setSheetName(Constants.STOCK);
-			excelData.setHeaders(headers);
-			excelData.setRows(rows);
-		} else if(Constants.CUSTOMERS.equals(reportName)){
-			List<Customer> customers = customerRepository.findAll();
-			
-			List<List<String>> rows = new ArrayList<>();
-			for(Customer customer : customers){
-				List<String> values = new ArrayList<>();
-				values.add(customer.getName());
-				values.add(customer.getMobile());
-				values.add(customer.getEmail());
-				values.add(customer.getCity());
-				values.add(customer.getState());
-				rows.add(values);
-			}
-			
-			excelData.setSheetName(Constants.CUSTOMERS);
-			List<String> headers = new ArrayList<>();
-			headers.add("Customer Name");
-			headers.add("Mobile");
-			headers.add("Email");
-			headers.add("City");
-			headers.add("State");
-			
 			excelData.setHeaders(headers);
 			excelData.setRows(rows);
 		} else if(Constants.ORDERS.equals(reportName)){

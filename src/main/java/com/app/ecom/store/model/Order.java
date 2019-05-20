@@ -7,12 +7,14 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,9 +36,16 @@ public class Order {
 	@Column(name = "order_date", columnDefinition="timestamp")
 	private ZonedDateTime orderDate;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@Column(name = "status", length = 10)
+	private String status;
+	
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "user_id", updatable = false)
 	private User user;
+	
+	@OneToOne(targetEntity = Address.class, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(nullable = false, name = "address_id")
+	private Address address;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -74,12 +83,28 @@ public class Order {
 		this.orderDate = orderDate;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public Set<OrderDetails> getOrderDetails() {

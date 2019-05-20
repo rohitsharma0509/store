@@ -15,10 +15,6 @@
 </head>
 
 <body>
-  <table width="100%">
-    <tr>
-      <td><tiles:insertAttribute name="body" /></td>
-    </tr>
-  </table>
+<tiles:insertAttribute name="body" />
 </body>
 </html>

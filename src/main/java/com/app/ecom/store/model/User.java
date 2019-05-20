@@ -37,35 +37,21 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	
+	@Column(name = "mobile")
+	private String mobile;
+	
 	@Column(name = "email")
 	private String email;
 	
 	@Column(name = "language")
 	private String language;
 	
-	@Column(name = "mobile")
-	private String mobile;
-	
-	@Column(name = "address_line1")
-	private String addressLine1;
-	
-	@Column(name = "address_line2")
-	private String addressLine2;
-	
-	@Column(name = "city")
-	private String city;
-	
-	@Column(name = "state")
-	private String state;
-	
-	@Column(name = "pincode")
-	private String pincode;
-	
-	@Column(name = "country")
-	private String country;
-	
 	@Column(name = "is_enabled", columnDefinition="tinyint(1)")
     private Boolean isEnabled;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Address> addresses = new HashSet<>();
 	
 	@ManyToMany(cascade={CascadeType.ALL})
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -139,54 +125,6 @@ public class User {
 		this.mobile = mobile;
 	}
 
-	public String getAddressLine1() {
-		return addressLine1;
-	}
-
-	public void setAddressLine1(String addressLine1) {
-		this.addressLine1 = addressLine1;
-	}
-
-	public String getAddressLine2() {
-		return addressLine2;
-	}
-
-	public void setAddressLine2(String addressLine2) {
-		this.addressLine2 = addressLine2;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getPincode() {
-		return pincode;
-	}
-
-	public void setPincode(String pincode) {
-		this.pincode = pincode;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -203,7 +141,15 @@ public class User {
         this.isEnabled = isEnabled;
     }
     
-    public Set<Order> getOrders() {
+    public Set<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Set<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public Set<Order> getOrders() {
 		return orders;
 	}
 

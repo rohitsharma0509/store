@@ -12,12 +12,12 @@
 						</c:if>
 						<div class="form-group">
 							<label for="username" class="control-label">Username</label>
-							<input type="text" class="form-control" id="username" name="username" value="" required title="Please enter your username" placeholder="username">
+							<input type="text" class="form-control" id="username" name="username" value="" required placeholder="Username">
 							<span class="help-block"></span>
 						</div>
 						<div class="form-group">
 							<label for="password" class="control-label">Password</label>
-							<input type="password" class="form-control" id="password" name="password" value="" required title="Please enter your password">
+							<input type="password" class="form-control" id="password" name="password" value="" required placeholder="Password">
 							<span class="help-block"></span>
 						</div>
 						<c:if test="${not empty error}">

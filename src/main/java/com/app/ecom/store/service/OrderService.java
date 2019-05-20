@@ -6,13 +6,13 @@ import java.time.ZonedDateTime;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.OrderDto;
 import com.app.ecom.store.dto.ProductDto;
-import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.model.Order;
+import com.app.ecom.store.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
-	OrderDto addOrder(java.util.List<ProductDto> productDtos, UserDto userDto, Double totalPrice);
+	OrderDto addOrder(java.util.List<ProductDto> productDtos, User user, Double totalPrice, Long addressId);
 
 	OrderDto getOrder(Long id);
 

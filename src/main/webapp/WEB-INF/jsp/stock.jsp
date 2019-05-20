@@ -2,9 +2,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<div class="row">
-	<div class="col-sm-10" style="height: 40px;"><spring:message code="Stock" text="Stock" /></div>
-</div>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item active"><spring:message code="Stock" text="Stock" /></li>
+</ol>
 <div class="row main-row">
 	<div class="col-sm-3">
 			<form method="GET" class="form-horizontal" action="stock">
