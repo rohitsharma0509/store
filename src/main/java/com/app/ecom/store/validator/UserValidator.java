@@ -1,13 +1,12 @@
 package com.app.ecom.store.validator;
 
+import com.app.ecom.store.dto.UserDto;
+import com.app.ecom.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
-import com.app.ecom.store.dto.UserDto;
-import com.app.ecom.store.service.UserService;
 
 @Component
 public class UserValidator implements Validator {
@@ -42,6 +41,10 @@ public class UserValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
         if (!userDto.getEmail().matches("[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")) {
             errors.rejectValue("email", "invalid.userForm.email");
+        }
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mobile", "NotEmpty");
+        if (userDto.getMobile().length() < 10) {
+            errors.rejectValue("mobile", "invalid.userForm.mobile");
         }
     }
 }

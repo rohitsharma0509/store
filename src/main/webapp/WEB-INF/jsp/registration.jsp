@@ -49,6 +49,14 @@
                 <form:errors path="email" class="help-inline"></form:errors>
             </div>
         </spring:bind>
+        
+        <spring:bind path="mobile">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="mobile" path="mobile" class="form-control"
+                            placeholder="Mobile"></form:input>
+                <form:errors path="mobile" class="help-inline"></form:errors>
+            </div>
+        </spring:bind>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form:form>
