@@ -22,22 +22,24 @@ String action = "Save";
 </div>
 <form:form method="POST" modelAttribute="productCategory" class="form-horizontal" action="<%=RequestUrls.CATEGORIES %>">
 <form:hidden path="id"  class="form-control input-sm"/>
-<div class="card">
-  <div class="card-body">
-    <div class="form-group row">
-      <label for="name" class="col-sm-1"></label>
-      <label for="name" class="col-sm-2 col-form-label">Category Name&nbsp;<span class="urgent_fields">*</span></label>
-      <div class="col-sm-3">
-            <form:input type="text" path="name" id="name" class="form-control"/>
-            <form:errors path="name" class="help-inline has-error"></form:errors>
-      </div>
-      <label for="name" class="col-sm-6"></label>
+<div class="container py-5">
+    <h6><spring:message code="Category Details" text="Category Details" /></h6><hr>
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+          <div class="form-group row">
+              <div class="col-sm-6">
+                  <label for="name"><spring:message code="Category Name" text="Category Name" />&nbsp;<span class="urgent_fields">*</span></label>
+                  <form:input type="text" path="name" id="name" class="form-control input-sm"/>
+                  <form:errors path="name" class="help-inline has-error"></form:errors>
+              </div>
+              <div class="col-sm-6"></div>
+          </div>
+        </div>
     </div>
-    <div class="form-group row">
-    	<label for="name" class="col-sm-1"></label>
-        <button type="submit" class="col-sm-1 btn btn-sm btn-success"><%=action %></button>
+    <hr>
+    <div class="row">
+        <div class="col-sm-2"><button type="submit" class="btn btn-success"><spring:message code="<%=action %>" text="<%=action %>" /></button></div>
+        <div class="col-sm-10"></div>
     </div>
-</div>
 </div>
 </form:form>
-<div class="row" style="height: 100px;"></div>
