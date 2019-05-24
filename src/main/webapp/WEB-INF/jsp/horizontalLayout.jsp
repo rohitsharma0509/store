@@ -2,13 +2,7 @@
 <html>
 <head>
 <title><tiles:getAsString name="title" /></title>
-<style>
-.tilesBody {
-  min-height: 700px;
-}
-</style>
 </head>
-
 <body>
   <div class="container">
     <tiles:insertAttribute name="header" />
