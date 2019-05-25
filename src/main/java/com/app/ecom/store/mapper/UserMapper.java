@@ -2,7 +2,6 @@ package com.app.ecom.store.mapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,6 +22,9 @@ public class UserMapper {
     @Autowired
     private AddressMapper addressMapper;
     
+    @Autowired
+    private RoleMapper roleMapper;
+    
     public User userDtoToUser(UserDto userDto) {
         User user = new User();
         user.setId(userDto.getId());
@@ -31,14 +33,15 @@ public class UserMapper {
         }
         if(!StringUtils.isEmpty(userDto.getPassword())) {
         	user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-            user.setIsEnabled(false);
-            user.setRoles(new HashSet<>());
         }
+        boolean isEnabled = null != userDto.isEnabled() && userDto.isEnabled() ? true : false;
+        user.setIsEnabled(isEnabled);
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setLanguage(StringUtils.isEmpty(userDto.getLanguage()) ? "en" : userDto.getLanguage());
         user.setAddresses(addressMapper.addressDtosToAddress(userDto.getAddresses()));
+        user.setRoles(roleMapper.roleDtosToRoles(userDto.getRoles()));
         return user;
     }
     

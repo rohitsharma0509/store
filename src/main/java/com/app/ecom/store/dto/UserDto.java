@@ -27,6 +27,8 @@ public class UserDto {
     private Boolean isEnabled = false;
 
     private Set<AddressDto> addresses;
+    
+    private Set<RoleDto> roles;
 
     public Long getId() {
         return id;
@@ -115,5 +117,13 @@ public class UserDto {
 
 	public void setAddresses(Set<AddressDto> addresses) {
 		this.addresses = addresses;
+	}
+
+	public Set<RoleDto> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<RoleDto> roles) {
+		this.roles = roles;
 	}
 }
