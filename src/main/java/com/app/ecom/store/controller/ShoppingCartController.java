@@ -58,7 +58,6 @@ public class ShoppingCartController {
 				shoppingCart.setTotalPrice(shoppingCart.getTotalPrice() + (productDto.getPerProductPrice()*productDto.getQuantity()));
 			}
 		}
-		
 		model.addAttribute("shoppingCart", shoppingCart);
 		return "redirect:shoppingCart";
 	}

@@ -4,19 +4,18 @@
 <%
 String action = "Save";
 %>
-<div class="row panel">
-	<c:choose>
-	    <c:when test="${empty emailAccount.id}">
-	        <div class="col-sm-12" style="height:40px;"><b><a href="${contextPath}/admin">Admin</a></b> > Add Email Account</div>
-	    </c:when>
-	    <c:otherwise>
-	        <div class="col-sm-12" style="height:40px;"><b><a href="${contextPath}/admin">Admin</a></b> > Edit Email Account</div>
-	        <% 
-	        action = "Edit";
-	        %>
-	    </c:otherwise>
-	</c:choose>
-</div>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <c:choose>
+    <c:when test="${empty emailAccount.id}">
+      <li class="breadcrumb-item active"><spring:message code="Add Email Account" text="Add Email Account" /></li>
+    </c:when>
+    <c:otherwise>
+      <li class="breadcrumb-item active"><spring:message code="Edit Email Account" text="Edit Email Account" /></li>
+      <% action = "Edit"; %>
+    </c:otherwise>
+  </c:choose>
+</ol>
 <div class="row" style="height:10px;">
 </div>
 <form:form method="POST" modelAttribute="emailAccount" class="form-horizontal" enctype="multipart/form-data" action="addEmailAccount">

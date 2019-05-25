@@ -148,25 +148,28 @@ String name = String.format("%1$s %2$s", user.getFirstName(), user.getLastName()
   max-width: 800px;
 }
 </style>
-
-<div class="row" style="height: 50px; margin-top: 10px;background-color: black;">
-  <div class="col-sm-9"></div>
-  <div class="col-sm-3">
-    <c:if test="${pageContext.request.userPrincipal.name != null}">
-      <form id="logoutForm" method="POST" action="${contextPath}/logout">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        <div class="dropdown">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" 
-          style="float: right;min-width:160px;background-color: black;color:white;"><%=name %></button>
-          <div class="dropdown-menu">
-            <security:authorize access="hasAuthority('ADMIN')">
-              <a class="dropdown-item" href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a>
-            </security:authorize>
-            <a class="dropdown-item" href="${contextPath}<%=RequestUrls.MY_ACCOUNT %>"><spring:message code="My Account" text="My Account" /></a>
-            <a class="dropdown-item" href="#" onclick="document.forms['logoutForm'].submit()"><spring:message code="Logout" text="Logout" /></a>
-          </div>
+<div class="row">
+  <div class="col-sm-12">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div id="navbarNavDropdown" class="navbar-collapse collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="side-dropdown-menus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%=name %></a>
+                    <div class="dropdown-menu" aria-labelledby="side-dropdown-menus">
+                      <c:if test="${pageContext.request.userPrincipal.name != null}">
+								        <form id="logoutForm" method="POST" action="${contextPath}/logout">
+									        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	                        <security:authorize access="hasAuthority('ADMIN')">
+							              <a class="dropdown-item" href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a>
+							            </security:authorize>
+							            <a class="dropdown-item" href="${contextPath}<%=RequestUrls.MY_ACCOUNT %>"><spring:message code="My Account" text="My Account" /></a>
+							            <a class="dropdown-item" href="#" onclick="document.forms['logoutForm'].submit()"><spring:message code="Logout" text="Logout" /></a>
+						            </form>
+                      </c:if>
+                    </div>
+                </li>
+            </ul>
         </div>
-      </form>
-    </c:if>
+    </nav>
   </div>
 </div>

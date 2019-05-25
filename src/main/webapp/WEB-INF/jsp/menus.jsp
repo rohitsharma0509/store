@@ -1,7 +1,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <div class="row">
-  <div class="col-sm-12" style="padding: 0px;">
+  <div class="col-sm-12">
     <nav class="navbar navbar-expand-sm navbar-dark" style="background-color:#009688;">
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="${contextPath}/home"><spring:message code="Dashboard" text="Dashboard" /></a></li>

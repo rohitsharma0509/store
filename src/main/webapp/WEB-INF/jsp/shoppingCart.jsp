@@ -20,11 +20,12 @@
        		<c:choose>
 			<c:when test="${shoppingCart.getProductDtos().size() > 0}">	
        		<c:forEach var="product" items="${shoppingCart.productDtos}" varStatus="loop">
-       		<form:hidden path="productDtos[${loop.index}].id" value="${product.id}" class="form-control input-sm"/>
-       		<form:hidden path="productDtos[${loop.index}].name" value="${product.name}" class="form-control input-sm"/>
-       		<form:hidden path="productDtos[${loop.index}].code" value="${product.code}" class="form-control input-sm"/>
-       		<form:hidden path="productDtos[${loop.index}].perProductPrice" value="${product.perProductPrice}" class="form-control input-sm"/>
-       		<form:hidden path="totalPrice" class="form-control input-sm"/>
+       		<form:hidden path="productDtos[${loop.index}].id" value="${product.id}"/>
+       		<form:hidden path="productDtos[${loop.index}].name" value="${product.name}"/>
+       		<form:hidden path="productDtos[${loop.index}].code" value="${product.code}"/>
+       		<form:hidden path="productDtos[${loop.index}].perProductPrice" value="${product.perProductPrice}"/>
+       		<form:hidden path="productDtos[${loop.index}].availableQuantity" value="${product.availableQuantity}"/>
+       		<form:hidden path="totalPrice"/>
 		   		<div class="row">
 			   		<div class="col-sm-3 text-center">
 			            <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew" width="120" height="80">

@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.MY_ACCOUNT %>"><spring:message code="My Account" text="My Account" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Edit Profile" text="Edit Profile" /></li>
 </ol>
 <div class="row" style="height: 10px;"></div>

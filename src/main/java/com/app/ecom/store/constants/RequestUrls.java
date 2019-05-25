@@ -8,9 +8,8 @@ public class RequestUrls {
 	public static final String ADD_PRODUCT = "/admin/addProduct";
 	public static final String PRODUCTS = "/admin/products";
 	public static final String DELETE_PRODUCT = "/admin/products/{id}";
-	public static final String PRODUCTS_IMPORT = "/admin/products/import";
-	public static final String PRODUCTS_SAVE = "/admin/products/save";
-	public static final String PRODUCTS_IMPORT_FILE = "/admin/importProducts";
+	public static final String PRODUCTS_IMPORT = "/admin/importProducts";
+	public static final String PRODUCTS_SAVE = "/admin/addProducts";
 	
 	public static final String BUY = "/buy";
 	public static final String GET_ORDERS = "/orders/{id}";

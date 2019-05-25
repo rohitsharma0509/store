@@ -1,7 +1,8 @@
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link href="css/stepper.css" rel="stylesheet">
+<link href="../css/stepper.css" rel="stylesheet">
 <style>
 .btn-default {
     background-color: #2bbbad!important;
@@ -12,15 +13,17 @@
     color: #fff!important;
 }
 </style>
-<div class="row panel">
-	<div class="col-sm-12" style="height:40px;"><b><a href="${contextPath}/admin">Admin</a></b> > <b><a href="${contextPath}<%=RequestUrls.PRODUCTS %>">Products</a></b> > Import Products</div>
-</div>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.PRODUCTS %>"><spring:message code="Products" text="Products" /></a></li>
+  <li class="breadcrumb-item active"><spring:message code="Import Products" text="Import Products" /></li>
+</ol>
 <div class="row" style="height:10px;"></div>
 <div class="row">
 	<div class="col-sm-12">
 		<div class="card">
 		    <div class="card-body mb-4">
-		        <h2 class="text-center font-weight-bold pt-4 pb-5"><strong>Import Products</strong></h2>
+		        <h2 class="text-center font-weight-bold pt-4 pb-5"><strong><spring:message code="Import Products" text="Import Products" /></strong></h2>
 		
 		        <div class="steps-form">
 		            <div class="steps-row setup-panel">
