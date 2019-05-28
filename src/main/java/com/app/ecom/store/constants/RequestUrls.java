@@ -55,6 +55,7 @@ public class RequestUrls {
 	public static final String HOME = "/home";
 	public static final String ACCESS_DENIED = "/accessDenied";
 	public static final String USERS = "/admin/users";
+	public static final String EDIT_USERS = "/editUsers";
 	public static final String FAILURE = "/failure";
 	
 	public static final String ROLES = "/admin/roles";
@@ -63,6 +64,8 @@ public class RequestUrls {
 	public static final String CHANGE_LOCALE = "/changeLocale";
 	public static final String EDIT_PROFILE = "/editProfile";
 	public static final String MY_ACCOUNT = "/myAccount";
+	
+	public static final String PRIVILEGES = "/admin/privileges";
 	
 	public static final String PROFIT_LOSS = "/admin/profitLoss";
 	public static final String DAILY_PROFIT_LOSS = "/admin/dailyProfitLoss";

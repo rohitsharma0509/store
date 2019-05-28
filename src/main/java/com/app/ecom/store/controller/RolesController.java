@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.dto.RoleDto;
 import com.app.ecom.store.model.Role;
 import com.app.ecom.store.service.RoleService;
 import com.app.ecom.store.util.CommonUtil;
@@ -39,25 +40,25 @@ public class RolesController {
     }
 	
 	@PostMapping(value = RequestUrls.ROLES)
-	public String addCategory(Model model, @Valid Role role, BindingResult bindingResult) {
-		roleValidator.validate(role, bindingResult);
+	public String addRole(Model model, @Valid RoleDto roleDto, BindingResult bindingResult) {
+		roleValidator.validate(roleDto, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return "addRole";
 		}
 		
-		roleService.addRole(role);
+		roleService.addRole(roleDto);
 		return "redirect:"+RequestUrls.ROLES;
 	}
 	
 	@GetMapping(value = RequestUrls.ADD_ROLE)
 	public String addRole(Model model, @RequestParam(value = FieldNames.ID, required=false) Long id) {
-		Role role;
+		RoleDto roleDto;
 		if(id != null){
-			role = roleService.getRoleById(id);
+			roleDto = roleService.getRoleById(id);
 		}else {
-			role = new Role();
+			roleDto = new RoleDto();
 		}
-		model.addAttribute(FieldNames.ROLE, role);
+		model.addAttribute("roleDto", roleDto);
 		return "addRole";
 	}
 }

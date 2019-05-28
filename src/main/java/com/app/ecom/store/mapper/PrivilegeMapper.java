@@ -18,15 +18,35 @@ public class PrivilegeMapper {
 		}
 
 		Set<Privilege> privileges = new HashSet<>();
-		privilegeDtos.stream().filter(Objects::nonNull)
-				.forEach(privilegeDto -> privileges.add(privilegeDtoToprivileges(privilegeDto)));
+		privilegeDtos.stream().filter(Objects::nonNull).forEach(privilegeDto -> privileges.add(privilegeDtoToPrivilege(privilegeDto)));
 		return privileges;
 	}
 
-	private Privilege privilegeDtoToprivileges(PrivilegeDto privilegeDto) {
+	private Privilege privilegeDtoToPrivilege(PrivilegeDto privilegeDto) {
 		Privilege privilege = new Privilege();
+		privilege.setId(privilegeDto.getId());
 		privilege.setName(privilegeDto.getName());
 		privilege.setDescription(privilegeDto.getDescription());
+		privilege.setParentId(privilegeDto.getParentId());
 		return privilege;
+	}
+
+	public Set<PrivilegeDto> privilegesToPrivilegeDtos(Set<Privilege> privileges) {
+		if (CollectionUtils.isEmpty(privileges)) {
+			return Collections.emptySet();
+		}
+		
+		Set<PrivilegeDto> privilegeDtos = new HashSet<>();
+		privileges.stream().filter(Objects::nonNull).forEach(privilege -> privilegeDtos.add(privilegeToPrivilegeDto(privilege)));
+		return privilegeDtos;
+	}
+
+	private PrivilegeDto privilegeToPrivilegeDto(Privilege privilege) {
+		PrivilegeDto privilegeDto = new PrivilegeDto();
+		privilegeDto.setId(privilege.getId());
+		privilegeDto.setName(privilege.getName());
+		privilegeDto.setDescription(privilege.getDescription());
+		privilegeDto.setParentId(privilege.getParentId());
+		return privilegeDto;
 	}
 }

@@ -47,7 +47,7 @@ public class UserController {
 	}
 	
 	@Transactional
-	@PostMapping(value = RequestUrls.USERS)
+	@PostMapping(value = RequestUrls.EDIT_USERS)
 	public String editUser(Model model, @ModelAttribute("user") User user, HttpServletRequest request, HttpServletResponse response) {
 		userService.update(user);
 		userService.updateLocale(request, response, user.getLanguage());

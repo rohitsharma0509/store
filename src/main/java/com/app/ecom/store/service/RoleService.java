@@ -1,14 +1,14 @@
 package com.app.ecom.store.service;
 
+import com.app.ecom.store.dto.RoleDto;
+import com.app.ecom.store.model.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import com.app.ecom.store.model.Role;
 
 public interface RoleService {
 	Page<Role> getRoles(Pageable pageable);
 
-	Role addRole(Role role);
+	RoleDto addRole(RoleDto roleDto);
 
-	Role getRoleById(Long id);
+	RoleDto getRoleById(Long id);
 }

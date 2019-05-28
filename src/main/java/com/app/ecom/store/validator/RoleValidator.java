@@ -1,18 +1,17 @@
 package com.app.ecom.store.validator;
 
+import com.app.ecom.store.dto.RoleDto;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
-import com.app.ecom.store.model.Role;
 
 @Component
 public class RoleValidator  implements Validator {
 	
 	@Override
 	public boolean supports(Class<?> aClass) {
-		return Role.class.equals(aClass);
+		return RoleDto.class.equals(aClass);
 	}
 
 	@Override

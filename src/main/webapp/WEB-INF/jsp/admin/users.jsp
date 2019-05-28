@@ -2,6 +2,14 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<script>
+  $(document).ready(function(){
+      $('.pover').popover();
+      $('.pover').on('click', function (e) {
+          $('.pover').not(this).popover('hide');
+      });
+  });
+</script>
 <ol class="breadcrumb">
   <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Users" text="Users" /></li>
@@ -38,7 +46,7 @@
 <div class="row" style="height: 20px;"></div>
 <div class="row">
 	<div class="col-sm-11">
-		<a class="btn btn-sm btn-info" href="#" rel="moreActions" data-popover-content="#moreActionContent" data-toggle="popover" ><spring:message code="More Actions" text="More Actions" />&nbsp;&nbsp;<i class="fa fa-caret-right" aria-hidden="true" ></i></a>
+		<a class="btn btn-sm btn-info pover" href="#" rel="moreActions" data-popover-content="#moreActionContent" data-toggle="popover" ><spring:message code="More Actions" text="More Actions" />&nbsp;&nbsp;<i class="fa fa-caret-right" aria-hidden="true" ></i></a>
 	</div>
 </div>
 <div id="moreActionContent" class="d-none">
@@ -66,8 +74,14 @@
 							<td>${user.firstName} ${user.lastName}</td>
 				   			<td>${user.email}</td>
 				   			<td>${user.mobile}</td>
-							<td><a href="${contextPath}<%=RequestUrls.USERS %>?id=${user.id}"><i class="fa fa-edit" aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;
-								<a href="#" onclick="callAjaxForDelete('${contextPath}<%=RequestUrls.USERS %>/${user.id}')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+							<td>
+							  <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
+                <div id="singleRecordAction" class="d-none">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.USERS %>?id=${user.id}"><spring:message code="Edit" text="Edit" /></a></li>
+                    <li class="list-group-item list-group-item-action"><a href="#" onclick="callAjaxForDelete('${contextPath}<%=RequestUrls.USERS %>/${user.id}')"><spring:message code="Delete" text="Delete" /></a></li>
+                  </ul>
+                </div>
 							</td>
 						</tr>
 					</c:forEach>

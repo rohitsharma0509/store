@@ -20,7 +20,7 @@ String action = "Save";
 </ol>
 <div class="row" style="height:10px;">
 </div>
-<form:form method="POST" modelAttribute="role" class="form-horizontal" action="<%=RequestUrls.ROLES %>">
+<form:form method="POST" modelAttribute="roleDto" class="form-horizontal" action="<%=RequestUrls.ROLES %>">
 <form:hidden path="id"  class="form-control input-sm"/>
 <div class="container py-5">
     <h6><spring:message code="Role Details" text="Role Details" /></h6><hr>

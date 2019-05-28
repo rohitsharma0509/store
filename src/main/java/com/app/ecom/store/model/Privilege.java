@@ -26,6 +26,9 @@ public class Privilege {
 	
 	@ManyToMany(mappedBy = "privileges")
 	private Set<Role> roles;
+	
+	@Column(name = "parent_id")
+	private Long parentId;
 
 	public Long getId() {
 		return id;
@@ -57,5 +60,13 @@ public class Privilege {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
 	}
 }

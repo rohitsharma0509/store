@@ -33,4 +33,21 @@ public class RoleMapper {
 		role.setPrivileges(privilegeMapper.privilegeDtosToPrivileges(roleDto.getPrivilegeDtos()));
 		return role;
 	}
+	
+	public Set<RoleDto> rolesToRoleDtos(Set<Role> roles) {
+		if (CollectionUtils.isEmpty(roles)) {
+			return Collections.emptySet();
+		}
+
+		Set<RoleDto> roleDtos = new HashSet<>();
+		roles.stream().filter(Objects::nonNull).forEach(role -> roleDtos.add(roleToRoleDto(role)));
+		return roleDtos;
+	}
+
+	public RoleDto roleToRoleDto(Role role) {
+		RoleDto roleDto = new RoleDto();
+		roleDto.setName(role.getName());
+		roleDto.setPrivilegeDtos(privilegeMapper.privilegesToPrivilegeDtos(role.getPrivileges()));
+		return roleDto;
+	}
 }

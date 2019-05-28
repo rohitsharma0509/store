@@ -9,7 +9,7 @@
 <div class="row" style="height: 10px;"></div>
 
 
-<form:form method="POST" modelAttribute="user" class="form-horizontal" enctype="multipart/form-data" action="<%=RequestUrls.USERS %>">
+<form:form method="POST" modelAttribute="user" class="form-horizontal" enctype="multipart/form-data" action="<%=RequestUrls.EDIT_USERS %>">
 <form:hidden path="id"  class="form-control input-sm"/>
 <div class="container py-5">
     <h6><spring:message code="User Details" text="User Details" /></h6><hr>
