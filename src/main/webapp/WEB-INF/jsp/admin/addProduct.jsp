@@ -50,8 +50,14 @@ String action = "Save";
                   <form:errors path="name" class="help-inline has-error"></form:errors>
               </div>
               <div class="col-sm-6">
-                  <label for="image"><spring:message code="Image" text="Image" />&nbsp;<span class="urgent_fields">*</span></label>
+                  <label for="image"><spring:message code="Image" text="Image" /></label>
                   <form:input type="file" path="image" id="image" class="form-control form-control-sm"/>
+              </div>
+          </div>
+          <div class="form-group row">
+              <div class="col-sm-12">
+                <label for="description"><spring:message code="Description" text="Description" /></label>
+                <form:textarea path="description" rows="5" cols="60" class="form-control form-control-sm" />
               </div>
           </div>
         </div>

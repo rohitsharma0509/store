@@ -39,6 +39,7 @@ public class UserMapper {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
+        user.setMobile(userDto.getMobile());
         user.setLanguage(StringUtils.isEmpty(userDto.getLanguage()) ? "en" : userDto.getLanguage());
         user.setAddresses(addressMapper.addressDtosToAddress(userDto.getAddresses()));
         user.setRoles(roleMapper.roleDtosToRoles(userDto.getRoles()));

@@ -2,8 +2,6 @@ package com.app.ecom.store.controller;
 
 import java.util.Calendar;
 
-import javax.inject.Inject;
-
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.model.User;
@@ -11,6 +9,7 @@ import com.app.ecom.store.model.UserToken;
 import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.service.UserTokenService;
 import com.app.ecom.store.validator.UserValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,13 +21,14 @@ import org.springframework.web.context.request.WebRequest;
 
 @Controller
 public class SignupController {
-    @Inject
+	
+    @Autowired
     private UserService userService;
 
-    @Inject
+    @Autowired
     private UserValidator userValidator;
     
-    @Inject
+    @Autowired
     private UserTokenService userTokenService;
     
     @GetMapping(value = RequestUrls.REGISTRATION)

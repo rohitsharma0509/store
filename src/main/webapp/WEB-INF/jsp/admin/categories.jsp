@@ -62,13 +62,13 @@
 						<th>Category Name</th>
 						<th>Action</th>
 					</tr>
-					<c:forEach var="category" items="${page.getContent()}">
+					<c:forEach var="category" items="${page.getContent()}" varStatus="loop">
 						<tr>
 							<td><input class="checkbox" type="checkbox" name="ids" value="${category.id}" /></td>
 							<td>${category.name}</td>
 							<td>
-							  <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
-                <div id="singleRecordAction" class="d-none">
+							  <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
+                <div id="singleRecordAction${loop.index}" class="d-none">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_CATEGORY %>?id=${category.id}"><spring:message code="Edit" text="Edit" /></a></li>
                     <li class="list-group-item list-group-item-action"><a href="#" onclick="callAjaxForDelete('${contextPath}<%=RequestUrls.CATEGORIES %>/${category.id}')"><spring:message code="Delete" text="Delete" /></a></li>

@@ -22,7 +22,7 @@
           <c:forEach var="privilegeDto" items="${privilegeDtos}">
             <tr>
               <c:choose>
-              <c:when test="${privilegeDts.isInRole}">
+              <c:when test="${privilegeDto.isInRole}">
                 <td><input class="checkbox" type="checkbox" name="ids" checked value="${privilegeDto.id}" /></td>
               </c:when>
               <c:otherwise>

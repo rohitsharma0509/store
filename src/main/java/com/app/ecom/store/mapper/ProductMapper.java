@@ -11,13 +11,12 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-import org.springframework.stereotype.Component;
-
 import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.jaxb.ProductType;
 import com.app.ecom.store.dto.jaxb.ProductsType;
 import com.app.ecom.store.model.Product;
 import com.app.ecom.store.service.ProductCategoryService;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ProductMapper {
@@ -42,6 +41,7 @@ public class ProductMapper {
 		productDto.setId(product.getId());
 		productDto.setCode(product.getCode());
 		productDto.setName(product.getName());
+		productDto.setDescription(product.getDescription());
 		productDto.setBrandName(product.getBrandName());
 		productDto.setCategoryId(product.getCategoryId());
 		productDto.setQuantity(isCart ? 1 : product.getQuantity());
@@ -58,6 +58,7 @@ public class ProductMapper {
 		product.setId(productDto.getId());
 		product.setCode(productDto.getCode());
 		product.setName(productDto.getName());
+		product.setDescription(productDto.getDescription());
 		product.setBrandName(productDto.getBrandName());
 		product.setCategoryId(productDto.getCategoryId());
 		product.setQuantity(productDto.getQuantity());

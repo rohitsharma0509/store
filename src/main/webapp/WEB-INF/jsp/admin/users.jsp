@@ -68,15 +68,15 @@
 						<th><spring:message code="Mobile" text="Mobile" /></th>
 						<th><spring:message code="Action" text="Action" /></th>
 					</tr>
-					<c:forEach var="user" items="${page.getContent()}">
+					<c:forEach var="user" items="${page.getContent()}" varStatus="loop">
 						<tr>
 							<td><input class="checkbox" type="checkbox" name="ids" value="${user.id}" /></td>
 							<td>${user.firstName} ${user.lastName}</td>
 				   			<td>${user.email}</td>
 				   			<td>${user.mobile}</td>
 							<td>
-							  <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
-                <div id="singleRecordAction" class="d-none">
+							  <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
+                <div id="singleRecordAction${loop.index}" class="d-none">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.USERS %>?id=${user.id}"><spring:message code="Edit" text="Edit" /></a></li>
                     <li class="list-group-item list-group-item-action"><a href="#" onclick="callAjaxForDelete('${contextPath}<%=RequestUrls.USERS %>/${user.id}')"><spring:message code="Delete" text="Delete" /></a></li>

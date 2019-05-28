@@ -24,6 +24,9 @@ public class Product {
 	@Column(name = "product_name")
 	private String name;
 	
+	@Column(name = "product_desc")
+	private String description;
+	
 	@Column(name = "brand_name")
 	private String brandName;
 
@@ -72,6 +75,14 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getBrandName() {

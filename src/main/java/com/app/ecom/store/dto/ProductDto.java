@@ -9,6 +9,8 @@ public class ProductDto {
 
 	private String name;
 	
+	private String description;
+	
 	private String brandName;
 
 	private Integer quantity;
@@ -26,8 +28,6 @@ public class ProductDto {
 	private Long categoryId;
 	
 	private Integer availableQuantity;
-	
-	/*private Set<Purchase> purchases = new HashSet<>();*/
 
 	public Long getId() {
 		return id;
@@ -51,6 +51,14 @@ public class ProductDto {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getBrandName() {

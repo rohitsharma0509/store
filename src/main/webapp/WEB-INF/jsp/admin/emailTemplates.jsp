@@ -66,7 +66,7 @@
 						<th><spring:message code="BCC" text="BCC" /></th>
 						<th><spring:message code="Action" text="Action" /></th>
 					</tr>
-					<c:forEach var="template" items="${page.getContent()}">
+					<c:forEach var="template" items="${page.getContent()}" varStatus="loop">
 						<tr>
 							<td><input class="checkbox" type="checkbox" name="ids" value="${template.id}" /></td>
 							<td>${template.type}</td>
@@ -75,8 +75,8 @@
 				   			<td>${template.cc}</td>
 				   			<td>${template.bcc}</td>
 							<td>
-						    <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
-                <div id="singleRecordAction" class="d-none">
+						    <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
+                <div id="singleRecordAction${loop.index}" class="d-none">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_EMAIL_TEMPLATES %>?id=${template.id}"><spring:message code="Edit" text="Edit" /></a></li>
                     <li class="list-group-item list-group-item-action"><a href="#" onclick="callAjaxForDelete('${contextPath}<%=RequestUrls.EMAIL_TEMPLATES %>/${template.id}')"><spring:message code="Delete" text="Delete" /></a></li>

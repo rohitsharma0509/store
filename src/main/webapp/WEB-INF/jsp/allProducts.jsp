@@ -14,7 +14,7 @@ $(window).scroll(function () {
 	}else{
 		scrollData="no";
 	}
-	if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+	if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
 		if(scrollData=="yes"){
 			$('#loadingData1').show();
 			setTimeout(function() {
