@@ -26,32 +26,38 @@ $('form[name=addressForm]').submit(function(e) {
           <form:form method="POST" modelAttribute="addressDto" name="addressForm" action="addAddress">
              <div class="row form-group">
                <div class="col-sm-12">
-                  <form:input type="text" path="addressLine1" id="addressLine1" placeholder='<spring:message code="Address Line1" text="Address Line1" />' class="form-control" required='required' autocomplete="off"/>
+                  <spring:message code="Address Line1" text="Address Line1" var="label"/>
+                  <form:input type="text" path="addressLine1" id="addressLine1" placeholder="${label}" class="form-control" required='required' autocomplete="off"/>
                </div>
              </div>
              <div class="row form-group">
                <div class="col-sm-12">
-                  <form:input type="text" path="addressLine2" id="addressLine2" placeholder='<spring:message code="Address Line2" text="Address Line2" />' class="form-control" required='required' autocomplete="off"/>
+                  <spring:message code="Address Line2" text="Address Line2" var="label"/>
+                  <form:input type="text" path="addressLine2" id="addressLine2" placeholder="${label}" class="form-control" required='required' autocomplete="off"/>
                </div>
              </div>
              <div class="row form-group">
                <div class="col-sm-12">
-                  <form:input type="text" path="city" id="city" placeholder='<spring:message code="City" text="City" />' class="form-control" required='required' autocomplete="off"/>
+                  <spring:message code="City" text="City" var="label"/>
+                  <form:input type="text" path="city" id="city" placeholder="${label}" class="form-control" required='required' autocomplete="off"/>
                </div>
              </div>
              <div class="row form-group">
                <div class="col-sm-12">
-                  <form:input type="text" path="state" id="state" placeholder='<spring:message code="State" text="State" />' class="form-control" required='required' autocomplete="off"/>
+                  <spring:message code="State" text="State" var="label"/>
+                  <form:input type="text" path="state" id="state" placeholder="${label}" class="form-control" required='required' autocomplete="off"/>
                </div>
              </div>
              <div class="row form-group">
                <div class="col-sm-12">
-                  <form:input type="text" path="pincode" id="pincode" placeholder='<spring:message code="Pincode" text="Pincode" />' class="form-control" required='required' autocomplete="off"/>
+                  <spring:message code="Pincode" text="Pincode" var="label"/>
+                  <form:input type="text" path="pincode" id="pincode" placeholder="${label}" class="form-control" required='required' autocomplete="off"/>
                </div>
              </div>
              <div class="row form-group">
                <div class="col-sm-12">
-                  <form:input type="text" path="country" id="country" placeholder='<spring:message code="Country" text="Country" />' class="form-control" required='required' autocomplete="off"/>
+                  <spring:message code="Country" text="Country" var="label"/>
+                  <form:input type="text" path="country" id="country" placeholder="${label}" class="form-control" required='required' autocomplete="off"/>
                </div>
              </div>
              <div class="row form-group">

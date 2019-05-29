@@ -27,9 +27,9 @@
 						<div class="checkbox">
 							<label><input type="checkbox" name="rememberMe" id="rememberMe"> Remember login</label>
 						</div>
-						<button type="submit" class="btn btn-success btn-block">Login</button>
-						<a href="${contextPath}/forgetPassword" class="btn btn-info btn-block">Help to login</a>
-						<a href="${contextPath}/registration" class="btn btn-info btn-block">Register now!</a>
+						<button type="submit" class="btn btn-success btn-block">Signin</button>
+						<a href="${contextPath}/forgetPassword" class="pull-left">Forget Password?</label>
+            <a href="${contextPath}/registration" class="pull-right need-help">SignUp</a>
 					</form>
 				</div>
 			</div>
