@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.EmailTemplateDto;
+import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.TemplateType;
 import com.app.ecom.store.model.EmailTemplate;
 import com.app.ecom.store.service.EmailTemplateService;
@@ -21,8 +22,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class EmailTemplateController {
@@ -66,10 +70,28 @@ public class EmailTemplateController {
     }
     
     @GetMapping(value = RequestUrls.EMAIL_TEMPLATES)
-    public String getCategories(Model model, @PageableDefault(page=1, size=10) Pageable pageable) {
+    public String getEmailTemplates(Model model, @PageableDefault(page=1, size=10) Pageable pageable) {
         Page<EmailTemplate> page = emailTemplateService.getEmailTemplates(pageable);
         model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.EMAIL_TEMPLATES, page.getNumber()+1, page.getTotalPages(), null));
         model.addAttribute(FieldNames.PAGE, page);
         return "emailTemplates";
     }
+    
+	@PostMapping(value = RequestUrls.DELETE_EMAIL_TEMPLATES)
+	public String deleteEmailTemplateById(Model model, @PathVariable(FieldNames.ID) Long id) {
+		emailTemplateService.deleteEmailTemplateById(id);
+		return "emailTemplates";
+	}
+	
+	@ResponseBody
+	@PostMapping(value = RequestUrls.DELETE_BULK_EMAIL_TEMPLATES)
+	public boolean deleteEmailTemplates(@RequestBody IdsDto idsDto) {
+		return emailTemplateService.deleteEmailTemplates(idsDto.getIds());
+	}
+	
+	@ResponseBody
+	@PostMapping(value = RequestUrls.DELETE_ALL_EMAIL_TEMPLATES)
+	public boolean deleteAllEmailTemplates() {
+		return emailTemplateService.deleteAllEmailTemplates();
+	}
 }

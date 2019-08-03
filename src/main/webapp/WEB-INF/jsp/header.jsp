@@ -55,32 +55,7 @@ String name = String.format("%1$s %2$s", user.getFirstName(), user.getLastName()
         }
     });   
   }
-  $(function(){
-      $('[rel="moreActions"]').popover({
-          container: 'body',
-          html: true,
-          content: function () {
-              var clone = $($(this).data('popover-content')).clone(true).removeClass('d-none');
-              return clone;
-          }
-      }).click(function(e) {
-          e.preventDefault();
-      });
-    $("#all").change(function() {
-      $(".checkbox").prop("checked", $(this).prop("checked"));
-    });
-    $(".checkbox").change(function() {
-      if(false==$(this).prop("checked")){
-        $("#all").prop("checked", false);
-      }
-      if($(".checkbox:checked").length == $(".checkbox").length) {
-        $("#all").prop("checked", true);
-      }
-    });
-  });
-  
-  </script>
-
+</script>
 <style>
 * {
   font-size: 12px;
@@ -151,6 +126,7 @@ String name = String.format("%1$s %2$s", user.getFirstName(), user.getLastName()
 <div class="row">
   <div class="col-sm-12">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <!-- <a class="navbar-brand" href="#"><img src="../images/logo.jpg" alt="Store" style="width:40px;"></a> -->
         <div id="navbarNavDropdown" class="navbar-collapse collapse justify-content-end">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">

@@ -2,20 +2,30 @@
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script src="../js/actions.js"></script>
 <script>
-  $(document).ready(function(){
-      $('.pover').popover();
-      $('.pover').on('click', function (e) {
-          $('.pover').not(this).popover('hide');
-      });
-  });
+var filterState=0;
+$(document).ready(function(){
+   $('#hideShowDiv').click(function() { 
+      if(filterState==0){
+        $("#filters").slideUp("slow");
+        $("#hideShowDiv").html("<a href='#'>Show Filters</a>");
+        filterState=1;
+      }else if(filterState==1){
+        $("#filters").slideDown("slow");
+        $("#hideShowDiv").html("<a href='#'>Hide Filters</a>");
+        filterState=0;
+      }
+   });
+});
 </script>
 <ol class="breadcrumb">
   <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
   <li class="breadcrumb-item active"><spring:message code="Products" text="Products" /></li>
+  <li class="ml-auto"><span id="hideShowDiv"><a href="#">Hide Filters</a></span></li>
 </ol>
 <div class="row" style="height: 10px;"></div>
-<div class="row">
+<div class="row" id="filters">
 	<div class="col-sm-12">
 	<form method="GET" class="form-horizontal" action="<%=RequestUrls.PRODUCTS %>">
 		<div class="card">
@@ -87,7 +97,8 @@
 	<ul class="list-group list-group-flush">
 	  <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_PRODUCT %>"><spring:message code="Add Product" text="Add Product" /></a></li>
 	  <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.PRODUCTS_IMPORT %>"><spring:message code="Import CSV/XML" text="Import CSV/XML" /></a></li>
-	  <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_CATEGORY %>"><spring:message code="Delete" text="Delete All" /></a></li>
+	  <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="MULTIPLE" data-url="<%=RequestUrls.DELETE_BULK_PRODUCT %>"><spring:message code="Delete" text="Delete" /></a></li>
+    <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="ALL" data-url="<%=RequestUrls.DELETE_ALL_PRODUCT %>"><spring:message code="Delete All" text="Delete All" /></a></li>
 	</ul>
 </div>
 <div class="row" style="height: 10px;"></div>
@@ -99,7 +110,7 @@
 					<div class="col-sm-12">
 						<table class="table content-table">
 							<tr>
-								<th><input type="checkbox" name="ids" id="all" /></th>
+								<th><input type="checkbox" name="ids" id="all" value='-1' /></th>
 								<th><spring:message code="Code" text="Code" /></th>
 								<th><spring:message code="Name" text="Name" /></th>
 								<th><spring:message code="Quantity" text="Quantity" /></th>
@@ -120,7 +131,7 @@
 		                <div id="singleRecordAction${loop.index}" class="d-none">
 		                  <ul class="list-group list-group-flush">
 		                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.ADD_PRODUCT %>?id=${product.id}"><spring:message code="Edit" text="Edit" /></a></li>
-		                    <li class="list-group-item list-group-item-action"><a href="#" onclick="callAjaxForDelete('${contextPath}<%=RequestUrls.PRODUCTS %>/${product.id}')"><spring:message code="Delete" text="Delete" /></a></li>
+		                    <li class="list-group-item list-group-item-action"><a href="#" class="deleteBtn" data-flag="SINGLE" data-url="<%=RequestUrls.PRODUCTS %>/${product.id}"><spring:message code="Delete" text="Delete" /></a></li>
 		                  </ul>
 		                </div>
 									</td>
@@ -146,4 +157,34 @@
 			</c:when>
 		</c:choose>
 	</div>
+</div>
+<div class="row">
+  <div class="modal fade" id="deleteConfirmation" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header"><spring:message code="Confirm Delete" text="Confirm Delete" /></div>
+        <div class="modal-body mx-3">
+          <p><spring:message code="Are you sure you want to delete?" text="Are you sure you want to delete?" /> </p>
+        </div>
+        <div class="modal-footer">
+	        <form:form id="deleteForm">
+	          <button type="submit" class="btn btn-success"><spring:message code="Delete" text="Delete" /></button>
+	          <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="Close" text="Close" /></button>
+	        </form:form>
+        </div>
+      </div>  
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="modal fade" id="alertMessages" role="dialog" aria-labelledby="alertMessagesLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body mx-3"></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="OK" text="OK" /></button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,19 +1,20 @@
 package com.app.ecom.store.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
 
 import com.app.ecom.store.dto.EmailTemplateDto;
 import com.app.ecom.store.mapper.EmailTemplateMapper;
 import com.app.ecom.store.model.EmailTemplate;
 import com.app.ecom.store.repository.EmailTemplateRepository;
 import com.app.ecom.store.service.EmailTemplateService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 public class EmailTemplateServiceImpl implements EmailTemplateService {
@@ -44,4 +45,36 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
         PageRequest request = PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), pageable.getSort());
         return emailTemplateRepository.findAll(request);
     }
+
+	@Override
+	@Transactional
+	public void deleteEmailTemplateById(Long id) {
+		emailTemplateRepository.deleteById(id);
+	}
+
+	@Override
+	@Transactional
+	public boolean deleteEmailTemplates(List<Long> ids) {
+		boolean isDeleted = false;
+		try {
+			emailTemplateRepository.deleteByIdIn(ids);
+			isDeleted = true;
+		} catch(Exception e) {
+			
+		}
+		return isDeleted;
+	}
+
+	@Override
+	@Transactional
+	public boolean deleteAllEmailTemplates() {
+		boolean isDeleted = false;
+		try {
+			emailTemplateRepository.deleteAll();
+			isDeleted = true;
+		} catch(Exception e) {
+			
+		}
+		return isDeleted;
+	}
 }

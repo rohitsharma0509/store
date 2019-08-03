@@ -1,6 +1,9 @@
 package com.app.ecom.store.service.impl;
 
+import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import com.app.ecom.store.dto.RoleDto;
 import com.app.ecom.store.mapper.RoleMapper;
@@ -39,5 +42,37 @@ public class RoleServiceImpl implements RoleService {
 		} else {
 			return null;
 		}
+	}
+	
+	@Override
+	@Transactional
+	public void deleteRoleById(Long id) {
+		roleRepository.deleteById(id);
+	}
+	
+	@Override
+	@Transactional
+	public boolean deleteAllRoles() {
+		boolean isDeleted = false;
+		try {
+			roleRepository.deleteAll();
+			isDeleted = true;
+		} catch(Exception e) {
+			
+		}
+		return isDeleted;
+	}
+
+	@Override
+	@Transactional
+	public boolean deleteRoles(List<Long> ids) {
+		boolean isDeleted = false;
+		try {
+			roleRepository.deleteByIdIn(ids);
+			isDeleted = true;
+		} catch(Exception e) {
+			
+		}
+		return isDeleted;
 	}
 }

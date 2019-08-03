@@ -2,10 +2,9 @@ package com.app.ecom.store.service;
 
 import java.util.List;
 
+import com.app.ecom.store.model.ProductCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import com.app.ecom.store.model.ProductCategory;
 
 public interface ProductCategoryService {
 	
@@ -22,4 +21,8 @@ public interface ProductCategoryService {
 	void deleteCategory(Long id);
 
 	ProductCategory editCategory(ProductCategory productCategory);
+
+	boolean deleteCategories(List<Long> ids);
+
+	boolean deleteAllCategories();
 }

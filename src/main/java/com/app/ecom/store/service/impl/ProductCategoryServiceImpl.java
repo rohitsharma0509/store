@@ -3,15 +3,15 @@ package com.app.ecom.store.service.impl;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
 
 import com.app.ecom.store.model.ProductCategory;
 import com.app.ecom.store.repository.ProductCategoryRepository;
 import com.app.ecom.store.service.ProductCategoryService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
@@ -49,6 +49,32 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	@Override
 	public void deleteCategory(Long id) {
 		productCategoryRepository.deleteById(id);
+	}
+	
+	@Override
+	@Transactional
+	public boolean deleteAllCategories() {
+		boolean isDeleted = false;
+		try {
+			productCategoryRepository.deleteAll();
+			isDeleted = true;
+		} catch(Exception e) {
+			
+		}
+		return isDeleted;
+	}
+
+	@Override
+	@Transactional
+	public boolean deleteCategories(List<Long> ids) {
+		boolean isDeleted = false;
+		try {
+			productCategoryRepository.deleteByIdIn(ids);
+			isDeleted = true;
+		} catch(Exception e) {
+			
+		}
+		return isDeleted;
 	}
 
 	@Override

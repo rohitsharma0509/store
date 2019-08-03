@@ -7,7 +7,10 @@ public class RequestUrls {
 	public static final String PRODUCTS_AJAX = "/products/ajax";
 	public static final String ADD_PRODUCT = "/admin/addProduct";
 	public static final String PRODUCTS = "/admin/products";
-	public static final String DELETE_PRODUCT = "/admin/products/{id}";
+	public static final String DELETE_PRODUCT = PRODUCTS+"/{id}";
+	public static final String DELETE_BULK_PRODUCT = "/admin/bulkproducts";
+	public static final String DELETE_ALL_PRODUCT = "/admin/allproducts";
+	
 	public static final String PRODUCTS_IMPORT = "/admin/importProducts";
 	public static final String PRODUCTS_SAVE = "/admin/addProducts";
 	
@@ -28,6 +31,9 @@ public class RequestUrls {
 	public static final String ADD_EMAIL_ACCOUNT = "/addEmailAccount";
 	public static final String EMAIL_TEMPLATES = "/admin/emailTemplates";
 	public static final String ADD_EMAIL_TEMPLATES = "/admin/addEmailTemplates";
+	public static final String DELETE_EMAIL_TEMPLATES = EMAIL_TEMPLATES+"/{id}";
+	public static final String DELETE_BULK_EMAIL_TEMPLATES = "/admin/bulkemailTemplates";
+	public static final String DELETE_ALL_EMAIL_TEMPLATES = "/admin/allemailTemplates";
 	
 	public static final String EXCEL = "/excel";
 	public static final String SAMPLE = "/sample";
@@ -35,7 +41,9 @@ public class RequestUrls {
 	public static final String ADD_CATEGORY = "/admin/addCategory";	
 	public static final String CATEGORIES = "/admin/categories";	
 	public static final String CATEGORIES_ALL = "/admin/categories/all";	
-	public static final String DELETE_CATEGORY = "/admin/categories/{id}";
+	public static final String DELETE_CATEGORY = CATEGORIES+"/{id}";
+	public static final String DELETE_BULK_CATEGORY = "/admin/bulkcategories";
+	public static final String DELETE_ALL_CATEGORY = "/admin/allcategories";
 	
 	public static final String ADD_TO_CART = "/addToCart";
 	public static final String DELETE_FROM_CART = "/shoppingCart/{id}";
@@ -60,6 +68,10 @@ public class RequestUrls {
 	
 	public static final String ROLES = "/admin/roles";
 	public static final String ADD_ROLE = "/admin/addRole";
+	public static final String DELETE_ROLE = ROLES+"/{id}";
+	public static final String DELETE_BULK_ROLES = "/admin/bulkroles";
+	public static final String DELETE_ALL_ROLES = "/admin/allroles";
+	
 	public static final String CHANGE_LANGUAGE = "/changeLanguage";
 	public static final String CHANGE_LOCALE = "/changeLocale";
 	public static final String EDIT_PROFILE = "/editProfile";

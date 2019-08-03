@@ -29,6 +29,5 @@ public class AddressController {
 	@ResponseBody
 	public void addAddress(Model model, @ModelAttribute  @Valid AddressDto addressDto, BindingResult bindingResult) {
 		addressService.addAddress(addressDto);
-		System.out.println("Address saved successfully");
 	}
 }

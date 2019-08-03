@@ -1,7 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script src="/js/numeric.js"></script>
 <%
 String action = "Save";
 %>
@@ -21,7 +22,7 @@ String action = "Save";
 <div class="row" style="height:10px;">
 </div>
 <form:form method="POST" modelAttribute="productDto" class="form-horizontal" enctype="multipart/form-data" action="<%=RequestUrls.PRODUCTS %>">
-<form:hidden path="id"  class="form-control input-sm"/>
+<form:hidden path="id"/>
 <div class="container py-5">
     <h6><spring:message code="Product Details" text="Product Details" /></h6><hr>
     <div class="row">
@@ -68,12 +69,12 @@ String action = "Save";
           <div class="form-group row">
               <div class="col-sm-6">
                   <label for="purchasePrice"><spring:message code="Purchase Price" text="Purchase Price" />&nbsp;<span class="urgent_fields">*</span></label>
-                  <form:input type="text" path="purchasePrice" id="purchasePrice" class="form-control form-control-sm" autocomplete="off"/>
+                  <form:input type="text" path="purchasePrice" id="purchasePrice" class="form-control form-control-sm numeric" autocomplete="off"/>
                   <form:errors path="purchasePrice" class="help-inline has-error"></form:errors>
               </div>
               <div class="col-sm-6">
                   <label for="perProductPrice"><spring:message code="Sell Price" text="Sell Price" />&nbsp;<span class="urgent_fields">*</span></label>
-                  <form:input type="text" path="perProductPrice" id="perProductPrice" class="form-control form-control-sm" autocomplete="off"/>
+                  <form:input type="text" path="perProductPrice" id="perProductPrice" class="form-control form-control-sm numeric" autocomplete="off"/>
                   <form:errors path="perProductPrice" class="help-inline has-error"></form:errors>
               </div>
           </div>
@@ -85,12 +86,12 @@ String action = "Save";
           <div class="form-group row">
               <div class="col-sm-6">
                   <label for="quantity"><spring:message code="Quantity" text="Quantity" />&nbsp;<span class="urgent_fields">*</span></label>
-                  <form:input type="text" path="quantity" id="quantity" class="form-control form-control-sm" autocomplete="off"/>
+                  <form:input type="text" path="quantity" id="quantity" class="form-control form-control-sm integer" autocomplete="off"/>
                   <form:errors path="quantity" class="help-inline has-error"></form:errors>
               </div>
               <div class="col-sm-6">
                   <label for="alertQuantity"><spring:message code="Alert Quantity" text="Alert Quantity" />&nbsp;<span class="urgent_fields">*</span></label>
-                  <form:input type="text" path="alertQuantity" id="alertQuantity" class="form-control form-control-sm" autocomplete="off"/>
+                  <form:input type="text" path="alertQuantity" id="alertQuantity" class="form-control form-control-sm integer" autocomplete="off"/>
                   <form:errors path="alertQuantity" class="help-inline has-error"></form:errors>
               </div>
           </div>

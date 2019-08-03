@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.model.ProductCategory;
 import com.app.ecom.store.service.ProductCategoryService;
 import com.app.ecom.store.util.CommonUtil;
@@ -17,13 +18,14 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ProductCategoryController {
@@ -75,12 +77,24 @@ public class ProductCategoryController {
 		return "categories";
 	}
 	
-	@DeleteMapping(value = RequestUrls.DELETE_CATEGORY)
+	@PostMapping(value = RequestUrls.DELETE_CATEGORY)
 	public String deleteCategory(Model model, @PathVariable(FieldNames.ID) Long id) {
 		productCategoryService.deleteCategory(id);
 		return "categories";
 	}
 	
+	@ResponseBody
+	@PostMapping(value = RequestUrls.DELETE_BULK_CATEGORY)
+	public boolean deleteProducts(@RequestBody IdsDto idsDto) {
+		return productCategoryService.deleteCategories(idsDto.getIds());
+	}
+	
+	@ResponseBody
+	@PostMapping(value = RequestUrls.DELETE_ALL_CATEGORY)
+	public boolean deleteAllProducts() {
+		return productCategoryService.deleteAllCategories();
+	}
+
 	@PutMapping(value = RequestUrls.CATEGORIES)
 	public String editCategory(Model model, @ModelAttribute(FieldNames.PRODUCT_CATEGORY) ProductCategory productCategory) {
 		productCategoryService.editCategory(productCategory);

@@ -6,16 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.persistence.Tuple;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
+import javax.transaction.Transactional;
 
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.CustomPage;
@@ -29,20 +21,28 @@ import com.app.ecom.store.querybuilder.QueryBuilder;
 import com.app.ecom.store.repository.ProductRepository;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
-	@Inject
+	@Autowired
 	private ProductRepository productRepository;
 	
-	@Inject
+	@Autowired
 	private ProductMapper productMapper;
 	
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil; 
 	
-	@Inject
+	@Autowired
 	private QueryBuilder queryBuilder;
 	
 	@Override
@@ -70,6 +70,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public Product addProduct(ProductDto productDto) {
 	    Product product = productMapper.productDtoToProduct(productDto);
 	    productRepository.save(product);
@@ -182,11 +183,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void deleteProduct(Long id) {
+	@Transactional
+	public void deleteProductById(Long id) {
 		productRepository.deleteById(id);
 	}
 
 	@Override
+	@Transactional
 	public Product editProduct(Product product) {
 		return productRepository.save(product);
 	}
@@ -268,6 +271,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+	@Transactional
 	public void importProducts(MultipartFile multiPartFile, String fileType){
 		List<Product> products = null;
 		try {
@@ -288,5 +292,36 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Integer getAvailableQuantity(Long id) {
 		return productRepository.getAvailableQuantity(id);
+	}
+	
+	@Override
+	@Transactional
+	public boolean deleteAllProducts() {
+		boolean isDeleted = false;
+		try {
+			productRepository.deleteAll();
+			isDeleted = true;
+		} catch(Exception e) {
+			
+		}
+		return isDeleted;
+	}
+
+	@Override
+	@Transactional
+	public boolean deleteProducts(List<Long> ids) {
+		boolean isDeleted = false;
+		try {
+			productRepository.deleteByIdIn(ids);
+			isDeleted = true;
+		} catch(Exception e) {
+			
+		}
+		return isDeleted;
+	}
+	
+	@Override
+	public Long countByCategoryId(Long categoryId) {
+		return productRepository.countByCategoryId(categoryId);
 	}
 }

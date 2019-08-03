@@ -6,6 +6,7 @@
 <script>
 var pageId = 1;
 var totalRecords = ${page.totalRecords};
+var filterState=0;
 
 $(window).scroll(function () {
 	var scrollData;
@@ -42,12 +43,26 @@ function getProductList(){
 	    });  		
 	}
 }
+$(document).ready(function(){
+	 $('#hideShowDiv').click(function() { 
+		  if(filterState==0){
+        $("#filters").slideUp("slow");
+        $("#hideShowDiv").html("<a href='#'>Show Filters</a>");
+        filterState=1;
+      }else if(filterState==1){
+        $("#filters").slideDown("slow");
+        $("#hideShowDiv").html("<a href='#'>Hide Filters</a>");
+        filterState=0;
+      }
+	 });
+});
 </script>
 <ol class="breadcrumb">
   <li class="breadcrumb-item active"><spring:message code="All Products" text="All Products" /></li>
+  <li class="ml-auto"><span id="hideShowDiv"><a href="#">Hide Filters</a></span></li>
 </ol>
 <div class="row" style="height: 10px;"></div>
-<div class="row">
+<div class="row" id="filters">
 	<div class="col-sm-12">
 	<form method="GET" class="form-horizontal" action="<%=RequestUrls.PRODUCT_ALL %>">
 		<div class="card">

@@ -19,6 +19,7 @@ public class CustomExceptionHandler {
 	
 	@ExceptionHandler(Exception.class)
 	public String processException(Model model, Exception exception) {
+		exception.printStackTrace();
 		model.addAttribute("message", environment.getProperty(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value())));		
 		return "redirect:"+RequestUrls.FAILURE+"/"+HttpStatus.INTERNAL_SERVER_ERROR.value();
 	}
