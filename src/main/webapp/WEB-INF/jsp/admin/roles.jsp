@@ -114,7 +114,7 @@ $(document).ready(function(){
 		</c:when>
 	</c:choose>
 <div class="row">
-  <div class="modal fade" id="deleteConfirmation" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
+  <div class="modal fade" id="deleteConfirmation" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header"><spring:message code="Confirm Delete" text="Confirm Delete" /></div>
@@ -132,7 +132,7 @@ $(document).ready(function(){
   </div>
 </div>
 <div class="row">
-  <div class="modal fade" id="alertMessages" role="dialog" aria-labelledby="alertMessagesLabel" aria-hidden="true">
+  <div class="modal fade" id="alertMessages" role="dialog" aria-labelledby="alertMessagesLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body mx-3"></div>

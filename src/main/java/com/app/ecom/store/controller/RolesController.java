@@ -1,10 +1,13 @@
 package com.app.ecom.store.controller;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.IdsDto;
+import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.RoleDto;
 import com.app.ecom.store.model.Role;
 import com.app.ecom.store.service.RoleService;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -66,21 +70,33 @@ public class RolesController {
 		return "addRole";
 	}
 	
+	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_ROLE)
-	public String deleteRoleById(Model model, @PathVariable(FieldNames.ID) Long id) {
-		roleService.deleteRoleById(id);
-		return "roles";
+	public Response deleteRoleById(Model model, @PathVariable(FieldNames.ID) Long id) {
+		Response response = roleValidator.validateRoleAssociation(Arrays.asList(id));
+		if(HttpStatus.OK.value() == response.getCode()) {
+			roleService.deleteRoleById(id);
+		}
+		return response;
 	}
 	
 	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_BULK_ROLES)
-	public boolean deleteRoles(@RequestBody IdsDto idsDto) {
-		return roleService.deleteRoles(idsDto.getIds());
+	public Response deleteRoles(@RequestBody IdsDto idsDto) {
+		Response response = roleValidator.validateRoleAssociation(idsDto.getIds());
+		if(HttpStatus.OK.value() == response.getCode()) {
+			roleService.deleteRoles(idsDto.getIds());
+		}
+		return response;
 	}
 	
 	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_ALL_ROLES)
-	public boolean deleteAllRoles() {
-		return roleService.deleteAllRoles();
+	public Response deleteAllRoles() {
+		Response response = roleValidator.validateRoleAssociation(null);
+		if(HttpStatus.OK.value() == response.getCode()) {
+			roleService.deleteAllRoles();
+		}
+		return response;
 	}
 }

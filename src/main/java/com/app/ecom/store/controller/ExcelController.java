@@ -3,12 +3,12 @@ package com.app.ecom.store.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.service.ExcelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ExcelController {
 	
-	@Inject
+	@Autowired
 	private ExcelService excelService;
 	
 	@GetMapping(value = RequestUrls.EXCEL)

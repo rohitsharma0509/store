@@ -1,9 +1,9 @@
 package com.app.ecom.store.mapper;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.model.User;
@@ -46,12 +46,12 @@ public class UserMapper {
         return user;
     }
     
-    public List<UserDto> usersToUserDtos(List<User> users) {
+    public Set<UserDto> usersToUserDtos(Set<User> users) {
     	if(CollectionUtils.isEmpty(users)) {
-    		return Collections.emptyList();
+    		return Collections.emptySet();
     	}
     	
-    	List<UserDto> userDtos = new ArrayList<>();
+    	Set<UserDto> userDtos = new HashSet<>();
     	users.stream().filter(Objects::nonNull).forEach(user -> userDtos.add(userToUserDto(user)));
     	return userDtos;
     }

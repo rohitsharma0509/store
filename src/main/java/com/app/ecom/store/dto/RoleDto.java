@@ -7,6 +7,8 @@ public class RoleDto {
 
 	private String name;
 	
+	private Set<UserDto> userDtos;
+	
 	private Set<PrivilegeDto> privilegeDtos;
 
 	public Long getId() {
@@ -23,6 +25,14 @@ public class RoleDto {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<UserDto> getUserDtos() {
+		return userDtos;
+	}
+
+	public void setUserDtos(Set<UserDto> userDtos) {
+		this.userDtos = userDtos;
 	}
 
 	public Set<PrivilegeDto> getPrivilegeDtos() {

@@ -9,19 +9,18 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
-import javax.inject.Inject;
-
 import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.jaxb.ProductType;
 import com.app.ecom.store.dto.jaxb.ProductsType;
 import com.app.ecom.store.model.Product;
 import com.app.ecom.store.service.ProductCategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductMapper {
 	
-	@Inject
+	@Autowired
 	private ProductCategoryService productCategoryService;
 	
 	public List<ProductDto> productsToProductDtos(List<Product> products) {

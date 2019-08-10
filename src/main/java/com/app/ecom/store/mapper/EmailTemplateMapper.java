@@ -3,13 +3,11 @@ package com.app.ecom.store.mapper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-
-import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import com.app.ecom.store.dto.EmailTemplateDto;
 import com.app.ecom.store.model.EmailTemplate;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 @Component
 public class EmailTemplateMapper {
@@ -20,11 +18,15 @@ public class EmailTemplateMapper {
         }
         
         List<EmailTemplateDto> emailTemplateDtos = new ArrayList<>();
-        emailTemplates.stream().filter(Objects::nonNull).forEach(emailTemplate -> emailTemplateDtos.add(emailTemplateToEmailTemplateDto(emailTemplate)));
+        emailTemplates.stream().forEach(emailTemplate -> emailTemplateDtos.add(emailTemplateToEmailTemplateDto(emailTemplate)));
         return emailTemplateDtos;
     }
     
     public EmailTemplateDto emailTemplateToEmailTemplateDto(EmailTemplate emailTemplate) {
+    	if(emailTemplate == null) {
+    		return null;
+    	}
+    	
         EmailTemplateDto emailTemplateDto = new EmailTemplateDto();
         emailTemplateDto.setId(emailTemplate.getId());
         emailTemplateDto.setType(emailTemplate.getType());
@@ -43,11 +45,15 @@ public class EmailTemplateMapper {
         }
         
         List<EmailTemplate> emailTemplates = new ArrayList<>();
-        emailTemplateDtos.stream().filter(Objects::nonNull).forEach(emailTemplateDto -> emailTemplates.add(emailTemplateDtoToEmailTemplate(emailTemplateDto)));
+        emailTemplateDtos.stream().forEach(emailTemplateDto -> emailTemplates.add(emailTemplateDtoToEmailTemplate(emailTemplateDto)));
         return emailTemplates;
     }
     
     public EmailTemplate emailTemplateDtoToEmailTemplate(EmailTemplateDto emailTemplateDto) {
+    	if(emailTemplateDto == null) {
+    		return null;
+    	}
+    	
         EmailTemplate emailTemplate = new EmailTemplate();
         emailTemplate.setId(emailTemplateDto.getId());
         emailTemplate.setType(emailTemplateDto.getType());

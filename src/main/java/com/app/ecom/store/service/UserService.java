@@ -1,6 +1,6 @@
 package com.app.ecom.store.service;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,15 +14,19 @@ import org.springframework.web.context.request.WebRequest;
 public interface UserService {
     User createUser(UserDto userDto);
     
-    void update(User user);
+    void updateUser(UserDto userDto);
 
     User findByUsername(String username);
     
+    UserDto findUserByUsername(String username);
+    
     Page<User> getUsers(Pageable pageable);
     
-    List<UserDto> getUserByMobileOrName(String mobileOrName);
+    Set<UserDto> getUserByMobileOrName(String mobileOrName);
 
     void updateLocale(HttpServletRequest request, HttpServletResponse response, String language);
 
     void sendVerificationLink(User user, WebRequest request);
+
+	UserDto findUserById(Long id);
 }

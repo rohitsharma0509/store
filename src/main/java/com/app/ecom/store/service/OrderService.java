@@ -2,6 +2,7 @@ package com.app.ecom.store.service;
 
 import java.io.ByteArrayOutputStream;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.OrderDto;
@@ -25,4 +26,6 @@ public interface OrderService {
 	Long countByOrderDateGreaterThanEqual(ZonedDateTime orderDate);
 
 	CustomPage<OrderDto> searchOrders(String orderNumber, String fromDate, String toDate, Long userId, Pageable pageable);
+	
+	Long countOrderByProductIdIn(List<Long> ids);
 }

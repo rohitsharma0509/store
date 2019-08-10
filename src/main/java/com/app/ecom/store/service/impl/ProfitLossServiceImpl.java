@@ -3,11 +3,7 @@ package com.app.ecom.store.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.Tuple;
-
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.constants.FieldNames;
@@ -16,14 +12,17 @@ import com.app.ecom.store.dto.ProfitLossDto;
 import com.app.ecom.store.querybuilder.QueryBuilder;
 import com.app.ecom.store.service.ProfitLossService;
 import com.app.ecom.store.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ProfitLossServiceImpl implements ProfitLossService{
 	
-	@Inject
+	@Autowired
 	private QueryBuilder queryBuilder;
 	
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 	
 	public CustomPage<ProfitLossDto> searchDailyProfitLoss(Pageable pageable) {

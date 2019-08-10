@@ -1,21 +1,19 @@
 package com.app.ecom.store.events;
 
-import javax.inject.Inject;
-
-import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
-
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.service.UserTokenService;
 import com.app.ecom.store.util.EmailUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 @Component
 public class RegistrationCompleteListener implements ApplicationListener<RegistrationCompleteEvent> {
     
-    @Inject
+    @Autowired
     private EmailUtil emailUtil;
     
-    @Inject
+    @Autowired
     private UserTokenService verificationTokenService;
 
     @Override

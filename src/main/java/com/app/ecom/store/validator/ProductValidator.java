@@ -1,19 +1,31 @@
 package com.app.ecom.store.validator;
 
-import javax.inject.Inject;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import com.app.ecom.store.dto.ProductDto;
+import com.app.ecom.store.dto.Response;
+import com.app.ecom.store.enums.ErrorCode;
+import com.app.ecom.store.service.OrderService;
+import com.app.ecom.store.service.ProductService;
+import com.app.ecom.store.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.app.ecom.store.dto.ProductDto;
-import com.app.ecom.store.util.CommonUtil;
-
 @Component
 public class ProductValidator implements Validator {
 
-	@Inject
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
 	private CommonUtil commonUtil;
 
 	@Override
@@ -24,32 +36,44 @@ public class ProductValidator implements Validator {
 	@Override
 	public void validate(Object o, Errors errors) {
 		ProductDto productDto = (ProductDto) o;
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "brandName", "NotEmpty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "perProductPrice", "NotEmpty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "purchasePrice", "NotEmpty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "quantity", "NotEmpty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "alertQuantity", "NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "brandName", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "perProductPrice", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "purchasePrice", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "quantity", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "alertQuantity", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 
 		if (!commonUtil.isValid(productDto.getCategoryId() + "")) {
-			errors.rejectValue("categoryId", "Select.Category");
+			errors.rejectValue("categoryId", commonUtil.getMessage(ErrorCode.ERR000009.getCode()));
 		}
 
 		if (!commonUtil.isDouble(productDto.getPerProductPrice() + "")) {
-			errors.rejectValue("perProductPrice", "Invalid.Sell.Price");
+			errors.rejectValue("perProductPrice", commonUtil.getMessage(ErrorCode.ERR000010.getCode()));
 		}
 
 		if (!commonUtil.isDouble(productDto.getPurchasePrice() + "")) {
-			errors.rejectValue("purchasePrice", "Invalid.Purchase.Price");
+			errors.rejectValue("purchasePrice", commonUtil.getMessage(ErrorCode.ERR000011.getCode()));
 		}
 
 		if (!commonUtil.isInteger(productDto.getQuantity() + "")) {
-			errors.rejectValue("quantity", "Invalid.Quantity");
+			errors.rejectValue("quantity", commonUtil.getMessage(ErrorCode.ERR000012.getCode()));
 		}
 
 		if (!commonUtil.isInteger(productDto.getAlertQuantity() + "")) {
-			errors.rejectValue("alertQuantity", "Invalid.Alert.Quantity");
+			errors.rejectValue("alertQuantity", commonUtil.getMessage(ErrorCode.ERR000013.getCode()));
 		}
+	}
+
+	public Response validateProductAssociation(List<Long> productIds) {
+		List<ProductDto> productDtos;
+		if(CollectionUtils.isEmpty(productIds)) {
+			productDtos = productService.getAllProducts();
+			productIds = productDtos.stream().map(ProductDto::getId).collect(Collectors.toList());
+		}
+		
+		String errorCode = productIds.size() <= 1 ? ErrorCode.ERR000019.getCode() : ErrorCode.ERR000020.getCode();
+		Long orderCount = orderService.countOrderByProductIdIn(productIds);
+		return commonUtil.getResponse(orderCount > 0, errorCode);
 	}
 
 }

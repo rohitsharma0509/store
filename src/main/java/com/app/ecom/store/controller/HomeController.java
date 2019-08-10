@@ -4,26 +4,25 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 
-import javax.inject.Inject;
-
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.service.OrderService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.ChartGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-	@Inject
+	@Autowired
 	private ProductService productService;
 	
-	@Inject
+	@Autowired
 	private OrderService orderService;
 	
-	@Inject
+	@Autowired
 	private ChartGenerator chartGenerator;
 	
 	@GetMapping(value = { "/", RequestUrls.HOME })

@@ -313,4 +313,9 @@ public class OrderServiceImpl implements OrderService {
 		page.setTotalPages((int)Math.ceil((double)totalRecords/pageable.getPageSize()));
 		return page;
 	}
+
+	@Override
+	public Long countOrderByProductIdIn(List<Long> ids) {
+		return orderRepository.countOrderByProductIdIn(ids);
+	}
 }

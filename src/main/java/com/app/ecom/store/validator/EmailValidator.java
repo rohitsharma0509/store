@@ -1,20 +1,18 @@
 package com.app.ecom.store.validator;
 
-import javax.inject.Inject;
-
+import com.app.ecom.store.constants.Constants;
+import com.app.ecom.store.dto.Email;
+import com.app.ecom.store.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.app.ecom.store.constants.Constants;
-import com.app.ecom.store.dto.Email;
-import com.app.ecom.store.util.CommonUtil;
-
 @Component
 public class EmailValidator implements Validator {
 
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 
 	@Override

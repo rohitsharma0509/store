@@ -2,11 +2,6 @@ package com.app.ecom.store.service.impl;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.Email;
 import com.app.ecom.store.model.EmailAccount;
@@ -14,17 +9,20 @@ import com.app.ecom.store.repository.EmailAccountRepository;
 import com.app.ecom.store.service.EmailService;
 import com.app.ecom.store.util.CommonUtil;
 import com.app.ecom.store.util.EmailUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class EmailServiceImpl implements EmailService {
 	
-	@Inject
+	@Autowired
 	private EmailAccountRepository emailAccountRepository;
 	
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 	
-	@Inject
+	@Autowired
 	private EmailUtil emailUtil;
 
 	@Override

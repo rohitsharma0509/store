@@ -1,17 +1,16 @@
 package com.app.ecom.store.controller;
 
-import javax.inject.Inject;
-
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.model.User;
 import com.app.ecom.store.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SigninController {
-    @Inject
+    @Autowired
     private UserService userService;
     
     @GetMapping(value = RequestUrls.LOGIN)

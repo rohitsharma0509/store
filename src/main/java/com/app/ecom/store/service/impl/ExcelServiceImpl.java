@@ -5,8 +5,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import com.app.ecom.store.constants.Constants;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.ExcelData;
@@ -18,21 +16,22 @@ import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.CommonUtil;
 import com.app.ecom.store.util.ExcelUtil;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ExcelServiceImpl implements ExcelService {
 	
-	@Inject
+	@Autowired
 	private ExcelUtil excelUtil;
 	
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 	
-	@Inject
+	@Autowired
 	private ProductService productService;
 	
-	@Inject
+	@Autowired
 	private OrderRepository orderRepository;
 
 	@Override

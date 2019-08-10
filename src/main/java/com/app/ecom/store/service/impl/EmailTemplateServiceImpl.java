@@ -3,7 +3,6 @@ package com.app.ecom.store.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import com.app.ecom.store.dto.EmailTemplateDto;
@@ -11,6 +10,7 @@ import com.app.ecom.store.mapper.EmailTemplateMapper;
 import com.app.ecom.store.model.EmailTemplate;
 import com.app.ecom.store.repository.EmailTemplateRepository;
 import com.app.ecom.store.service.EmailTemplateService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +19,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailTemplateServiceImpl implements EmailTemplateService {
 
-    @Inject
+    @Autowired
     private EmailTemplateRepository emailTemplateRepository;
 
-    @Inject
+    @Autowired
     private EmailTemplateMapper emailTemplateMapper;
 
     @Override
@@ -33,6 +33,11 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
         } else {
             return null;
         }
+    }
+    
+    @Override
+    public EmailTemplateDto getEmailTemplateBySubject(String subject) {
+        return emailTemplateMapper.emailTemplateToEmailTemplateDto(emailTemplateRepository.findBySubject(subject));
     }
 
     @Override

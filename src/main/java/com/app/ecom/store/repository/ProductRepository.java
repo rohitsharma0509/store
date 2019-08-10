@@ -28,4 +28,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	Integer getAvailableQuantity(@Param("id") Long id);
 
 	Long countByCategoryId(Long categoryId);
+
+	Long countByCategoryIdIn(List<Long> categoryIds);
 }

@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmailTemplateRepository extends JpaRepository<EmailTemplate, Long> {
 	void deleteByIdIn(List<Long> ids);
+
+	EmailTemplate findBySubject(String subject);
 }

@@ -1,7 +1,9 @@
 package com.app.ecom.store.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -33,6 +35,11 @@ public class RoleServiceImpl implements RoleService {
 	public RoleDto addRole(RoleDto roleDto) {
 		return roleMapper.roleToRoleDto(roleRepository.save(roleMapper.roleDtoToRole(roleDto)));
 	}
+	
+	@Override
+	public RoleDto getRoleByName(String name) {
+		return roleMapper.roleToRoleDto(roleRepository.findByName(name));
+	}
 
 	@Override
 	public RoleDto getRoleById(Long id) {
@@ -46,8 +53,15 @@ public class RoleServiceImpl implements RoleService {
 	
 	@Override
 	@Transactional
-	public void deleteRoleById(Long id) {
-		roleRepository.deleteById(id);
+	public boolean deleteRoleById(Long id) {
+		boolean flag = false;
+		try {
+			roleRepository.deleteById(id);
+			flag = true;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
 	}
 	
 	@Override
@@ -74,5 +88,16 @@ public class RoleServiceImpl implements RoleService {
 			
 		}
 		return isDeleted;
+	}
+
+	@Override
+	public Set<RoleDto> getRolesByIdIn(List<Long> ids) {
+		return roleMapper.rolesToRoleDtos(roleRepository.findByIdIn(ids));
+	}
+
+	@Override
+	public Set<RoleDto> getAllRoles() {
+		List<Role> roles = roleRepository.findAll();
+		return roleMapper.rolesToRoleDtos(new HashSet<>(roles));
 	}
 }

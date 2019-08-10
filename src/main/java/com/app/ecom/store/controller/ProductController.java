@@ -1,9 +1,9 @@
 package com.app.ecom.store.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
@@ -11,13 +11,16 @@ import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.ProductDto;
+import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.model.Product;
 import com.app.ecom.store.service.ProductCategoryService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.CommonUtil;
 import com.app.ecom.store.validator.ProductValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,16 +37,16 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class ProductController {
     
-	@Inject
+	@Autowired
 	private ProductService productService;
 	
-	@Inject
+	@Autowired
 	private ProductCategoryService productCategoryService;
 	
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 	
-	@Inject
+	@Autowired
 	private ProductValidator productValidator;
 	
 	@GetMapping(value = RequestUrls.ADD_PRODUCT)
@@ -95,22 +98,37 @@ public class ProductController {
 		return "products";
 	}
 	
+	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_PRODUCT)
-	public String deleteProductById(Model model, @PathVariable(FieldNames.ID) Long id) {
-		productService.deleteProductById(id);
-		return "products";
+	public Response deleteProductById(Model model, @PathVariable(FieldNames.ID) Long id) {
+		Response response = productValidator.validateProductAssociation(Arrays.asList(id));
+		
+		if(HttpStatus.OK.value() == response.getCode()) {
+			productService.deleteProductById(id);
+		}
+		return response;
 	}
 	
 	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_BULK_PRODUCT)
-	public boolean deleteProducts(@RequestBody IdsDto idsDto) {
-		return productService.deleteProducts(idsDto.getIds());
+	public Response deleteProducts(@RequestBody IdsDto idsDto) {
+		Response response = productValidator.validateProductAssociation(idsDto.getIds());
+		
+		if(HttpStatus.OK.value() == response.getCode()) {
+			productService.deleteProducts(idsDto.getIds());
+		}
+		return response;
 	}
 	
 	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_ALL_PRODUCT)
-	public boolean deleteAllProducts() {
-		return productService.deleteAllProducts();
+	public Response deleteAllProducts() {
+		Response response = productValidator.validateProductAssociation(null);
+		
+		if(HttpStatus.OK.value() == response.getCode()) {
+			productService.deleteAllProducts();
+		}
+		return response;
 	}
 	
 	@PutMapping(value = RequestUrls.PRODUCTS)

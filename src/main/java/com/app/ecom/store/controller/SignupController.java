@@ -4,8 +4,8 @@ import java.util.Calendar;
 
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.UserDto;
+import com.app.ecom.store.dto.UserTokenDto;
 import com.app.ecom.store.model.User;
-import com.app.ecom.store.model.UserToken;
 import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.service.UserTokenService;
 import com.app.ecom.store.validator.UserValidator;
@@ -51,21 +51,21 @@ public class SignupController {
     
     @GetMapping(value = RequestUrls.REGISTRATION_CONFIRM)
     public String confirmRegistration(WebRequest request, Model model, @RequestParam String token) {
-        UserToken userToken = userTokenService.getUserToken(token);
+        UserTokenDto userTokenDto = userTokenService.getUserToken(token);
         
-        if (userToken == null) {
+        if (userTokenDto == null) {
             model.addAttribute("message", "Invalid token");
             return RequestUrls.LOGIN;
         }
          
-        User user = userToken.getUser();
+        UserDto userDto = userTokenDto.getUserDto();
         Calendar cal = Calendar.getInstance();
-        if ((userToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+        if ((userTokenDto.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
             model.addAttribute("message", "Acount activation link has been expired.");
             return RequestUrls.LOGIN;
-        } 
-        user.setIsEnabled(true);
-        userService.update(user);
+        }
+        userDto.setIsEnabled(true);
+        userService.updateUser(userDto);
         model.addAttribute("message", "Your acount has been activated now.");
         return RequestUrls.LOGIN; 
     }

@@ -2,21 +2,19 @@ package com.app.ecom.store.service.impl;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
+import com.app.ecom.store.model.Supplier;
+import com.app.ecom.store.repository.SupplierRepository;
+import com.app.ecom.store.service.SupplierService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.app.ecom.store.model.Supplier;
-import com.app.ecom.store.repository.SupplierRepository;
-import com.app.ecom.store.service.SupplierService;
-
 @Service
 public class SupplierServiceImpl implements SupplierService{
 
-	@Inject
+	@Autowired
 	private SupplierRepository supplierRepository;
 
 	@Override

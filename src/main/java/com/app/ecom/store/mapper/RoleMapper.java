@@ -16,6 +16,9 @@ public class RoleMapper {
 
 	@Autowired
 	private PrivilegeMapper privilegeMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	public Set<Role> roleDtosToRoles(Set<RoleDto> roleDtos) {
 		if (CollectionUtils.isEmpty(roleDtos)) {
@@ -45,9 +48,13 @@ public class RoleMapper {
 	}
 
 	public RoleDto roleToRoleDto(Role role) {
+		if(null == role) {
+			return null;
+		}
 		RoleDto roleDto = new RoleDto();
 		roleDto.setName(role.getName());
 		roleDto.setPrivilegeDtos(privilegeMapper.privilegesToPrivilegeDtos(role.getPrivileges()));
+		roleDto.setUserDtos(userMapper.usersToUserDtos(role.getUsers()));
 		return roleDto;
 	}
 }

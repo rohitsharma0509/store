@@ -54,18 +54,6 @@ $(document).ready(function(){
 	</div>
 </div>
 <div class="row" style="height: 20px;"></div>
-<div class="row">
-	<div class="col-sm-11">
-		<a class="btn btn-sm btn-info pover" href="#" rel="moreActions" data-popover-content="#moreActionContent" data-toggle="popover" ><spring:message code="More Actions" text="More Actions" />&nbsp;&nbsp;<i class="fa fa-caret-right" aria-hidden="true" ></i></a>
-	</div>
-</div>
-<div id="moreActionContent" class="d-none">
-	<ul class="list-group list-group-flush">
-	  <li class="list-group-item list-group-item-action"><a href="#" onclick="deleteRecords('', '<%=RequestUrls.USERS %>')"><spring:message code="Delete" text="Delete" /></a></li>
-    <li class="list-group-item list-group-item-action"><a href="#" onclick="deleteRecords('ALL', '<%=RequestUrls.USERS %>')"><spring:message code="Delete All" text="Delete All" /></a></li>
-	</ul>
-</div>
-<div class="row" style="height: 10px;"></div>
 <c:choose>
 	<c:when test="${page.getContent().size() > 0}">
 		<div class="row">
@@ -88,9 +76,7 @@ $(document).ready(function(){
 							  <a href="#" class="pover" rel="moreActions" data-popover-content="#singleRecordAction${loop.index}" data-placement="left" data-toggle="popover" ><i class="fa fa-list" aria-hidden="true"></i></a>
                 <div id="singleRecordAction${loop.index}" class="d-none">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.USERS %>?id=${user.id}"><spring:message code="Edit" text="Edit" /></a></li>
-                    <li class="list-group-item list-group-item-action"><a href="#" data-id="${product.id}" data-toggle="modal" data-target="#deleteConfirmation"><spring:message code="Delete" text="Delete" /></a></li>
-                    <!-- <li class="list-group-item list-group-item-action"><a href="#" onclick="callAjaxForDelete('${contextPath}<%=RequestUrls.USERS %>/${user.id}')"><spring:message code="Delete" text="Delete" /></a></li> -->
+                    <li class="list-group-item list-group-item-action"><a href="${contextPath}<%=RequestUrls.EDIT_USER %>?id=${user.id}"><spring:message code="Edit" text="Edit" /></a></li>
                   </ul>
                 </div>
 							</td>

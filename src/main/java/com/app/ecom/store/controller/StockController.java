@@ -3,14 +3,13 @@ package com.app.ecom.store.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.StockDto;
 import com.app.ecom.store.service.ProductCategoryService;
 import com.app.ecom.store.service.ProductService;
 import com.app.ecom.store.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -21,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class StockController {
 	
-	@Inject
+	@Autowired
 	private ProductService productService;
 	
-	@Inject
+	@Autowired
 	private ProductCategoryService productCategoryService;
 	
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 	
 	@GetMapping(value = RequestUrls.STOCK)

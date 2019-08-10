@@ -1,20 +1,24 @@
 package com.app.ecom.store.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.IdsDto;
+import com.app.ecom.store.dto.ProductCategoryDto;
+import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.model.ProductCategory;
 import com.app.ecom.store.service.ProductCategoryService;
 import com.app.ecom.store.util.CommonUtil;
 import com.app.ecom.store.validator.ProductCategoryValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,35 +34,35 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ProductCategoryController {
 
-	@Inject
+	@Autowired
 	private ProductCategoryService productCategoryService;
 	
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 	
-	@Inject
+	@Autowired
 	private ProductCategoryValidator productCategoryValidator;
 	
 	@GetMapping(value = RequestUrls.ADD_CATEGORY)
 	public String addCategory(Model model, @RequestParam(value = FieldNames.ID, required=false) Long id) {
-		ProductCategory productCategory;
+		ProductCategoryDto productCategoryDto;
 		if(id != null){
-			productCategory = productCategoryService.getCategoryById(id);
+			productCategoryDto = productCategoryService.getCategoryById(id);
 		}else {
-			productCategory = new ProductCategory();
+			productCategoryDto = new ProductCategoryDto();
 		}
-		model.addAttribute(FieldNames.PRODUCT_CATEGORY, productCategory);
+		model.addAttribute(FieldNames.PRODUCT_CATEGORY_DTO, productCategoryDto);
 		return "addCategory";
 	}
 	
 	@PostMapping(value = RequestUrls.CATEGORIES)
-	public String addCategory(Model model, @Valid ProductCategory productCategory, BindingResult bindingResult) {
-		productCategoryValidator.validate(productCategory, bindingResult);
+	public String addCategory(Model model, @Valid ProductCategoryDto productCategoryDto, BindingResult bindingResult) {
+		productCategoryValidator.validate(productCategoryDto, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return "addCategory";
 		}
 		
-		productCategoryService.addCategory(productCategory);
+		productCategoryService.addCategory(productCategoryDto);
 		return "redirect:"+RequestUrls.CATEGORIES;
 	}
 	
@@ -77,22 +81,37 @@ public class ProductCategoryController {
 		return "categories";
 	}
 	
+	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_CATEGORY)
-	public String deleteCategory(Model model, @PathVariable(FieldNames.ID) Long id) {
-		productCategoryService.deleteCategory(id);
-		return "categories";
+	public Response deleteCategory(Model model, @PathVariable(FieldNames.ID) Long id) {
+		Response response = productCategoryValidator.validateCategoryAssociation(Arrays.asList(id));
+
+		if(HttpStatus.OK.value() == response.getCode()) {
+			productCategoryService.deleteCategory(id);
+		}
+		return response;
 	}
 	
 	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_BULK_CATEGORY)
-	public boolean deleteProducts(@RequestBody IdsDto idsDto) {
-		return productCategoryService.deleteCategories(idsDto.getIds());
+	public Response deleteProducts(@RequestBody IdsDto idsDto) {
+		Response response = productCategoryValidator.validateCategoryAssociation(idsDto.getIds());
+
+		if(HttpStatus.OK.value() == response.getCode()) {
+			productCategoryService.deleteCategories(idsDto.getIds());
+		}
+		return response;
 	}
 	
 	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_ALL_CATEGORY)
-	public boolean deleteAllProducts() {
-		return productCategoryService.deleteAllCategories();
+	public Response deleteAllProducts() {
+		Response response = productCategoryValidator.validateCategoryAssociation(null);
+
+		if(HttpStatus.OK.value() == response.getCode()) {
+			productCategoryService.deleteAllCategories();
+		}
+		return response;
 	}
 
 	@PutMapping(value = RequestUrls.CATEGORIES)

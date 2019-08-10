@@ -1,23 +1,26 @@
 package com.app.ecom.store.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.EmailTemplateDto;
 import com.app.ecom.store.dto.IdsDto;
+import com.app.ecom.store.dto.Response;
 import com.app.ecom.store.dto.TemplateType;
 import com.app.ecom.store.model.EmailTemplate;
 import com.app.ecom.store.service.EmailTemplateService;
 import com.app.ecom.store.util.CommonUtil;
 import com.app.ecom.store.validator.EmailTemplateValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,13 +34,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class EmailTemplateController {
     
-    @Inject
+    @Autowired
     private CommonUtil commonUtil;
     
-    @Inject
+    @Autowired
     private EmailTemplateService emailTemplateService;
     
-    @Inject
+    @Autowired
     private EmailTemplateValidator emailTemplateValidator;
     
     @GetMapping(value = RequestUrls.ADD_EMAIL_TEMPLATES)
@@ -77,21 +80,36 @@ public class EmailTemplateController {
         return "emailTemplates";
     }
     
+    @ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_EMAIL_TEMPLATES)
-	public String deleteEmailTemplateById(Model model, @PathVariable(FieldNames.ID) Long id) {
-		emailTemplateService.deleteEmailTemplateById(id);
-		return "emailTemplates";
+	public Response deleteEmailTemplateById(@PathVariable(FieldNames.ID) Long id) {
+    	Response response = emailTemplateValidator.validateTemplateAssociation(Arrays.asList(id));
+    	
+    	if(HttpStatus.OK.value() == response.getCode()) {
+    		emailTemplateService.deleteEmailTemplateById(id);
+    	}
+		return response;
 	}
 	
 	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_BULK_EMAIL_TEMPLATES)
-	public boolean deleteEmailTemplates(@RequestBody IdsDto idsDto) {
-		return emailTemplateService.deleteEmailTemplates(idsDto.getIds());
+	public Response deleteEmailTemplates(@RequestBody IdsDto idsDto) {
+		Response response = emailTemplateValidator.validateTemplateAssociation(idsDto.getIds());
+    	
+    	if(HttpStatus.OK.value() == response.getCode()) {
+    		emailTemplateService.deleteEmailTemplates(idsDto.getIds());
+    	}
+		return response;
 	}
 	
 	@ResponseBody
 	@PostMapping(value = RequestUrls.DELETE_ALL_EMAIL_TEMPLATES)
-	public boolean deleteAllEmailTemplates() {
-		return emailTemplateService.deleteAllEmailTemplates();
+	public Response deleteAllEmailTemplates() {
+		Response response = emailTemplateValidator.validateTemplateAssociation(null);
+    	
+    	if(HttpStatus.OK.value() == response.getCode()) {
+    		emailTemplateService.deleteAllEmailTemplates();
+    	}
+		return response;
 	}
 }

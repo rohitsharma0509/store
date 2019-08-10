@@ -50,4 +50,6 @@ public interface ProductService {
 	boolean deleteProducts(List<Long> ids);
 	
 	Long countByCategoryId(Long categoryId);
+	
+	Long countByCategoryIdIn(List<Long> categoryIds);
 }

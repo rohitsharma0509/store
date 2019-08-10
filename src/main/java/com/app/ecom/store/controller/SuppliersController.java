@@ -2,12 +2,12 @@ package com.app.ecom.store.controller;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.model.Supplier;
 import com.app.ecom.store.service.SupplierService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SuppliersController {
 
-	@Inject
+	@Autowired
 	private SupplierService supplierService;
 	
 	@GetMapping(value = RequestUrls.ADD_SUPPLIER)

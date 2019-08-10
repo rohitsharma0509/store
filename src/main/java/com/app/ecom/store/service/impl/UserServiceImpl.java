@@ -1,8 +1,8 @@
 package com.app.ecom.store.service.impl;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,15 +42,15 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
-    public void update(User user) {
-    	Optional<User> optionalUser = userRepository.findById(user.getId());
+    public void updateUser(UserDto userDto) {
+    	Optional<User> optionalUser = userRepository.findById(userDto.getId());
     	if(optionalUser.isPresent()) {
     		User userToUpdate = optionalUser.get();
-    		userToUpdate.setFirstName(user.getFirstName());
-    		userToUpdate.setLastName(user.getLastName());
-    		userToUpdate.setEmail(user.getEmail());
-    		userToUpdate.setMobile(user.getMobile());
-    		userToUpdate.setLanguage(user.getLanguage());
+    		userToUpdate.setFirstName(userDto.getFirstName());
+    		userToUpdate.setLastName(userDto.getLastName());
+    		userToUpdate.setEmail(userDto.getEmail());
+    		userToUpdate.setMobile(userDto.getMobile());
+    		userToUpdate.setLanguage(userDto.getLanguage());
     		userRepository.save(userToUpdate);
     	}
     }
@@ -60,8 +60,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username);
     }
     
+    @Override
+    public UserDto findUserByUsername(String username) {
+        return userMapper.userToUserDto(userRepository.findByUsername(username));
+    }
+    
 	@Override
-	public List<UserDto> getUserByMobileOrName(String mobileOrName) {
+	public Set<UserDto> getUserByMobileOrName(String mobileOrName) {
 		return userMapper.usersToUserDtos(userRepository.findByMobileContaining(mobileOrName));
 	}
     
@@ -84,4 +89,14 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
     }
+
+	@Override
+	public UserDto findUserById(Long id) {
+		Optional<User> optionalUser = userRepository.findById(id);
+		if(optionalUser.isPresent()) {
+			return userMapper.userToUserDto(optionalUser.get());
+		} else {
+			return null;
+		}
+	}
 }

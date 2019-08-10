@@ -1,8 +1,7 @@
 package com.app.ecom.store.exceptions;
 
-import javax.inject.Inject;
-
 import com.app.ecom.store.constants.RequestUrls;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @PropertySource("classpath:errorMessages.properties")
 public class CustomExceptionHandler {
 	
-	@Inject
+	@Autowired
 	private Environment environment;
 	
 	@ExceptionHandler(Exception.class)

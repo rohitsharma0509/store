@@ -5,20 +5,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.inject.Inject;
-
-import org.springframework.stereotype.Service;
-
+import com.app.ecom.store.dto.UserTokenDto;
+import com.app.ecom.store.mapper.UserTokenMapper;
 import com.app.ecom.store.model.User;
 import com.app.ecom.store.model.UserToken;
 import com.app.ecom.store.repository.UserTokenRepository;
 import com.app.ecom.store.service.UserTokenService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserTokenServiceImpl implements UserTokenService {
 
-    @Inject
+    @Autowired
     private UserTokenRepository userTokenRepository;
+    
+    @Autowired
+    private UserTokenMapper userTokenMapper;
 
     @Override
     public String createUserToken(User user) {
@@ -36,7 +39,7 @@ public class UserTokenServiceImpl implements UserTokenService {
     }
 
     @Override
-    public UserToken getUserToken(String token) {
-        return userTokenRepository.findByToken(token);
+    public UserTokenDto getUserToken(String token) {
+        return userTokenMapper.userTokenToUserTokenDto(userTokenRepository.findByToken(token));
     }
 }

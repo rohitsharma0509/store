@@ -115,6 +115,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/admin/users.jsp" />  
     </definition>
     
+    <definition name="editUser" extends="base.definition">  
+        <put-attribute name="title" value="Edit User" />  
+        <put-attribute name="body" value="/WEB-INF/jsp/admin/editUser.jsp" />  
+    </definition>
+    
     <definition name="roles" extends="base.definition">  
         <put-attribute name="title" value="Roles" />  
         <put-attribute name="body" value="/WEB-INF/jsp/admin/roles.jsp" />  

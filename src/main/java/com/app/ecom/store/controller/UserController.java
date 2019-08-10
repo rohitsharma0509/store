@@ -1,8 +1,7 @@
 package com.app.ecom.store.controller;
 
-import java.util.List;
+import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -13,6 +12,7 @@ import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.model.User;
 import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,13 +29,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserController {
-	@Inject
+	@Autowired
 	private UserService userService;
 
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 	
-	@Inject
+	@Autowired
 	private Environment environment;
 
 	@GetMapping(value = RequestUrls.USERS)
@@ -46,24 +46,42 @@ public class UserController {
 		return "users";
 	}
 	
-	@Transactional
-	@PostMapping(value = RequestUrls.EDIT_USERS)
-	public String editUser(Model model, @ModelAttribute("user") User user, HttpServletRequest request, HttpServletResponse response) {
-		userService.update(user);
-		userService.updateLocale(request, response, user.getLanguage());
-		return "myAccount";
-	}
-	
-	@GetMapping(value = RequestUrls.EDIT_PROFILE)
-	public String getUser(Model model) {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		User user = userService.findByUsername(username);
+	@GetMapping(value = RequestUrls.EDIT_USER)
+	public String editUser(Model model, @RequestParam(name = FieldNames.ID, required = true) Long id) {
+		UserDto userDto = userService.findUserById(id);
 		java.util.Map<String, String> languages = new java.util.HashMap<>();
 		languages.put("en", "English");
 		languages.put("hi", "Hindi");
 		languages.put("fr", "French");
 		model.addAttribute("languages", languages);
-		model.addAttribute("user", user);
+		model.addAttribute("userDto", userDto);
+		return "editUser";
+	}
+	
+	@PostMapping(value = RequestUrls.USERS)
+	public String editUser(@ModelAttribute("userDto") UserDto userDto) {
+		userService.updateUser(userDto);
+		return "redirect:"+RequestUrls.USERS;
+	}
+	
+	@Transactional
+	@PostMapping(value = RequestUrls.EDIT_USERS)
+	public String editLoggedInUser(@ModelAttribute("userDto") UserDto userDto, HttpServletRequest request, HttpServletResponse response) {
+		userService.updateUser(userDto);
+		userService.updateLocale(request, response, userDto.getLanguage());
+		return "myAccount";
+	}
+	
+	@GetMapping(value = RequestUrls.EDIT_PROFILE)
+	public String editLoggedInUserProfile(Model model) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserDto userDto = userService.findUserByUsername(username);
+		java.util.Map<String, String> languages = new java.util.HashMap<>();
+		languages.put("en", "English");
+		languages.put("hi", "Hindi");
+		languages.put("fr", "French");
+		model.addAttribute("languages", languages);
+		model.addAttribute("userDto", userDto);
 		return "editProfile";
 	}
 	
@@ -84,7 +102,7 @@ public class UserController {
 	
 	@GetMapping(value = "/users/search")
 	@ResponseBody
-	public List<UserDto> searchCustomer(@RequestParam(required = true) String mobileOrName) {
+	public Set<UserDto> searchCustomer(@RequestParam(required = true) String mobileOrName) {
 		return userService.getUserByMobileOrName(mobileOrName);
 	}
 }

@@ -1,6 +1,7 @@
 package com.app.ecom.store.constants;
 
 public class Constants {
+	public static final String EMPTY_STRING = "";
 	public static final String YYYY_MM_DD = "yyyy-MM-dd";
 	public static final String DD_MM_YYYY = "dd-MM-yyyy";
 	public static final String DATETIME_FORMAT_YYYYMMDDHHMMSS = "dd-MM-yyyy HH:mm:ss";

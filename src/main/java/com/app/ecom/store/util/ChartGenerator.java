@@ -17,9 +17,11 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
-import javax.inject.Inject;
 import javax.persistence.Tuple;
 
+import com.app.ecom.store.constants.Constants;
+import com.app.ecom.store.dto.SearchCriteria;
+import com.app.ecom.store.querybuilder.QueryBuilder;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
@@ -34,19 +36,16 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.app.ecom.store.constants.Constants;
-import com.app.ecom.store.dto.SearchCriteria;
-import com.app.ecom.store.querybuilder.QueryBuilder;
 
 @Component
 public class ChartGenerator {
 	
-	@Inject
+	@Autowired
 	private QueryBuilder queryBuilder;
 	
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 
 	public byte[] createPieChart(Long alertProducts, Long availableProducts, Long outOfStockProduct) {

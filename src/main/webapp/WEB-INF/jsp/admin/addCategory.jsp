@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.FieldNames"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
@@ -20,7 +21,7 @@ String action = "Save";
 </ol>
 <div class="row" style="height:10px;">
 </div>
-<form:form method="POST" modelAttribute="productCategory" class="form-horizontal" action="<%=RequestUrls.CATEGORIES %>">
+<form:form method="POST" modelAttribute="<%=FieldNames.PRODUCT_CATEGORY_DTO %>" class="form-horizontal" action="<%=RequestUrls.CATEGORIES %>">
 <form:hidden path="id"  class="form-control input-sm"/>
 <div class="container py-5">
     <h6><spring:message code="Category Details" text="Category Details" /></h6><hr>

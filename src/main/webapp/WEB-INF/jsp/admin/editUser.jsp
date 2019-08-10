@@ -3,13 +3,13 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.MY_ACCOUNT %>"><spring:message code="My Account" text="My Account" /></a></li>
-  <li class="breadcrumb-item active"><spring:message code="Edit Profile" text="Edit Profile" /></li>
+  <li class="breadcrumb-item"><a href="${contextPath}/admin"><spring:message code="Admin" text="Admin" /></a></li>
+  <li class="breadcrumb-item"><a href="${contextPath}<%=RequestUrls.USERS %>"><spring:message code="Users" text="Users" /></a></li>
+  <li class="breadcrumb-item active"><spring:message code="Edit User" text="Edit User" /></li>
 </ol>
 <div class="row" style="height: 10px;"></div>
 
-
-<form:form method="POST" modelAttribute="userDto" class="form-horizontal" enctype="multipart/form-data" action="<%=RequestUrls.EDIT_USERS %>">
+<form:form method="POST" modelAttribute="userDto" class="form-horizontal" enctype="multipart/form-data" action="<%=RequestUrls.USERS %>">
 <form:hidden path="id"  class="form-control input-sm"/>
 <div class="container py-5">
     <h6><spring:message code="User Details" text="User Details" /></h6><hr>

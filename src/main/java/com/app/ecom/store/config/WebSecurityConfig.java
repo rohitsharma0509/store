@@ -1,7 +1,5 @@
 package com.app.ecom.store.config;
 
-import javax.inject.Inject;
-
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.handler.CustomAccessDeniedHandler;
 import com.app.ecom.store.handler.CustomAuthenticationFailureHandler;
@@ -23,13 +21,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
-	@Inject
+	@Autowired
 	private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
 	
-	@Inject
+	@Autowired
 	private CustomAuthenticationFailureHandler authenticationFailureHandler;
 	
-	@Inject
+	@Autowired
 	private CustomAccessDeniedHandler customAccessDeniedHandler;
 	
     @Bean

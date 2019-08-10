@@ -32,16 +32,7 @@
 		  if(flag == 'MULTIPLE') {
 			  $('#deleteForm').find("input[name=id]").remove();
 			 
-			 var selectedIds = [];
-			 $.each($("input[name='ids']:checked"), function() {
-				selectedIds.push($(this).val());
-		    	var index = selectedIds.indexOf(-1);
-		    	
-		    	if (index > -1) {
-		    	  array.splice(index, 1);
-		    	}
-				 
-			 });
+			 var selectedIds = getSelectedIds();
 			 
 			 if(selectedIds.length <= 0) {
 				 $('#alertMessages').find(".modal-body").html("<p>please select atleast 1 item!</p>");
@@ -56,28 +47,32 @@
       
       $('#deleteForm').submit(function(e) {
 		e.preventDefault();
-		var selectedIds = [];
-		 $.each($("input[name='ids']:checked"), function() {
-			selectedIds.push($(this).val());
-	    	var index = selectedIds.indexOf(-1);
-	    	
-	    	if (index > -1) {
-	    	  array.splice(index, 1);
-	    	}
-		});
+		var flag = $(".deleteBtn").data('flag');
+		var idsDto = {};
+		
+		if(flag == 'MULTIPLE') {
+			var selectedIds = getSelectedIds();
+			idsDto = {"ids": selectedIds };
+		}
 		 
-		var idsDto = {"ids": selectedIds };
 		$.post({
 	        url: $(this).attr('action'),
 	        data: JSON.stringify(idsDto),
 	        contentType: "application/json",
 	        headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
 	        success: function(response) {
-	        	console.log(response);
-	            window.parent.location.reload();
+	        	if(response.code == 200) {
+	        		window.parent.location.reload();
+	        	} else {
+	        		$('#deleteConfirmation').modal('hide');
+	        		$('#alertMessages').find(".modal-body").html(response.description);
+	        		$('#alertMessages').modal({show:true});
+	        	}
 	        },
 	        error: function(response) {
-	            console.log(response);
+	        	$('#deleteConfirmation').modal('hide');
+	        	$('#alertMessages').find(".modal-body").html("<p>Something went wrong!</p>");
+				$('#alertMessages').modal({show:true});
 	        }
 	    });
       });
@@ -86,4 +81,17 @@
 	  $('.pover').on('click', function (e) {
 	      $('.pover').not(this).popover('hide');
 	  });
+	  
+	  function getSelectedIds() {
+		  var selectedIds = [];
+		  $.each($("input[name='ids']:checked"), function() {
+			selectedIds.push($(this).val());
+		    var index = selectedIds.indexOf(-1);
+		    	
+		    if (index > -1) {
+		      array.splice(index, 1);
+		    }
+		  });
+		  return selectedIds;
+	  }
   });

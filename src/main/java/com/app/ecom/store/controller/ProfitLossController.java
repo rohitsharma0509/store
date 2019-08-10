@@ -1,7 +1,5 @@
 package com.app.ecom.store.controller;
 
-import javax.inject.Inject;
-
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.CustomPage;
@@ -9,6 +7,7 @@ import com.app.ecom.store.dto.ProfitLossDto;
 import com.app.ecom.store.service.ProfitLossService;
 import com.app.ecom.store.util.ComboGenerator;
 import com.app.ecom.store.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -18,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ProfitLossController {
-	@Inject
+	@Autowired
 	private ProfitLossService profitLossService;
 
-	@Inject
+	@Autowired
 	private CommonUtil commonUtil;
 
-	@Inject
+	@Autowired
 	private ComboGenerator comboGenerator;
 
 	@GetMapping(value = RequestUrls.PROFIT_LOSS)

@@ -63,6 +63,7 @@ public class RequestUrls {
 	public static final String HOME = "/home";
 	public static final String ACCESS_DENIED = "/accessDenied";
 	public static final String USERS = "/admin/users";
+	public static final String EDIT_USER = "/admin/editUser";
 	public static final String EDIT_USERS = "/editUsers";
 	public static final String FAILURE = "/failure";
 	

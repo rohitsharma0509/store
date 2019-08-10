@@ -1,24 +1,19 @@
 package com.app.ecom.store.repository;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.app.ecom.store.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-import com.app.ecom.store.dto.ProfitLossDto;
-import com.app.ecom.store.model.Order;
+import org.springframework.data.repository.query.Param;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
-	
-	@Query(value = "select date(o.order_date) orderDate, count(o.order_id) noOfOrders, sum(od.quantity) soldQuantity, sum(o.total_amount) amountReceived, sum(od.quantity*p.per_product_price-od.quantity*p.purchase_price) profitOrLoss from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id group by date(o.order_date)", nativeQuery = true)
-	Page<ProfitLossDto> getDailyProfitAndLossStatement(Pageable pageable);
-	
-	@Query(value = "select month(o.order_date) date, sum(o.total_amount) amount_received from orders o left join order_details od on o.order_id=od.order_id left join products p on od.product_id=p.product_id group by year(o.order_date), month(o.order_date)", nativeQuery = true)
-	java.util.Map<Integer, Double> getMonthlySales();
 	
 	Long countByOrderDate(ZonedDateTime orderDate);
 	
 	Long countByOrderDateGreaterThanEqual(ZonedDateTime orderDate);
+
+	@Query(value = "select count(o.order_id) from orders o left join order_details od on o.order_id = od.order_id where od.product_id in(:productIds)", nativeQuery = true)
+	Long countOrderByProductIdIn(@Param(value="productIds") List<Long> productIds);
 }

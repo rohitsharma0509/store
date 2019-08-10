@@ -11,29 +11,35 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
-import javax.inject.Inject;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import com.app.ecom.store.constants.Constants;
+import com.app.ecom.store.dto.Response;
+import com.app.ecom.store.dto.jaxb.ProductsType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
-import com.app.ecom.store.dto.jaxb.ProductsType;
 
 @Component
 public class CommonUtil {
 	
-	@Inject
+	@Autowired
 	private Unmarshaller unmarshaller;
 	
-	@Inject
+	@Autowired
 	private Marshaller marshaller;
 	
-	@Inject
+	@Autowired
 	private MessageSource messageSource;
+	
+	@Autowired
+	private Environment enviroment;
 	
 	public String convertLocalDateTimeToString(LocalDateTime localDateTime, String format) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
@@ -169,5 +175,23 @@ public class CommonUtil {
 	        number = number + postfix;
 	    }
 	    return number;
+	}
+	
+	public Response getResponse(boolean flag, String errorCode) {
+		Response response = new Response();
+		if(flag) {
+			response.setCode(HttpStatus.BAD_REQUEST.value());
+			response.setMessage(errorCode);
+			response.setDescription(enviroment.getProperty(errorCode));
+		} else {
+			response.setCode(HttpStatus.OK.value());
+			response.setMessage(Constants.EMPTY_STRING);
+			response.setDescription(Constants.EMPTY_STRING);
+		}
+		return response;
+	}
+	
+	public String getMessage(String errorCode) {
+		return enviroment.getProperty(errorCode);
 	}
 }
