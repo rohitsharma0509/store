@@ -4,30 +4,47 @@ import java.util.Set;
 
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonInclude(value = Include.NON_NULL)
 public class UserDto {
 
+	@JsonProperty("id")
     private Long id;
 
+	@JsonProperty("firstName")
     private String firstName;
 
+	@JsonProperty("lastName")
     private String lastName;
 
+	@JsonProperty("username")
     private String username;
 
+	@JsonProperty("password")
     private String password;
 
+	@JsonProperty("passwordConfirm")
     private String passwordConfirm;
     
+	@JsonProperty("mobile")
     private String mobile;
 
+	@JsonProperty("email")
     private String email;
 
+	@JsonProperty("language")
     private String language;
 
+	@JsonProperty("isEnabled")
     private Boolean isEnabled = false;
 
-    private Set<AddressDto> addresses;
+	@JsonProperty("addressDtos")
+    private Set<AddressDto> addressDtos;
     
+	@JsonProperty("roles")
     private Set<RoleDto> roles;
 
     public Long getId() {
@@ -111,12 +128,12 @@ public class UserDto {
         this.isEnabled = isEnabled;
     }
 
-	public Set<AddressDto> getAddresses() {
-		return addresses;
+	public Set<AddressDto> getAddressDtos() {
+		return addressDtos;
 	}
 
-	public void setAddresses(Set<AddressDto> addresses) {
-		this.addresses = addresses;
+	public void setAddressDtos(Set<AddressDto> addressDtos) {
+		this.addressDtos = addressDtos;
 	}
 
 	public Set<RoleDto> getRoles() {

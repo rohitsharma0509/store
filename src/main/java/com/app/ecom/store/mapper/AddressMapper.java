@@ -2,7 +2,6 @@ package com.app.ecom.store.mapper;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import com.app.ecom.store.dto.AddressDto;
@@ -19,11 +18,15 @@ public class AddressMapper {
 		}
 		
 		Set<Address> addresses = new HashSet<>();
-		addressDtos.stream().filter(Objects::nonNull).forEach(addressDto -> addresses.add(addressDtoToAddress(addressDto)));
+		addressDtos.stream().forEach(addressDto -> addresses.add(addressDtoToAddress(addressDto)));
 		return addresses;
 	}
 	
 	public Address addressDtoToAddress(AddressDto addressDto) {
+		if(null == addressDto) {
+			return null;
+		}
+		
 		Address address = new Address();
 		address.setId(addressDto.getId());
 		address.setAddressLine1(addressDto.getAddressLine1());
@@ -42,11 +45,15 @@ public class AddressMapper {
 		}
 		
 		Set<AddressDto> addressDtos = new HashSet<>();
-		addresses.stream().filter(Objects::nonNull).forEach(address -> addressDtos.add(addressToAddressDto(address)));
+		addresses.stream().forEach(address -> addressDtos.add(addressToAddressDto(address)));
 		return addressDtos;
 	}
 	
 	public AddressDto addressToAddressDto(Address address) {
+		if(null == address) {
+			return null;
+		}
+		
 		AddressDto addressDto = new AddressDto();
 		addressDto.setId(address.getId());
 		addressDto.setAddressLine1(address.getAddressLine1());

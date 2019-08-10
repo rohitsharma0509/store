@@ -3,21 +3,35 @@ package com.app.ecom.store.dto;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonInclude(value = Include.NON_NULL)
 public class OrderDto {
+	
+	@JsonProperty("id")
 	private Long id;
 
+	@JsonProperty("orderNumber")
 	private String orderNumber;
 
+	@JsonProperty("totalAmount")
 	private Double totalAmount;
 
+	@JsonProperty("orderDate")
 	private String orderDate;
 	
+	@JsonProperty("status")
 	private String status;
 
+	@JsonProperty("userDto")
 	private UserDto userDto;
 
+	@JsonProperty("productDtos")
 	private Set<ProductDto> productDtos = new HashSet<>();
 	
+	@JsonProperty("addressDto")
 	private AddressDto addressDto;
 
 	public Long getId() {

@@ -58,13 +58,15 @@ public class OrderMapper {
 			Collections.emptyList();
 		}
 		List<OrderDto> orderDtos = new ArrayList<>();
-		orders.stream().filter(Objects::nonNull).forEach(order -> {
-			orderDtos.add(orderToOrderDto(order));
-		});
+		orders.stream().forEach(order -> orderDtos.add(orderToOrderDto(order)));
 		return orderDtos;
 	}
 
 	public OrderDto orderToOrderDto(Order order) {
+		if(null == order) {
+			return null;
+		}
+		
 		OrderDto orderDto = new OrderDto();
 		orderDto.setId(order.getId());
 		orderDto.setOrderDate(commonUtil.convertZonedDateTimeToString(order.getOrderDate(), Constants.DATETIME_FORMAT_YYYYMMDDHHMMSS));
@@ -77,8 +79,7 @@ public class OrderMapper {
 		return orderDto;
 	}
 
-	public Set<ProductDto> orderDetailsToProductDtos(
-			Set<OrderDetails> orderDetails) {
+	public Set<ProductDto> orderDetailsToProductDtos(Set<OrderDetails> orderDetails) {
 		Set<ProductDto> productDtos = new HashSet<>();
 		orderDetails.stream().filter(Objects::nonNull).forEach(orderDetail -> {
 			ProductDto productDto = new ProductDto();
@@ -92,8 +93,7 @@ public class OrderMapper {
 		return productDtos;
 	}
 
-	private Set<OrderDetails> productDtosToOrderDetails(
-			List<ProductDto> productDtos, Order order) {
+	private Set<OrderDetails> productDtosToOrderDetails(List<ProductDto> productDtos, Order order) {
 		Set<OrderDetails> orderDetails = new HashSet<>();
 
 		productDtos.stream().filter(Objects::nonNull).forEach(productDto -> {

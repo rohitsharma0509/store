@@ -1,22 +1,37 @@
 package com.app.ecom.store.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonInclude(value = Include.NON_NULL)
 public class AddressDto {
+	
+	@JsonProperty("id")
 	private Long id;
 
+	@JsonProperty("addressLine1")
 	private String addressLine1;
 
+	@JsonProperty("addressLine2")
 	private String addressLine2;
 
+	@JsonProperty("city")
 	private String city;
 
+	@JsonProperty("state")
 	private String state;
 
+	@JsonProperty("pincode")
 	private String pincode;
 
+	@JsonProperty("country")
 	private String country;
 	
+	@JsonProperty("isPrimary")
 	private Boolean isPrimary;
 	
+	@JsonProperty("userDto")
 	private UserDto userDto;
 
 	public Long getId() {

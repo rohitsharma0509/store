@@ -1,32 +1,50 @@
 package com.app.ecom.store.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.web.multipart.MultipartFile;
 
+@JsonInclude(value = Include.NON_NULL)
 public class ProductDto {
+	
+	@JsonProperty("id")
 	private Long id;
 	
+	@JsonProperty("code")
 	private String code;
 
+	@JsonProperty("name")
 	private String name;
 	
+	@JsonProperty("description")
 	private String description;
 	
+	@JsonProperty("brandName")
 	private String brandName;
 
+	@JsonProperty("quantity")
 	private Integer quantity;
 	
+	@JsonProperty("alertQuantity")
 	private Integer alertQuantity;
 	
+	@JsonProperty("purchasePrice")
 	private Double purchasePrice;
 
+	@JsonProperty("perProductPrice")
 	private Double perProductPrice;
 	
+	@JsonProperty("image")
 	private MultipartFile image;
 	
+	@JsonProperty("base64Image")
 	private String base64Image;
 	
+	@JsonProperty("categoryId")
 	private Long categoryId;
 	
+	@JsonProperty("availableQuantity")
 	private Integer availableQuantity;
 
 	public Long getId() {

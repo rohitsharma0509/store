@@ -1,9 +1,16 @@
 package com.app.ecom.store.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonInclude(value = Include.NON_NULL)
 public class TemplateType {
 
+	@JsonProperty("id")
     private Long id;
 
+	@JsonProperty("type")
     private String type;
 
     public Long getId() {

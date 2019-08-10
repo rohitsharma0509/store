@@ -1,14 +1,34 @@
 package com.app.ecom.store.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonInclude(value = Include.NON_NULL)
 public class StockDto {
+	
+	@JsonProperty("id")
 	private Long id;
+	
+	@JsonProperty("code")
 	private String code;
+	
+	@JsonProperty("name")
 	private String name;
+	
+	@JsonProperty("categoryName")
 	private String categoryName;
+	
+	@JsonProperty("brandName")
 	private String brandName;
 
+	@JsonProperty("totalQty")
 	private int totalQty;
+	
+	@JsonProperty("availableQty")
 	private int availableQty;
+	
+	@JsonProperty("orderedQty")
 	private int orderedQty;
 
 	public Long getId() {

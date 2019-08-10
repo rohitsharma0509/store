@@ -112,6 +112,7 @@ $(document).ready(function(){
 							<tr>
 								<th><input type="checkbox" name="ids" id="all" value='-1' /></th>
 								<th><spring:message code="Code" text="Code" /></th>
+								<th><spring:message code="Brand Name" text="Brand Name" /></th>
 								<th><spring:message code="Name" text="Name" /></th>
 								<th><spring:message code="Quantity" text="Quantity" /></th>
 								<th><spring:message code="Price" text="Price" /></th>
@@ -122,6 +123,7 @@ $(document).ready(function(){
 								<tr>
 									<td><input class="checkbox" type="checkbox" name="ids" value="${product.id}" /></td>
 									<td>${product.code}</td>
+									<td>${product.brandName}</td>
 									<td>${product.name}</td>
 									<td>${product.quantity}</td>
 									<td>${product.perProductPrice}</td>

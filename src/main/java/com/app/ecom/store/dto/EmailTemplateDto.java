@@ -1,21 +1,34 @@
 package com.app.ecom.store.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonInclude(value = Include.NON_NULL)
 public class EmailTemplateDto {
 
+	@JsonProperty("id")
     private Long id;
 
+	@JsonProperty("type")
     private Long type;
 
+	@JsonProperty("from")
     private String from;
 
+	@JsonProperty("to")
     private String to;
 
+	@JsonProperty("cc")
     private String cc;
 
+	@JsonProperty("bcc")
     private String bcc;
 
+	@JsonProperty("subject")
     private String subject;
 
+	@JsonProperty("body")
     private String body;
 
     public Long getId() {

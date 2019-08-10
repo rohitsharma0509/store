@@ -23,4 +23,17 @@ public class UserTokenMapper {
 		userTokenDto.setUserDto(userMapper.userToUserDto(userToken.getUser()));
 		return userTokenDto;
 	}
+	
+	public UserToken userTokenDtoToUserToken(UserTokenDto userTokenDto) {
+		if(userTokenDto == null) {
+			return null;
+		}
+		
+		UserToken userToken = new UserToken();
+		userToken.setId(userTokenDto.getId());
+		userToken.setToken(userTokenDto.getToken());
+		userToken.setExpiryDate(userTokenDto.getExpiryDate());
+		userToken.setUser(userMapper.userDtoToUser(userTokenDto.getUserDto()));
+		return userToken;
+	}
 }

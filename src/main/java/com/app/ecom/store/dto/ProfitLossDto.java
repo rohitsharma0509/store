@@ -1,15 +1,25 @@
 package com.app.ecom.store.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonInclude(value = Include.NON_NULL)
 public class ProfitLossDto {
+	
+	@JsonProperty("orderDate")
 	private String orderDate;
 	
+	@JsonProperty("noOfOrders")
 	private Integer noOfOrders;
 	
+	@JsonProperty("soldQuantity")
 	private Integer soldQuantity;
 	
+	@JsonProperty("amountReceived")
 	private Double amountReceived;
 	
+	@JsonProperty("profitOrLoss")
 	private Double profitOrLoss;
 
 	public String getOrderDate() {

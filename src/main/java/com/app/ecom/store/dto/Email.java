@@ -1,10 +1,25 @@
 package com.app.ecom.store.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonInclude(value = Include.NON_NULL)
 public class Email {
+	
+	@JsonProperty("to")
 	public String to;
+	
+	@JsonProperty("cc")
 	public String cc;
+	
+	@JsonProperty("bcc")
 	public String bcc;
+	
+	@JsonProperty("subject")
 	public String subject;
+	
+	@JsonProperty("body")
 	public String body;
 
 	public String getTo() {

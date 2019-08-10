@@ -2,17 +2,26 @@ package com.app.ecom.store.dto;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PrivilegeDto {
+	
+	@JsonProperty("id")
 	private Long id;
 	
+	@JsonProperty("name")
 	private String name;
 	
+	@JsonProperty("description")
 	private String description;
 	
+	@JsonProperty("parentId")
 	private Long parentId;
 	
+	@JsonProperty("isInRole")
 	private Boolean isInRole;
 	
+	@JsonProperty("childPrivileges")
 	private Set<PrivilegeDto> childPrivileges;
 
 	public Long getId() {

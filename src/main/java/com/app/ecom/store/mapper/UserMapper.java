@@ -2,7 +2,6 @@ package com.app.ecom.store.mapper;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import com.app.ecom.store.dto.UserDto;
@@ -41,7 +40,7 @@ public class UserMapper {
         user.setEmail(userDto.getEmail());
         user.setMobile(userDto.getMobile());
         user.setLanguage(StringUtils.isEmpty(userDto.getLanguage()) ? "en" : userDto.getLanguage());
-        user.setAddresses(addressMapper.addressDtosToAddress(userDto.getAddresses()));
+        user.setAddresses(addressMapper.addressDtosToAddress(userDto.getAddressDtos()));
         user.setRoles(roleMapper.roleDtosToRoles(userDto.getRoles()));
         return user;
     }
@@ -52,11 +51,15 @@ public class UserMapper {
     	}
     	
     	Set<UserDto> userDtos = new HashSet<>();
-    	users.stream().filter(Objects::nonNull).forEach(user -> userDtos.add(userToUserDto(user)));
+    	users.stream().forEach(user -> userDtos.add(userToUserDto(user)));
     	return userDtos;
     }
     
     public UserDto userToUserDto(User user) {
+    	if(null == user) {
+    		return null;
+    	}
+    	
     	return userToUserDto(user, true);
     }
     public UserDto userToUserDto(User user, Boolean isAddressRequired) {
@@ -68,7 +71,7 @@ public class UserMapper {
         userDto.setLanguage(user.getLanguage());
         userDto.setMobile(user.getMobile());
         if(isAddressRequired) {
-        	userDto.setAddresses(addressMapper.addressesToAddressDtos(user.getAddresses()));
+        	userDto.setAddressDtos(addressMapper.addressesToAddressDtos(user.getAddresses()));
         }
         return userDto;
     }

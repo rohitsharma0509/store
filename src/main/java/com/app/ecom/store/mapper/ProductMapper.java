@@ -6,8 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.jaxb.ProductType;
@@ -25,9 +25,7 @@ public class ProductMapper {
 	
 	public List<ProductDto> productsToProductDtos(List<Product> products) {
 		List<ProductDto> productDtos = new ArrayList<>();
-		products.stream().filter(Objects::nonNull).forEach(product -> {
-			productDtos.add(productToProductDto(product));
-		});
+		products.stream().forEach(product -> productDtos.add(productToProductDto(product)));
 		return productDtos;
 	}
 
@@ -36,6 +34,10 @@ public class ProductMapper {
 	}
 
 	public ProductDto productToProductDto(Product product, boolean isCart) {
+		if(null == product) {
+			return null;
+		}
+		
 		ProductDto productDto = new ProductDto();
 		productDto.setId(product.getId());
 		productDto.setCode(product.getCode());
@@ -47,12 +49,15 @@ public class ProductMapper {
 		productDto.setAlertQuantity(product.getAlertQuantity());
 		productDto.setPurchasePrice(product.getPurchasePrice());
 		productDto.setPerProductPrice(product.getPerProductPrice());
-		productDto.setBase64Image(Base64.getEncoder().encodeToString(
-				product.getImage()));
+		productDto.setBase64Image(Base64.getEncoder().encodeToString(product.getImage()));
 		return productDto;
 	}
 
 	public Product productDtoToProduct(ProductDto productDto) {
+		if(null == productDto) {
+			return null;
+		}
+		
 		Product product = new Product();
 		product.setId(productDto.getId());
 		product.setCode(productDto.getCode());
@@ -75,17 +80,19 @@ public class ProductMapper {
 
 	public List<Product> convertProductsTypeToProducts(ProductsType productsType) {
 		if (productsType == null) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		List<Product> products = new ArrayList<>();
-		productsType.getProductTypes().stream().filter(Objects::nonNull).forEach(productType -> {
-			products.add(convertProductTypeToProduct(productType));
-		});
+		productsType.getProductTypes().stream().forEach(productType -> products.add(convertProductTypeToProduct(productType)));
 		return products;
 	}
 	
 	public Product convertProductTypeToProduct(ProductType productType) {
+		if(null == productType) {
+			return null;
+		}
+		
 		Product product = new Product();
 		product.setName(productType.getName());
 		product.setCode(productType.getCode());

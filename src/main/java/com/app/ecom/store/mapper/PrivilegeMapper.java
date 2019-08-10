@@ -2,7 +2,6 @@ package com.app.ecom.store.mapper;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import com.app.ecom.store.dto.PrivilegeDto;
@@ -18,11 +17,15 @@ public class PrivilegeMapper {
 		}
 
 		Set<Privilege> privileges = new HashSet<>();
-		privilegeDtos.stream().filter(Objects::nonNull).forEach(privilegeDto -> privileges.add(privilegeDtoToPrivilege(privilegeDto)));
+		privilegeDtos.stream().forEach(privilegeDto -> privileges.add(privilegeDtoToPrivilege(privilegeDto)));
 		return privileges;
 	}
 
 	private Privilege privilegeDtoToPrivilege(PrivilegeDto privilegeDto) {
+		if(null == privilegeDto) {
+			return null;
+		}
+		
 		Privilege privilege = new Privilege();
 		privilege.setId(privilegeDto.getId());
 		privilege.setName(privilegeDto.getName());
@@ -37,11 +40,15 @@ public class PrivilegeMapper {
 		}
 		
 		Set<PrivilegeDto> privilegeDtos = new HashSet<>();
-		privileges.stream().filter(Objects::nonNull).forEach(privilege -> privilegeDtos.add(privilegeToPrivilegeDto(privilege)));
+		privileges.stream().forEach(privilege -> privilegeDtos.add(privilegeToPrivilegeDto(privilege)));
 		return privilegeDtos;
 	}
 
 	private PrivilegeDto privilegeToPrivilegeDto(Privilege privilege) {
+		if(null == privilege) {
+			return null;
+		}
+		
 		PrivilegeDto privilegeDto = new PrivilegeDto();
 		privilegeDto.setId(privilege.getId());
 		privilegeDto.setName(privilege.getName());
