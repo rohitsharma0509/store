@@ -1,12 +1,15 @@
 package com.app.ecom.store.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.IdsDto;
 import com.app.ecom.store.dto.ProductCategoryDto;
 import com.app.ecom.store.dto.Response;
@@ -15,7 +18,6 @@ import com.app.ecom.store.service.ProductCategoryService;
 import com.app.ecom.store.util.CommonUtil;
 import com.app.ecom.store.validator.ProductCategoryValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -67,9 +69,12 @@ public class ProductCategoryController {
 	}
 	
 	@GetMapping(value = RequestUrls.CATEGORIES)
-	public String getCategories(Model model, @PageableDefault(page=1, size=10) Pageable pageable) {
-		Page<ProductCategory> page = productCategoryService.getCategories(pageable);
-		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.CATEGORIES, page.getNumber()+1, page.getTotalPages(), null));
+	public String getCategories(Model model, @PageableDefault(page=1, size=10) Pageable pageable, @RequestParam(required = false) String name) {
+		Map<String, String> params = new HashMap<>();
+		params.put("name", name);
+		
+		CustomPage<ProductCategoryDto> page = productCategoryService.getCategories(pageable, params);
+		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.CATEGORIES, page.getPageNumber()+1, page.getTotalPages(), params));
 	    model.addAttribute(FieldNames.PAGE, page);
 		return "categories";
 	}

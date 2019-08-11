@@ -40,7 +40,12 @@ $(document).ready(function(){
 							<label for="email"><spring:message code="Email" text="Email" /></label> 
 							<input type="text" id="email" name="email" value="${param.email}" class="form-control input-sm" />
 						</div>
-						<div class="col-sm-7"></div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-2">
+              <label for="name"><spring:message code="Mobile" text="Mobile" /></label>
+              <input type="text" id="mobile" name="mobile" value="${param.mobile}" class="form-control input-sm" />
+            </div>
+						<div class="col-sm-4"></div>
 					</div>
 					<div class="row">
 						<div class="col-sm-1">

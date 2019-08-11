@@ -1,5 +1,7 @@
 package com.app.ecom.store.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,13 +10,13 @@ import javax.transaction.Transactional;
 
 import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
+import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.UserDto;
 import com.app.ecom.store.model.User;
 import com.app.ecom.store.service.UserService;
 import com.app.ecom.store.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,9 +41,15 @@ public class UserController {
 	private Environment environment;
 
 	@GetMapping(value = RequestUrls.USERS)
-	public String getUsers(Model model, @PageableDefault(page=1, size=10) Pageable pageable) {
-		Page<User> page = userService.getUsers(pageable);
-		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.USERS, page.getNumber()+1, page.getTotalPages(), null));
+	public String getUsers(Model model, @PageableDefault(page=1, size=10) Pageable pageable, @RequestParam(required = false) String name,
+			@RequestParam(required = false) String email, String mobile) {
+		Map<String, String> params = new HashMap<>();
+		params.put("name", name);
+		params.put("email", email);
+		params.put("mobile", mobile);
+		
+		CustomPage<UserDto> page = userService.getUsers(pageable, params);
+		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.USERS, page.getPageNumber()+1, page.getTotalPages(), params));
 		model.addAttribute(FieldNames.PAGE, page);
 		return "users";
 	}

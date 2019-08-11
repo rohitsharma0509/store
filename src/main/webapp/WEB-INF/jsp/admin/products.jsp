@@ -57,24 +57,7 @@ $(document).ready(function(){
 					<label for="productName"><spring:message code="Product Name" text="Product Name" /></label> 
 					<input type="text" id="productName" name="productName" value="${param.productName}" class="form-control input-sm" />
 				</div>
-				<div class="col-sm-1"></div>
-				<div class="col-sm-2">
-					<label for="status"><spring:message code="Status" text="Status" /></label> 
-					<select id="statusId" name="statusId" class="form-control input-sm">
-						<option value="-1"><spring:message code="Select Status" text="Select Status" /></option>
-						<c:forEach var="status" items="${statuses}">
-							<c:choose>
-								<c:when test="${param.statusId == status.key}">
-									<option selected value="${status.key}">${status.value}</option>
-								</c:when>
-								<c:otherwise>
-									<option value="${status.key}">${status.value}</option>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</select>
-				</div>
-				<div class="col-sm-1"></div>
+				<div class="col-sm-4"></div>
 			</div>
 			<div class="row">
 				<div class="col-sm-1">

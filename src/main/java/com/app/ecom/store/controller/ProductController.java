@@ -85,15 +85,9 @@ public class ProductController {
 		params.put(FieldNames.CATEGORY_ID, categoryId);
 		params.put(FieldNames.BRAND_NAME, brandName);
 		params.put(FieldNames.PRODUCT_NAME, productName);
-		params.put(FieldNames.STATUS_ID, statusId);
 		CustomPage<Product> page = productService.searchProducts(pageable, params);
-		java.util.Map<String, String> statuses = new java.util.HashMap<>();
-		statuses.put("1", "Alert");
-		statuses.put("2", "Available");
-		statuses.put("3", "Out Of Stock");
-		model.addAttribute("statuses", statuses);
 		model.addAttribute(FieldNames.CATEGORIES, productCategoryService.getAllCategories());
-		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.PRODUCTS, page.getPageNumber()+1, page.getTotalPages(), null));
+		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.PRODUCTS, page.getPageNumber()+1, page.getTotalPages(), params));
 	    model.addAttribute(FieldNames.PAGE, page);
 		return "products";
 	}
