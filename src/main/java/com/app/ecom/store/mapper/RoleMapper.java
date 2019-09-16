@@ -1,7 +1,9 @@
 package com.app.ecom.store.mapper;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.app.ecom.store.dto.RoleDto;
@@ -19,12 +21,12 @@ public class RoleMapper {
 	@Autowired
 	private UserMapper userMapper;
 
-	public Set<Role> roleDtosToRoles(Set<RoleDto> roleDtos) {
+	public List<Role> roleDtosToRoles(List<RoleDto> roleDtos) {
 		if (CollectionUtils.isEmpty(roleDtos)) {
-			return Collections.emptySet();
+			return Collections.emptyList();
 		}
 
-		Set<Role> roles = new HashSet<>();
+		List<Role> roles = new ArrayList<>();
 		roleDtos.stream().forEach(roleDto -> roles.add(roleDtoToRole(roleDto)));
 		return roles;
 	}
@@ -35,6 +37,7 @@ public class RoleMapper {
 		}
 		
 		Role role = new Role();
+		role.setId(roleDto.getId());
 		role.setName(roleDto.getName());
 		role.setDescription(roleDto.getDescription());
 		role.setPrivileges(privilegeMapper.privilegeDtosToPrivileges(roleDto.getPrivilegeDtos()));
@@ -57,7 +60,9 @@ public class RoleMapper {
 		}
 		
 		RoleDto roleDto = new RoleDto();
+		roleDto.setId(role.getId());
 		roleDto.setName(role.getName());
+		roleDto.setOldName(role.getName());
 		roleDto.setDescription(role.getDescription());
 		roleDto.setPrivilegeDtos(privilegeMapper.privilegesToPrivilegeDtos(role.getPrivileges()));
 		roleDto.setUserDtos(userMapper.usersToUserDtos(role.getUsers()));

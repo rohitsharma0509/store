@@ -82,4 +82,9 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 		}
 		return isDeleted;
 	}
+
+	@Override
+	public List<EmailTemplateDto> getAllEmailTemplates() {
+		return emailTemplateMapper.emailTemplatesToEmailTemplateDtos(emailTemplateRepository.findAll());
+	}
 }

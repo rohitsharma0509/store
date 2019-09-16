@@ -32,7 +32,7 @@ public class PrivilegeController {
 		
 		List<Long> userPrivileges = roleDto.getPrivilegeDtos().stream().map(PrivilegeDto::getId).collect(Collectors.toList());
 		
-		Set<PrivilegeDto> allPrivileges = privilegeService.getPrivileges();
+		List<PrivilegeDto> allPrivileges = privilegeService.getPrivileges();
 		Set<Long> childPrivilegeIds = new HashSet<>();
 		allPrivileges.stream().forEach(privilegeDto -> {
 			if(userPrivileges.contains(privilegeDto.getId())) {

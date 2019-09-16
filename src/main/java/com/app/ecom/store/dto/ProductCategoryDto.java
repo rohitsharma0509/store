@@ -12,6 +12,9 @@ public class ProductCategoryDto {
 
 	@JsonProperty("name")
 	private String name;
+	
+	@JsonProperty("oldName")
+	private String oldName;
 
 	public Long getId() {
 		return id;
@@ -27,5 +30,13 @@ public class ProductCategoryDto {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getOldName() {
+		return oldName;
+	}
+
+	public void setOldName(String oldName) {
+		this.oldName = oldName;
 	}
 }

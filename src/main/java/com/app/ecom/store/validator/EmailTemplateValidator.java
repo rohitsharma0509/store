@@ -44,9 +44,13 @@ public class EmailTemplateValidator implements Validator {
             }
         }
         
-        if(emailTemplateService.getEmailTemplateBySubject(email.getSubject()) != null) {
-        	errors.rejectValue("subject", commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
-        }
+        List<EmailTemplateDto> emailTemplateDtos = emailTemplateService.getAllEmailTemplates();
+		
+		for(EmailTemplateDto emailTemplate : emailTemplateDtos) {
+			if(!emailTemplate.getSubject().equalsIgnoreCase(email.getOldSubject()) && emailTemplate.getSubject().equalsIgnoreCase(email.getSubject())) {
+				errors.rejectValue("name", commonUtil.getMessage(ErrorCode.ERR000008.getCode()));
+			}
+		}
     }
 
 	public Response validateTemplateAssociation(List<Long> templateIds) {

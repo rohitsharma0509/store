@@ -1,5 +1,6 @@
 package com.app.ecom.store.dto;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Transient;
@@ -45,7 +46,7 @@ public class UserDto {
     private Set<AddressDto> addressDtos;
     
 	@JsonProperty("roles")
-    private Set<RoleDto> roles;
+    private List<RoleDto> roles;
 
     public Long getId() {
         return id;
@@ -136,11 +137,11 @@ public class UserDto {
 		this.addressDtos = addressDtos;
 	}
 
-	public Set<RoleDto> getRoles() {
+	public List<RoleDto> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<RoleDto> roles) {
+	public void setRoles(List<RoleDto> roles) {
 		this.roles = roles;
 	}
 }

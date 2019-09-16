@@ -1,8 +1,8 @@
 package com.app.ecom.store.mapper;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import com.app.ecom.store.dto.PrivilegeDto;
 import com.app.ecom.store.model.Privilege;
@@ -11,17 +11,17 @@ import org.springframework.util.CollectionUtils;
 
 @Component
 public class PrivilegeMapper {
-	public Set<Privilege> privilegeDtosToPrivileges(Set<PrivilegeDto> privilegeDtos) {
+	public List<Privilege> privilegeDtosToPrivileges(List<PrivilegeDto> privilegeDtos) {
 		if (CollectionUtils.isEmpty(privilegeDtos)) {
-			return Collections.emptySet();
+			return Collections.emptyList();
 		}
 
-		Set<Privilege> privileges = new HashSet<>();
+		List<Privilege> privileges = new ArrayList<>();
 		privilegeDtos.stream().forEach(privilegeDto -> privileges.add(privilegeDtoToPrivilege(privilegeDto)));
 		return privileges;
 	}
 
-	private Privilege privilegeDtoToPrivilege(PrivilegeDto privilegeDto) {
+	public Privilege privilegeDtoToPrivilege(PrivilegeDto privilegeDto) {
 		if(null == privilegeDto) {
 			return null;
 		}
@@ -34,17 +34,17 @@ public class PrivilegeMapper {
 		return privilege;
 	}
 
-	public Set<PrivilegeDto> privilegesToPrivilegeDtos(Set<Privilege> privileges) {
+	public List<PrivilegeDto> privilegesToPrivilegeDtos(List<Privilege> privileges) {
 		if (CollectionUtils.isEmpty(privileges)) {
-			return Collections.emptySet();
+			return Collections.emptyList();
 		}
 		
-		Set<PrivilegeDto> privilegeDtos = new HashSet<>();
+		List<PrivilegeDto> privilegeDtos = new ArrayList<>();
 		privileges.stream().forEach(privilege -> privilegeDtos.add(privilegeToPrivilegeDto(privilege)));
 		return privilegeDtos;
 	}
 
-	private PrivilegeDto privilegeToPrivilegeDto(Privilege privilege) {
+	public PrivilegeDto privilegeToPrivilegeDto(Privilege privilege) {
 		if(null == privilege) {
 			return null;
 		}

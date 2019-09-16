@@ -1,5 +1,6 @@
 package com.app.ecom.store.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -30,9 +31,9 @@ public class Role {
 	@ManyToMany(mappedBy = "roles")
 	private Set<User> users;
 	
-	@ManyToMany(cascade={CascadeType.ALL})
+	@ManyToMany(cascade={CascadeType.MERGE})
 	@JoinTable(name = "role_privileges", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id"))
-	private Set<Privilege> privileges;
+	private List<Privilege> privileges;
 
 	public Long getId() {
 		return id;
@@ -66,11 +67,11 @@ public class Role {
 		this.users = users;
 	}
 
-	public Set<Privilege> getPrivileges() {
+	public List<Privilege> getPrivileges() {
 		return privileges;
 	}
 
-	public void setPrivileges(Set<Privilege> privileges) {
+	public void setPrivileges(List<Privilege> privileges) {
 		this.privileges = privileges;
 	}
 }

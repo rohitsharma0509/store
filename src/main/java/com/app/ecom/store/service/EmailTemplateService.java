@@ -22,4 +22,6 @@ public interface EmailTemplateService {
 	boolean deleteEmailTemplates(List<Long> ids);
 
 	boolean deleteAllEmailTemplates();
+
+	List<EmailTemplateDto> getAllEmailTemplates();
 }

@@ -41,9 +41,14 @@ public class ProductCategoryValidator implements Validator {
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", commonUtil.getMessage(ErrorCode.ERR000003.getCode()));
 		
-		if (productCategoryService.getProductCategoryByName(productCategoryDto.getName()) != null) {
-			errors.rejectValue("name", commonUtil.getMessage(ErrorCode.ERR000016.getCode()));
-        }
+		
+		Set<ProductCategoryDto> productCategoryDtos = productCategoryService.getAllProductCategories();
+		
+		for(ProductCategoryDto productCategory : productCategoryDtos) {
+			if(!productCategory.getName().equalsIgnoreCase(productCategoryDto.getOldName()) && productCategory.getName().equalsIgnoreCase(productCategoryDto.getName())) {
+				errors.rejectValue("name", commonUtil.getMessage(ErrorCode.ERR000016.getCode()));
+			}
+		}
 	}
 	
 	public Response validateCategoryAssociation(List<Long> categoryIds) {

@@ -1,7 +1,7 @@
 package com.app.ecom.store.events;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.app.ecom.store.dto.PrivilegeDto;
 import com.app.ecom.store.dto.RoleDto;
@@ -42,8 +42,8 @@ public class ContextRefreshedListener implements ApplicationListener<ContextRefr
 		}
 	}
 
-	private Set<RoleDto> getAdminRoleDto() {
-		Set<RoleDto> roleDtos = new HashSet<>();
+	private List<RoleDto> getAdminRoleDto() {
+		List<RoleDto> roleDtos = new ArrayList<>();
 		RoleDto roleDto = new RoleDto();
 		roleDto.setName("ROLE_ADMIN");
 		roleDto.setPrivilegeDtos(getAdminPrivilegeDto());
@@ -51,8 +51,8 @@ public class ContextRefreshedListener implements ApplicationListener<ContextRefr
 		return roleDtos;
 	}
 
-	private Set<PrivilegeDto> getAdminPrivilegeDto() {
-		Set<PrivilegeDto> privilegeDtos = new HashSet<>();
+	private List<PrivilegeDto> getAdminPrivilegeDto() {
+		List<PrivilegeDto> privilegeDtos = new ArrayList<>();
 		PrivilegeDto privilegeDto = new PrivilegeDto();
 		privilegeDto.setName("ADMIN");
 		privilegeDto.setDescription("Is Admin?");

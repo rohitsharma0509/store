@@ -27,6 +27,9 @@ public class EmailTemplateDto {
 
 	@JsonProperty("subject")
     private String subject;
+	
+	@JsonProperty("oldSubject")
+	private String oldSubject;
 
 	@JsonProperty("body")
     private String body;
@@ -87,7 +90,15 @@ public class EmailTemplateDto {
         this.subject = subject;
     }
 
-    public String getBody() {
+    public String getOldSubject() {
+		return oldSubject;
+	}
+
+	public void setOldSubject(String oldSubject) {
+		this.oldSubject = oldSubject;
+	}
+
+	public String getBody() {
         return body;
     }
 

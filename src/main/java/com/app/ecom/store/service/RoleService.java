@@ -1,15 +1,15 @@
 package com.app.ecom.store.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import com.app.ecom.store.dto.CustomPage;
 import com.app.ecom.store.dto.RoleDto;
-import com.app.ecom.store.model.Role;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface RoleService {
-	Page<Role> getRoles(Pageable pageable);
+	CustomPage<RoleDto> getRoles(Pageable pageable, Map<String, String> params);
 	
 	Set<RoleDto> getRolesByIdIn(List<Long> ids);
 

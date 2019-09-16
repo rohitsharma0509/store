@@ -1,5 +1,6 @@
 package com.app.ecom.store.dto;
 
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -15,6 +16,9 @@ public class RoleDto {
 	@JsonProperty("name")
 	private String name;
 	
+	@JsonProperty("oldName")
+	private String oldName;
+	
 	@JsonProperty("description")
 	private String description;
 	
@@ -22,7 +26,7 @@ public class RoleDto {
 	private Set<UserDto> userDtos;
 	
 	@JsonProperty("privilegeDtos")
-	private Set<PrivilegeDto> privilegeDtos;
+	private List<PrivilegeDto> privilegeDtos;
 
 	public Long getId() {
 		return id;
@@ -40,6 +44,14 @@ public class RoleDto {
 		this.name = name;
 	}
 	
+	public String getOldName() {
+		return oldName;
+	}
+
+	public void setOldName(String oldName) {
+		this.oldName = oldName;
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -56,11 +68,11 @@ public class RoleDto {
 		this.userDtos = userDtos;
 	}
 
-	public Set<PrivilegeDto> getPrivilegeDtos() {
+	public List<PrivilegeDto> getPrivilegeDtos() {
 		return privilegeDtos;
 	}
 
-	public void setPrivilegeDtos(Set<PrivilegeDto> privilegeDtos) {
+	public void setPrivilegeDtos(List<PrivilegeDto> privilegeDtos) {
 		this.privilegeDtos = privilegeDtos;
 	}
 }
