@@ -5,6 +5,7 @@ public class FieldNames {
 	public static final String ID = "id";
 	public static final String PRODUCT_CATEGORY = "productCategory";
 	public static final String PRODUCT_CATEGORY_DTO = "productCategoryDto";
+	public static final String PRIVILEGE_DTO = "privilegeDto";
 	public static final String PAGGING = "pagging";
 	public static final String PAGE = "page";
 	public static final String CATEGORIES = "categories";

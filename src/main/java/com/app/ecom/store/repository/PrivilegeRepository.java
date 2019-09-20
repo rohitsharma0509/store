@@ -11,5 +11,9 @@ import org.springframework.stereotype.Repository;
 public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {
 
 	List<PrivilegeDto> findByParentIdIsNull();
+	
+	void deleteByIdIn(List<Long> ids);
+	
+	List<Privilege> findByIdIn(List<Long> ids);
 
 }

@@ -78,7 +78,13 @@ public class RequestUrls {
 	public static final String EDIT_PROFILE = "/editProfile";
 	public static final String MY_ACCOUNT = "/myAccount";
 	
+	public static final String ROLE_PRIVILEGES = "/admin/rolePrivileges";
 	public static final String PRIVILEGES = "/admin/privileges";
+	public static final String ADD_PRIVILEGE = "/admin/addPrivilege";
+	public static final String DELETE_PRIVILEGE = PRIVILEGES+"/{id}";
+	public static final String DELETE_BULK_PRIVILEGES = "/admin/bulkprivileges";
+	public static final String DELETE_ALL_PRIVILEGES = "/admin/allprivileges";
+	
 	
 	public static final String PROFIT_LOSS = "/admin/profitLoss";
 	public static final String DAILY_PROFIT_LOSS = "/admin/dailyProfitLoss";

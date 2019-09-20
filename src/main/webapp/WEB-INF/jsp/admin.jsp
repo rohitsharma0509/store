@@ -15,6 +15,7 @@
 		<table class="table">
 			<tr class="info"><th><span class="glyphicon glyphicon-users"><b><spring:message code="Access Control" text="Access Control" /></b></span></th></tr>
 			<tr><td><a href="${contextPath}<%=RequestUrls.ROLES %>"><spring:message code="Roles" text="Roles" /></a></td></tr>
+			<tr><td><a href="${contextPath}<%=RequestUrls.PRIVILEGES %>"><spring:message code="Privileges" text="Privileges" /></a></td></tr>
 		</table>
 	</div>
 </div>

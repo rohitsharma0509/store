@@ -56,7 +56,7 @@ public class RolesController {
 		params.put("name", name);
 		params.put("roleName", roleName);
 		CustomPage<RoleDto> page = roleService.getRoles(pageable, params);
-		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.ROLES, page.getPageNumber()+1, page.getTotalPages(), null));
+		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.ROLES, page.getPageNumber()+1, page.getTotalPages(), params));
 		model.addAttribute(FieldNames.PAGE, page);
         return "roles";
     }
