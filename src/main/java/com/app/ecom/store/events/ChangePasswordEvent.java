@@ -5,24 +5,24 @@ import java.util.Locale;
 import com.app.ecom.store.dto.UserDto;
 import org.springframework.context.ApplicationEvent;
 
-public class RegistrationCompleteEvent extends ApplicationEvent {
+public class ChangePasswordEvent extends ApplicationEvent {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private String url;
+	private String url;
 
     private Locale locale;
 
     private UserDto userDto;
 
-    public RegistrationCompleteEvent(String url, Locale locale, UserDto userDto) {
-        super(userDto);
-        this.url = url;
-        this.locale = locale;
+	public ChangePasswordEvent(String url, Locale locale, UserDto userDto) {
+		super(userDto);
+		this.url = url;
+		this.locale = locale;
         this.userDto = userDto;
-    }
-
-    public String getUrl() {
+	}
+	
+	public String getUrl() {
         return url;
     }
 

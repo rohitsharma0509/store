@@ -1,6 +1,7 @@
 package com.app.ecom.store.handler;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
         	String username = authentication.getName();
             User user = userService.findByUsername(username);
             httpSession.setAttribute("user", user);
-            String locale = null == user || StringUtils.isEmpty(user.getLanguage()) ? "en" : user.getLanguage();
+            String locale = null == user || StringUtils.isEmpty(user.getLanguage()) ? Locale.ENGLISH.getLanguage() : user.getLanguage();
             userService.updateLocale(request, response, locale);
         }
     }

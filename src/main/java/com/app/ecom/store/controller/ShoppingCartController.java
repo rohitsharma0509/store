@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.app.ecom.store.constants.FieldNames;
 import com.app.ecom.store.constants.RequestUrls;
 import com.app.ecom.store.dto.ProductDto;
 import com.app.ecom.store.dto.ShoppingCart;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ShoppingCartController {
+	
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 	
@@ -37,7 +39,7 @@ public class ShoppingCartController {
 	private AddressService addressService;
 	
 	@GetMapping(value = RequestUrls.ADD_TO_CART)
-	public String addToCart(Model model, @RequestParam(value = "id", required=true) Long id) {
+	public String addToCart(Model model, @RequestParam(value = FieldNames.ID, required=true) Long id) {
 		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
 		Optional<ProductDto> optionalProductDto = shoppingCart.getProductDtos().stream().filter(productDto -> productDto.getId()==id).findFirst();
 		Integer availableQuantity = productService.getAvailableQuantity(id);
@@ -58,18 +60,18 @@ public class ShoppingCartController {
 				shoppingCart.setTotalPrice(shoppingCart.getTotalPrice() + (productDto.getPerProductPrice()*productDto.getQuantity()));
 			}
 		}
-		model.addAttribute("shoppingCart", shoppingCart);
-		return "redirect:shoppingCart";
+		model.addAttribute(FieldNames.SHOPPING_CART, shoppingCart);
+		return "redirect:"+FieldNames.SHOPPING_CART;
 	}
 	
 	@DeleteMapping(value = RequestUrls.DELETE_FROM_CART)
-	public String removeFromCart(Model model, @PathVariable(value = "id") Long id) {
+	public String removeFromCart(Model model, @PathVariable(value = FieldNames.ID) Long id) {
 		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
 		
 		ProductDto productDtoToDelete = null;
 		if(shoppingCart != null && !CollectionUtils.isEmpty(shoppingCart.getProductDtos())){
 			for(ProductDto productDto : shoppingCart.getProductDtos()){
-				if(id == productDto.getId()){
+				if(id.equals(productDto.getId())){
 					productDtoToDelete = productDto;
 				}
 			}
@@ -79,40 +81,39 @@ public class ShoppingCartController {
 				
 			}
 		}
-		model.addAttribute("shoppingCart", shoppingCart);
-		return "shoppingCart";
+		model.addAttribute(FieldNames.SHOPPING_CART, shoppingCart);
+		return FieldNames.SHOPPING_CART;
 	}
 	
 	@GetMapping(value = RequestUrls.SHOPPING_CART)
 	public String getShoppingCart(Model model) {
 		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
-		model.addAttribute("shoppingCart", shoppingCart);
-		return "shoppingCart";
+		model.addAttribute(FieldNames.SHOPPING_CART, shoppingCart);
+		return FieldNames.SHOPPING_CART;
 	}
 	
 	@GetMapping(value = RequestUrls.CHECKOUT)
-	public String checkout(Model model, HttpServletRequest request, @RequestParam(value = "id", required=false) Long id) {
+	public String checkout(Model model, HttpServletRequest request, @RequestParam(value = FieldNames.ID, required=false) Long id) {
 		HttpSession httpSession = request.getSession();
-		User user = (User) httpSession.getAttribute("user");
+		User user = (User) httpSession.getAttribute(FieldNames.USER);
 		if(null == id){
 			ShoppingCart shoppingCart = shoppingCartService.getShoppingCart();
-			model.addAttribute("productDtos", shoppingCart.getProductDtos());
-			model.addAttribute("totalPrice", shoppingCart.getTotalPrice());
+			model.addAttribute(FieldNames.PRODUCTDTOS, shoppingCart.getProductDtos());
+			model.addAttribute(FieldNames.TOTAL_PRICE, shoppingCart.getTotalPrice());
 		}else {
 			List<ProductDto> productDtos = new ArrayList<>();
 			ProductDto productDto = productService.getProductByIdForCart(id);
 			productDtos.add(productDto);
-			model.addAttribute("productDtos", productDtos);
-			model.addAttribute("totalPrice", productDto.getPerProductPrice());
+			model.addAttribute(FieldNames.PRODUCTDTOS, productDtos);
+			model.addAttribute(FieldNames.TOTAL_PRICE, productDto.getPerProductPrice());
 		}
-		//model.addAttribute("userDto", new UserDto());
 		model.addAttribute("addresses", addressService.getAddressByUser(user));
 		return "shoppingCartConfirm";
 	}
 	
 	@PostMapping(value = RequestUrls.SHOPPING_CART)
 	public String updateShoppingCart(Model model, @ModelAttribute ShoppingCart shoppingCart) {
-		model.addAttribute("shoppingCart", shoppingCartService.updateShoppingCart(shoppingCart));
+		model.addAttribute(FieldNames.SHOPPING_CART, shoppingCartService.updateShoppingCart(shoppingCart));
 		return "redirect:checkout";
 	}
 }

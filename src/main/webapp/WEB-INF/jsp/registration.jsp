@@ -59,6 +59,7 @@
         </spring:bind>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="window.history.back()">Back</button>
     </form:form>
 
 </div>

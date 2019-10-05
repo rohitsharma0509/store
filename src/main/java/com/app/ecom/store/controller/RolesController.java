@@ -53,7 +53,7 @@ public class RolesController {
 	@GetMapping(value = RequestUrls.ROLES)
     public String getRoles(Model model, @PageableDefault(page=1, size=10) Pageable pageable, @RequestParam(required=false) String name, @RequestParam(required=false) String roleName) {
 		Map<String, String> params = new HashMap<>();
-		params.put("name", name);
+		params.put(FieldNames.NAME, name);
 		params.put("roleName", roleName);
 		CustomPage<RoleDto> page = roleService.getRoles(pageable, params);
 		model.addAttribute(FieldNames.PAGGING, commonUtil.getPagging(RequestUrls.ROLES, page.getPageNumber()+1, page.getTotalPages(), params));

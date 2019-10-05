@@ -14,13 +14,12 @@ public class RegistrationCompleteListener implements ApplicationListener<Registr
     private EmailUtil emailUtil;
     
     @Autowired
-    private UserTokenService verificationTokenService;
+    private UserTokenService userTokenService;
 
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent event) {
-        System.out.println("Listening event......");
-        String token = verificationTokenService.createUserToken(event.getUser());
-        String confirmationUrl = "http://localhost:8080"+event.getUrl() + RequestUrls.REGISTRATION_CONFIRM+"?token=" + token;
-        emailUtil.sendEmail(new String[] {event.getUser().getEmail()}, null, null, "Registration Confirmation", confirmationUrl);
+        String token = userTokenService.createUserToken(event.getUserDto());
+        StringBuilder confirmationUrl = new StringBuilder(event.getUrl()).append(RequestUrls.REGISTRATION_CONFIRM).append("?token=").append(token);
+        emailUtil.sendEmail(new String[] {event.getUserDto().getEmail()}, null, null, "Registration Confirmation", confirmationUrl.toString());
     }
 }

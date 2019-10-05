@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserRepository extends JpaRepository<User, Long> {
 	User findByUsername(String username);
 
-	//List<User> findByMobileContainingOrFirstNameContainingOrLastNameContaining(String mobileOrName);
 	Set<User> findByMobileContaining(String mobileOrName);
+
+	User findByEmail(String email);
 }

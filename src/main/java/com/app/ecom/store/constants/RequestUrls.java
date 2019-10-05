@@ -60,6 +60,8 @@ public class RequestUrls {
 	public static final String REGISTRATION_CONFIG = "/registration/config";
 	public static final String LOGIN = "/login";
 	public static final String FORGET_PASSWORD = "/forgetPassword";
+	public static final String CHANGE_PASSWORD = "/changePassword";
+	public static final String RESET_PASSWORD = "/resetPassword";
 	public static final String HOME = "/home";
 	public static final String ACCESS_DENIED = "/accessDenied";
 	public static final String USERS = "/admin/users";

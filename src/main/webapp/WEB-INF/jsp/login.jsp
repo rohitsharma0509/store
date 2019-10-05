@@ -1,3 +1,4 @@
+<%@page import="com.app.ecom.store.constants.RequestUrls"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  <div class="container">
 	<div class="row">
@@ -28,8 +29,8 @@
 							<label><input type="checkbox" name="rememberMe" id="rememberMe"> Remember login</label>
 						</div>
 						<button type="submit" class="btn btn-success btn-block">Signin</button>
-						<a href="${contextPath}/forgetPassword" class="pull-left">Forget Password?</label>
-            <a href="${contextPath}/registration" class="pull-right need-help">SignUp</a>
+						<a href="${contextPath}<%=RequestUrls.FORGET_PASSWORD %>" class="pull-left">Forget Password?</label>
+            <a href="${contextPath}<%=RequestUrls.REGISTRATION %>" class="pull-right need-help">SignUp</a>
 					</form>
 				</div>
 			</div>
